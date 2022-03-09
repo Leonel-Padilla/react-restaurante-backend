@@ -13,7 +13,7 @@ class TipoDocumento extends Migration
      */
     public function up()
     {
-        Schema::create('tipoDocumento', function (Blueprint $table) {
+        Schema::create('tipo_documentos', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('nombreDocumento');

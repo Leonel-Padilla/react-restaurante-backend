@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('TipoDocumento', 'App\Http\Controllers\TipoDocumentoController@getTipoDocumento');
 Route::get('TipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoController@show');
+Route::get('TipoDocumentoND/{numeroDocumento}', 'App\Http\Controllers\TipoDocumentoController@getByNumeroDocumento');
 Route::post('addTipoDocumento', 'App\Http\Controllers\TipoDocumentoController@store');
 Route::put('updateTipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoController@update');
 Route::delete('deleteTipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoController@destroy');

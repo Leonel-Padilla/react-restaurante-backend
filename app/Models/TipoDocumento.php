@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class TipoDocumento
@@ -36,5 +37,12 @@ class TipoDocumento extends Model
     protected $fillable = ['nombreDocumento','numeroDocumento','estado'];
 
 
+    //New Collections
+    public static function findByNumeroDocumento($numeroDocumento){
+        
+      #return $tipoDocumento = DB::table('tipo_documentos')->where('numeroDocumento', $numeroDocumento)->get();
+
+      return $tipoDocumento = TipoDocumento::firstWhere('numeroDocumento', $numeroDocumento);
+    }
 
 }

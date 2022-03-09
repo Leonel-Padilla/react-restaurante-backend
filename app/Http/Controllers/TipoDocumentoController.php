@@ -11,6 +11,18 @@ class TipoDocumentoController extends Controller
     public function getTipoDocumento(){
         return response()->json(TipoDocumento::all(),200);
     }
+
+    //
+    public function getByNumeroDocumento($numeroDocumento){
+
+        $tipoDocumento = TipoDocumento::findByNumeroDocumento($numeroDocumento);
+
+        if(is_null($tipoDocumento)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($tipoDocumento, 200);
+    }
  
     //
     public function store(Request $request)

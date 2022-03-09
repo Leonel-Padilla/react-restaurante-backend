@@ -19,6 +19,7 @@ class Empleados extends Migration
             $table->bigInteger('tipoDocumentoId')->unsigned();
             $table->string('empleadoNombre');
             $table->string('empleadoNumero');
+            $table->string('empleadoCorreo');
             $table->string('empleadoDireccion');
             $table->integer('estado');
             $table->timestamps();
