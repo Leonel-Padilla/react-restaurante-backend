@@ -31,3 +31,17 @@ Route::get('EmpleadoN/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoControlle
 Route::post('addEmpleado', 'App\Http\Controllers\EmpleadoController@store');
 Route::put('updateEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@update');
 Route::delete('deleteEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@destroy');
+
+Route::get('Proveedor', 'App\Http\Controllers\ProveedoreController@getProveedor');
+Route::get('Proveedor/{id}', 'App\Http\Controllers\ProveedoreController@show');
+Route::get('ProveedorN/{nombreProveedor}', 'App\Http\Controllers\ProveedoreController@getByProveedorNombre');
+Route::post('addProveedor', 'App\Http\Controllers\ProveedoreController@store');
+Route::put('updateProveedor/{id}', 'App\Http\Controllers\ProveedoreController@update');
+Route::delete('deleteProveedor/{id}', 'App\Http\Controllers\ProveedoreController@destroy');
+
+Route::get('Cargo', 'App\Http\Controllers\CargoController@getCargo');
+Route::get('Cargo/{id}', 'App\Http\Controllers\CargoController@show');
+Route::get('CargoN/{nombreCargo}', 'App\Http\Controllers\CargoController@getByCargoNombre');
+Route::post('addCargo', 'App\Http\Controllers\CargoController@store');
+Route::put('updateCargo/{id}', 'App\Http\Controllers\CargoController@update');
+Route::delete('deleteCargo/{id}', 'App\Http\Controllers\CargoController@destroy');

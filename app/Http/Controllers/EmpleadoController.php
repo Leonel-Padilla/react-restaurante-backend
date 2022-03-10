@@ -35,8 +35,8 @@ class EmpleadoController extends Controller
         if (strlen($request->empleadoNombre) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
         }
-        if (strlen($request->empleadoNumero) === 0){
-            return response()->json(['Error'=>'El numero del empleado no puede estar vacio'], 203);
+        if (strlen($request->empleadoNumero) < 8 || strlen($request->empleadoNumero) > 8){
+            return response()->json(['Error'=>'El numero del empleado tiene que ser igual a 8'], 203);
         }
         if (strlen($request->empleadoDireccion) === 0){
             return response()->json(['Error'=>'La direccion del empleado no puede estar vacio'], 203);
