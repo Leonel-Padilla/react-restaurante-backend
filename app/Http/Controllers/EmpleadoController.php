@@ -18,6 +18,18 @@ class EmpleadoController extends Controller
     }
 
     //
+    public function getByEmpleadoNombre($nombreEmpleado){
+
+        $empleado = Empleado::findByEmpleadoNombre($nombreEmpleado);
+
+        if(empty($empleado)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($empleado, 200);
+    }
+
+    //
     public function store(Request $request)
     {   
         if (strlen($request->empleadoNombre) === 0){

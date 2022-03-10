@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Empleado
@@ -49,5 +50,12 @@ class Empleado extends Model
         return $this->hasOne('App\Models\TipoDocumento', 'id', 'tipoDocumentoId');
     }
     
+
+    //New Collections
+    public static function findByEmpleadoNombre($empleadoNombre){
+        
+      return $Empleado = DB::table('empleados')->where('empleadoNombre', $empleadoNombre)->get();
+
+    }
 
 }

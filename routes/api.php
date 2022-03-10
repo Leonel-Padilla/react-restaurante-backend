@@ -27,6 +27,7 @@ Route::delete('deleteTipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoCon
 
 Route::get('Empleado', 'App\Http\Controllers\EmpleadoController@getEmpleado');
 Route::get('Empleado/{id}', 'App\Http\Controllers\EmpleadoController@show');
+Route::get('EmpleadoN/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByEmpleadoNombre');
 Route::post('addEmpleado', 'App\Http\Controllers\EmpleadoController@store');
 Route::put('updateEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@update');
 Route::delete('deleteEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@destroy');
