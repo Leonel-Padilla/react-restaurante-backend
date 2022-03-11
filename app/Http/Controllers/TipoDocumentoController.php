@@ -63,8 +63,8 @@ class TipoDocumentoController extends Controller
     {   
         $tipoDocumento = TipoDocumento::find($id);
         //Validaciones Busqueda
-        if  ($id <= 1){
-            return response()->json(['Error'=>'El Id no puede ser menor o igua a cero'], 203);
+        if  ($id < 1){
+            return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
         if  (is_null($tipoDocumento)){
             return response()->json(['Error'=>'No existe este registro'], 203);

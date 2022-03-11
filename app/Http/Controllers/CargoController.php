@@ -35,7 +35,7 @@ class CargoController extends Controller
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
         }
         if (strlen($request->cargoDescripcion) === 0){
-            return response()->json(['Error'=>'El numero del cargo tiene que ser igual a 8'], 203);
+            return response()->json(['Error'=>'La descripción del cargo no puede estar vacia'], 203);
         }
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
@@ -82,7 +82,7 @@ class CargoController extends Controller
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
         }
         if (strlen($request->cargoDescripcion) === 0){
-            return response()->json(['Error'=>'El numero del cargo tiene que ser igual a 8'], 203);
+            return response()->json(['Error'=>'La descripcion del cago no puede estar vacia'], 203);
         }
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
