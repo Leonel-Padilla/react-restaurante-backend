@@ -39,7 +39,7 @@ class CargoController extends Controller
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Mensaje'=>'No se puede repetir el nombre del cargo'], 203);
+            return response()->json(['Error'=>'No se puede repetir el nombre del cargo'], 203);
         }
 
         $validator2 = Validator::make($request->all(), [ 
@@ -47,9 +47,17 @@ class CargoController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Mensaje'=>'No se puede repetir la decripción del cargo'], 203);
+            return response()->json(['Error'=>'No se puede repetir la decripción del cargo'], 203);
         }
 
+
+        /*if (str_contains($request->cargoNombre, "@") || str_contains($request->cargoNombre, ".") 
+        || str_contains($request->cargoNombre, "/") || str_contains($request->cargoNombre, "#") 
+        || str_contains($request->cargoNombre, "$") || str_contains($request->cargoNombre, "-")
+        || str_contains($request->cargoNombre, "_") || str_contains($request->cargoNombre, "?")
+        || str_contains($request->cargoNombre, "!") || str_contains($request->cargoNombre, ",")){
+            return response()->json(['Error'=>'El nombre no puede contener caracteres especiales'], 203);
+        }*/
 
         if (strlen($request->cargoNombre) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
@@ -165,12 +173,10 @@ class CargoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-
         $cargo->update($request->all());
 
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
 
-        
     }
 
     
