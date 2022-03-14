@@ -24,7 +24,7 @@ class Cargo extends Model
     static $rules = [
 		'cargoNombre' => 'required',
 		'cargoDescripcion' => 'required',
-		'estado' => 'required',
+		'estado' => 'required'
     ];
 
     protected $perPage = 20;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cargo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class CargoController
@@ -20,6 +21,7 @@ class CargoController extends Controller
     //
     public function getByCargoNombre($nombreCargo){
 
+
         $Cargo = Cargo::findByCargoNombre($nombreCargo);
 
         if(empty($Cargo)){
@@ -31,6 +33,15 @@ class CargoController extends Controller
     public function store(Request $request)
     {
        
+        $validator = Validator::make($request->all(), [ 
+            'cargoNombre' => 'unique:cargos',
+		    
+        ]);
+ 
+        if($validator->fails()){
+            return response()->json(['Mensaje'=>'No se puede repetir el nombre del cargo'], 200);
+        }
+
         if (strlen($request->cargoNombre) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
         }
