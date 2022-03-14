@@ -16,12 +16,12 @@ class Proveedores extends Migration
         Schema::create('proveedores', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('proveedorNombre');
-            $table->string('proveedorNumero');
-            $table->string('proveedorCorreo');
-            $table->string('proveedorEncargado');
-            $table->string('proveedorRTN');
-            $table->integer('estado');
+            $table->string('proveedorNombre', 50);
+            $table->string('proveedorNumero', 8);
+            $table->string('proveedorCorreo', 50);
+            $table->string('proveedorEncargado', 50);
+            $table->string('proveedorRTN', 14);
+            $table->tinyInteger('estado');
             $table->timestamps();
         });
     }

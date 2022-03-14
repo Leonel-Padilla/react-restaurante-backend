@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
  *
  * @property $id
  * @property $nombreDocumento
- * @property $numeroDocumento
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -23,7 +22,6 @@ class TipoDocumento extends Model
     
     static $rules = [
 		'nombreDocumento' => 'required',
-		'numeroDocumento' => 'required',
 		'estado' => 'required',
     ];
 
@@ -34,15 +32,10 @@ class TipoDocumento extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombreDocumento','numeroDocumento','estado'];
+    protected $fillable = ['nombreDocumento', 'estado'];
 
 
     //New Collections
-    public static function findByNumeroDocumento($numeroDocumento){
-        
-      #return $tipoDocumento = DB::table('tipo_documentos')->where('numeroDocumento', $numeroDocumento)->get();
-
-      return $tipoDocumento = TipoDocumento::firstWhere('numeroDocumento', $numeroDocumento);
-    }
+    
 
 }

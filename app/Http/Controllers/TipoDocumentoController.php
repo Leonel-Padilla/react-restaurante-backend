@@ -11,27 +11,12 @@ class TipoDocumentoController extends Controller
     public function getTipoDocumento(){
         return response()->json(TipoDocumento::all(),200);
     }
-
-    //
-    public function getByNumeroDocumento($numeroDocumento){
-
-        $tipoDocumento = TipoDocumento::findByNumeroDocumento($numeroDocumento);
-
-        if(is_null($tipoDocumento)){
-            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
-        }
-
-        return response($tipoDocumento, 200);
-    }
  
     //
     public function store(Request $request)
     {
         if (strlen($request->nombreDocumento) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
-        }
-        if (strlen($request->numeroDocumento) === 0){
-            return response()->json(['Error'=>'El numero de documento no puede estar vacio'], 203);
         }
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
@@ -73,9 +58,6 @@ class TipoDocumentoController extends Controller
         //Validaciones Actualizar
         if (strlen($request->nombreDocumento) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
-        }
-        if (strlen($request->numeroDocumento) === 0){
-            return response()->json(['Error'=>'El numero de documento no puede estar vacio'], 203);
         }
         if ($request->estado > 1 || $request->estado < 0 ){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);

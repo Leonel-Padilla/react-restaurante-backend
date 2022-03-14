@@ -17,11 +17,16 @@ class Empleados extends Migration
 
             $table->bigIncrements('id');
             $table->bigInteger('tipoDocumentoId')->unsigned();
-            $table->string('empleadoNombre');
-            $table->string('empleadoNumero');
-            $table->string('empleadoCorreo');
-            $table->string('empleadoDireccion');
-            $table->integer('estado');
+            $table->string('numeroDocumento', 14);
+            $table->string('empleadoNombre', 50);
+            $table->string('empleadoNumero', 8);
+            $table->string('empleadoCorreo', 50);
+            $table->string('empleadoUsuario', 20);
+            $table->string('empleadoContrasenia', 20);
+            $table->string('empleadoDireccion', 100);
+            $table->date('fechaContratacion');
+            $table->date('fechaNacimiento');
+            $table->tinyInteger('estado');
             $table->timestamps();
 
 

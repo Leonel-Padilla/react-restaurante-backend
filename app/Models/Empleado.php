@@ -26,9 +26,15 @@ class Empleado extends Model
     
     static $rules = [
 		'tipoDocumentoId' => 'required',
+    'numeroDocumento' => 'required',
 		'empleadoNombre' => 'required',
 		'empleadoNumero' => 'required',
+    'empleadoCorreo' => 'required',
+    'empleadoUsuario' => 'required',
+    'empleadoContrasenia' => 'required',
 		'empleadoDireccion' => 'required',
+    'fechaContratacion' => 'required',
+    'fechaNacimiento' => 'required',
 		'estado' => 'required',
     ];
 
@@ -39,7 +45,8 @@ class Empleado extends Model
      *
      * @var array
      */
-    protected $fillable = ['tipoDocumentoId','empleadoNombre','empleadoNumero','empleadoDireccion', 'empleadoCorreo','estado'];
+    protected $fillable = ['tipoDocumentoId','numeroDocumento','empleadoNombre','empleadoNumero', 'empleadoCorreo',
+    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','fechaContratacion','fechaNacimiento','estado'];
 
 
     /**
