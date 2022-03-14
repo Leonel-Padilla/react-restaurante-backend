@@ -30,28 +30,57 @@ class CargoController extends Controller
         return response($Cargo, 200);
     }
     
+
+
     public function store(Request $request)
     {
-       
-        $validator = Validator::make($request->all(), [ 
+        $validator1 = Validator::make($request->all(), [ 
             'cargoNombre' => 'unique:cargos',
-		    
         ]);
  
-        if($validator->fails()){
-            return response()->json(['Mensaje'=>'No se puede repetir el nombre del cargo'], 200);
+        if($validator1->fails()){
+            return response()->json(['Mensaje'=>'No se puede repetir el nombre del cargo'], 203);
         }
+
+        $validator2 = Validator::make($request->all(), [ 
+            'cargoDescripcion' => 'unique:cargos',
+        ]);
+ 
+        if($validator2->fails()){
+            return response()->json(['Mensaje'=>'No se puede repetir la decripción del cargo'], 203);
+        }
+
 
         if (strlen($request->cargoNombre) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
         }
-        if (strlen($request->cargoDescripcion) === 0){
-            return response()->json(['Error'=>'La descripción del cargo no puede estar vacia'], 203);
+
+        if (strlen($request->cargoNombre) < 4){
+            return response()->json(['Error'=>'El nombre del cargo no puede ser menor de 4 caracteres'], 203);
         }
+
+        if (strlen($request->cargoNombre) > 30){
+            return response()->json(['Error'=>'El nombre del cargo no puede ser mayor de 30 caracteres'], 203);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (strlen($request->cargoDescripcion) === 0){
+            return response()->json(['Error'=>'La descripción del cargo no puede estar vacía'], 203);
+        }
+
+        if (strlen($request->cargoDescripcion) > 100){
+            return response()->json(['Error'=>'La descripción del cargo no puede ser mayor de 100 caracteres'], 203);
+        }
+
+        if (strlen($request->cargoDescripcion) < 20){
+            return response()->json(['Error'=>'La descripción del cargo no puede ser menor de 20 caracteres'], 203);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
-        
+
         $cargo = Cargo::create($request->all());
 
         return response($cargo, 200);
@@ -88,16 +117,54 @@ class CargoController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
+        ////
+        /*$validator1 = Validator::make($request->all(), [ 
+            'cargoNombre' => 'unique:cargos',
+        ]);
+ 
+        if($validator1->fails()){
+            return response()->json(['Mensaje'=>'No se puede repetir el nombre del cargo'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [ 
+            'cargoDescripcion' => 'unique:cargos',
+        ]);
+ 
+        if($validator2->fails()){
+            return response()->json(['Mensaje'=>'No se puede repetir la decripción del cargo'], 203);
+        }*/
+
 
         if (strlen($request->cargoNombre) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
         }
-        if (strlen($request->cargoDescripcion) === 0){
-            return response()->json(['Error'=>'La descripcion del cago no puede estar vacia'], 203);
+
+        if (strlen($request->cargoNombre) < 4){
+            return response()->json(['Error'=>'El nombre del cargo no puede ser menor de 4 caracteres'], 203);
         }
+
+        if (strlen($request->cargoNombre) > 30){
+            return response()->json(['Error'=>'El nombre del cargo no puede ser mayor de 30 caracteres'], 203);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (strlen($request->cargoDescripcion) === 0){
+            return response()->json(['Error'=>'La descripción del cargo no puede estar vacía'], 203);
+        }
+
+        if (strlen($request->cargoDescripcion) > 100){
+            return response()->json(['Error'=>'La descripción del cargo no puede ser mayor de 100 caracteres'], 203);
+        }
+
+        if (strlen($request->cargoDescripcion) < 20){
+            return response()->json(['Error'=>'La descripción del cargo no puede ser menor de 20 caracteres'], 203);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
+
 
         $cargo->update($request->all());
 
