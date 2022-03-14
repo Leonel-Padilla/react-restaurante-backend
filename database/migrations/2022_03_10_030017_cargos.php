@@ -16,8 +16,8 @@ class Cargos extends Migration
         Schema::create('cargos', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('cargoNombre');
-            $table->string('cargoDescripcion');
+            $table->string('cargoNombre', 30);
+            $table->string('cargoDescripcion', 100);
             $table->integer('estado');
             $table->timestamps();
         });
