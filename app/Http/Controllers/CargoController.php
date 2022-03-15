@@ -51,7 +51,7 @@ class CargoController extends Controller
         }
 
 
-        /*if (str_contains($request->cargoNombre, "@") || str_contains($request->cargoNombre, ".") 
+        /*if str_contains($request->cargoNombre, "@" || str_contains($request->cargoNombre, ".") 
         || str_contains($request->cargoNombre, "/") || str_contains($request->cargoNombre, "#") 
         || str_contains($request->cargoNombre, "$") || str_contains($request->cargoNombre, "-")
         || str_contains($request->cargoNombre, "_") || str_contains($request->cargoNombre, "?")
