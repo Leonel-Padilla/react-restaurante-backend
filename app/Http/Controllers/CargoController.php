@@ -85,6 +85,7 @@ class CargoController extends Controller
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
