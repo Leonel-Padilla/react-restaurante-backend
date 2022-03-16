@@ -123,12 +123,21 @@ class EmpleadoController extends Controller
         }
         //
         $validator9 = Validator::make($request->all(), [ 
-            'empleadoContrasenia' => 'required|min:8|max:20',
+            'empleadoContrasenia' => 'required|min:5|max:20',
         ]);
  
         if($validator9->fails()){
             return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 20 caracteres.'], 203);
         }
+
+        $validator10 = Validator::make($request->all(), [ 
+            'empleadoDireccion' => 'required|min:10|max:50',
+        ]);
+
+        if($validator10->fails()){
+            return response()->json(['Error'=>'La dirección del empleado debe tener de 10 a 50 caracteres.'], 203);
+        }
+
         
 
         $empleado = Empleado::create($request->all());
