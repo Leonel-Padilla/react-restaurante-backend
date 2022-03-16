@@ -53,3 +53,10 @@ Route::get('Sucursal/{id}', 'App\Http\Controllers\SucursaleController@show');
 Route::post('addSucursal', 'App\Http\Controllers\SucursaleController@store');
 Route::put('updateSucursal/{id}', 'App\Http\Controllers\SucursaleController@update');
 Route::delete('deleteSucursal/{id}', 'App\Http\Controllers\SucursaleController@destroy');
+
+Route::get('Cliente', 'App\Http\Controllers\ClienteController@getCliente');
+Route::get('Cliente/{id}', 'App\Http\Controllers\ClienteController@show');
+Route::get('ClienteN/{nombreCliente}', 'App\Http\Controllers\ClienteController@getByClienteNombre');
+Route::post('addCliente', 'App\Http\Controllers\ClienteController@store');
+Route::put('updateCliente/{id}', 'App\Http\Controllers\ClienteController@update');
+Route::delete('deleteCliente/{id}', 'App\Http\Controllers\ClienteController@destroy');
