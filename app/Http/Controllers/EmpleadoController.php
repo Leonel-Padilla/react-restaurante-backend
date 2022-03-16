@@ -308,7 +308,7 @@ class EmpleadoController extends Controller
         }
         //
         $validator9 = Validator::make($request->all(), [ 
-            'empleadoContrasenia' => 'required|min:8|max:20',
+            'empleadoContrasenia' => 'required|min:5|max:20',
         ]);
  
         if($validator9->fails()){
