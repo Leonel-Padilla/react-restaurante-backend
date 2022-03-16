@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\CargoController' => $baseDir . '/app/Http/Controllers/CargoController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\EmpleadoController' => $baseDir . '/app/Http/Controllers/EmpleadoController.php',
     'App\\Http\\Controllers\\ProveedoreController' => $baseDir . '/app/Http/Controllers/ProveedoreController.php',
@@ -21,6 +22,7 @@ return array(
     'App\\Http\\Middleware\\TrustHosts' => $baseDir . '/app/Http/Middleware/TrustHosts.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Models\\Cargo' => $baseDir . '/app/Models/Cargo.php',
     'App\\Models\\Empleado' => $baseDir . '/app/Models/Empleado.php',
     'App\\Models\\Proveedore' => $baseDir . '/app/Models/Proveedore.php',
     'App\\Models\\TipoDocumento' => $baseDir . '/app/Models/TipoDocumento.php',

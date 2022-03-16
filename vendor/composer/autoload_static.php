@@ -529,6 +529,7 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\CargoController' => __DIR__ . '/../..' . '/app/Http/Controllers/CargoController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\EmpleadoController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmpleadoController.php',
         'App\\Http\\Controllers\\ProveedoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProveedoreController.php',
@@ -542,6 +543,7 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Cargo' => __DIR__ . '/../..' . '/app/Models/Cargo.php',
         'App\\Models\\Empleado' => __DIR__ . '/../..' . '/app/Models/Empleado.php',
         'App\\Models\\Proveedore' => __DIR__ . '/../..' . '/app/Models/Proveedore.php',
         'App\\Models\\TipoDocumento' => __DIR__ . '/../..' . '/app/Models/TipoDocumento.php',

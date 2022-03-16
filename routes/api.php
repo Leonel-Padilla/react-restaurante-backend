@@ -46,3 +46,10 @@ Route::get('CargoN/{nombreCargo}', 'App\Http\Controllers\CargoController@getByCa
 Route::post('addCargo', 'App\Http\Controllers\CargoController@store');
 Route::put('updateCargo/{id}', 'App\Http\Controllers\CargoController@update');
 Route::delete('deleteCargo/{id}', 'App\Http\Controllers\CargoController@destroy');
+
+
+Route::get('Sucursal', 'App\Http\Controllers\SucursaleController@getSucursal');
+Route::get('Sucursal/{id}', 'App\Http\Controllers\SucursaleController@show');
+Route::post('addSucursal', 'App\Http\Controllers\SucursaleController@store');
+Route::put('updateSucursal/{id}', 'App\Http\Controllers\SucursaleController@update');
+Route::delete('deleteSucursal/{id}', 'App\Http\Controllers\SucursaleController@destroy');
