@@ -16,7 +16,7 @@ class TipoDocumento extends Migration
         Schema::create('tipo_documentos', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('nombreDocumento', 30);
+            $table->string('nombreDocumento', 30)->unique();
             $table->tinyInteger('estado');
             $table->timestamps();
         });

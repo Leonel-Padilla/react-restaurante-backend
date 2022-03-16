@@ -33,6 +33,7 @@ class Empleado extends Model
     'empleadoUsuario' => 'required',
     'empleadoContrasenia' => 'required',
 		'empleadoDireccion' => 'required',
+    'cargoActualId' => 'required',
     'fechaContratacion' => 'required',
     'fechaNacimiento' => 'required',
 		'estado' => 'required',
@@ -46,7 +47,7 @@ class Empleado extends Model
      * @var array
      */
     protected $fillable = ['tipoDocumentoId','numeroDocumento','empleadoNombre','empleadoNumero', 'empleadoCorreo',
-    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','fechaContratacion','fechaNacimiento','estado'];
+    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','cargoActualId','fechaContratacion','fechaNacimiento','estado'];
 
 
     /**
