@@ -66,4 +66,10 @@ class Empleado extends Model
 
     }
 
+    public static function findByEmpleadoUsuario($empleadoUsuario){
+        
+      return $Empleado = DB::table('empleados')->where('empleadoUsuario', $empleadoUsuario)->get();
+
+    }
+
 }
