@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
 
 /**
  * Class Empleado
@@ -23,6 +24,13 @@ use Illuminate\Support\Facades\DB;
  */
 class Empleado extends Model
 {
+
+  use EncryptedAttribute;
+
+
+    protected $encryptable=[
+      'empleadoContrasenia'
+    ];
     
     static $rules = [
 		'tipoDocumentoId' => 'required',
@@ -67,6 +75,7 @@ class Empleado extends Model
     }
 
     public static function findByEmpleadoUsuario($empleadoUsuario){
+      
         
       return $Empleado = DB::table('empleados')->where('empleadoUsuario', $empleadoUsuario)->get();
 

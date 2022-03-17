@@ -152,6 +152,7 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
         'E' => 
         array (
             'Egulias\\EmailValidator\\' => 23,
+            'ESolution\\DBEncryption\\' => 23,
         ),
         'D' => 
         array (
@@ -458,6 +459,10 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
         ),
+        'ESolution\\DBEncryption\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -530,6 +535,7 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\CargoController' => __DIR__ . '/../..' . '/app/Http/Controllers/CargoController.php',
+        'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\EmpleadoController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmpleadoController.php',
         'App\\Http\\Controllers\\ProveedoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProveedoreController.php',
@@ -545,6 +551,7 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Cargo' => __DIR__ . '/../..' . '/app/Models/Cargo.php',
+        'App\\Models\\Cliente' => __DIR__ . '/../..' . '/app/Models/Cliente.php',
         'App\\Models\\Empleado' => __DIR__ . '/../..' . '/app/Models/Empleado.php',
         'App\\Models\\Proveedore' => __DIR__ . '/../..' . '/app/Models/Proveedore.php',
         'App\\Models\\Sucursale' => __DIR__ . '/../..' . '/app/Models/Sucursale.php',
@@ -789,6 +796,12 @@ class ComposerStaticInit934b2da280ead5aaa9f6d5ae26c7fc3c
         'Dotenv\\Util\\Regex' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Util/Regex.php',
         'Dotenv\\Util\\Str' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Util/Str.php',
         'Dotenv\\Validator' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Validator.php',
+        'ESolution\\DBEncryption\\Builders\\EncryptionEloquentBuilder' => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src/Builders/EncryptionEloquentBuilder.php',
+        'ESolution\\DBEncryption\\Console\\Commands\\DecryptModel' => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src/Console/Commands/DecryptModel.php',
+        'ESolution\\DBEncryption\\Console\\Commands\\EncryptModel' => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src/Console/Commands/EncryptModel.php',
+        'ESolution\\DBEncryption\\Encrypter' => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src/Encrypter.php',
+        'ESolution\\DBEncryption\\Providers\\DBEncryptionServiceProvider' => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src/Providers/DBEncryptionServiceProvider.php',
+        'ESolution\\DBEncryption\\Traits\\EncryptedAttribute' => __DIR__ . '/..' . '/elgibor-solution/laravel-database-encryption/src/Traits/EncryptedAttribute.php',
         'Egulias\\EmailValidator\\EmailLexer' => __DIR__ . '/..' . '/egulias/email-validator/src/EmailLexer.php',
         'Egulias\\EmailValidator\\EmailParser' => __DIR__ . '/..' . '/egulias/email-validator/src/EmailParser.php',
         'Egulias\\EmailValidator\\EmailValidator' => __DIR__ . '/..' . '/egulias/email-validator/src/EmailValidator.php',

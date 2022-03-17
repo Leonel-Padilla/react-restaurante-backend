@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => 'e7f82aeb590e324d3df5ddddeacc3df5ba2e7266',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -92,6 +92,15 @@
             'install_path' => __DIR__ . '/../egulias/email-validator',
             'aliases' => array(),
             'reference' => '0dbf5d78455d4d6a41d186da50adc1122ec066f4',
+            'dev_requirement' => false,
+        ),
+        'elgibor-solution/laravel-database-encryption' => array(
+            'pretty_version' => '1.1.0',
+            'version' => '1.1.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../elgibor-solution/laravel-database-encryption',
+            'aliases' => array(),
+            'reference' => 'e74082885ecab8dd126c40e9acd844d43bc5a25a',
             'dev_requirement' => false,
         ),
         'facade/flare-client-php' => array(
@@ -404,12 +413,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'e7f82aeb590e324d3df5ddddeacc3df5ba2e7266',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
