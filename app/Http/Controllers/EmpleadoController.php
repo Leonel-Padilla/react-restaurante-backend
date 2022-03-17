@@ -146,11 +146,11 @@ class EmpleadoController extends Controller
             return response()->json(['Error'=>'Debe ingresar una fecha de contratación.'], 203);
         }
         //
-        $validator11 = Validator::make($request->all(), [ 
+        $validator12 = Validator::make($request->all(), [ 
             'fechaNacimiento' => 'required',
         ]);
 
-        if($validator11->fails()){
+        if($validator12->fails()){
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
 

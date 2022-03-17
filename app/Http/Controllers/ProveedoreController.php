@@ -104,25 +104,13 @@ class ProveedoreController extends Controller
             return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caractes.'], 203);
         }
 
-        //
-        /*if (strlen($request->proveedorNombre) === 0){
-            return response()->json(['Error'=>'El nombre del proveedor no puede estar vacio'], 203);
+        $validator9 = Validator::make($request->all(), [ 
+            'proveedorRTN' => 'starts_with:0',
+        ]);
+ 
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El RTN debe empezar con 0.'], 203);
         }
-        if (strlen($request->proveedorEncargado) === 0){
-            return response()->json(['Error'=>'El encargado no puede estar vacio'], 203);
-        }
-        if (strlen($request->proveedorNumero) < 8 || strlen($request->proveedorNumero) > 8){
-            return response()->json(['Error'=>'El numero del proveedor tiene que ser igual a 8'], 203);
-        }
-        if (strlen($request->proveedorRTN) > 14 || strlen($request->proveedorRTN) < 14 ){
-            return response()->json(['Error'=>'El RTN del proveedor tiene que ser igual a 14 digitos'], 203);
-        }
-        if (strlen($request->proveedorCorreo) === 0){
-            return response()->json(['Error'=>'El Correo del proveedor no puede estar vacio'], 203);
-        }
-        if ($request->estado > 1|| $request->estado < 0){
-            return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
-        }*/
 
 
         $proveedore = Proveedore::create($request->all());
@@ -199,26 +187,6 @@ class ProveedoreController extends Controller
         if($validator8->fails()){
             return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caractes.'], 203);
         }
-
-
-        /*if (strlen($request->proveedorNombre) === 0){
-            return response()->json(['Error'=>'El nombre del proveedor no puede estar vacio'], 203);
-        }
-        if (strlen($request->proveedorEncargado) === 0){
-            return response()->json(['Error'=>'El encargado no puede estar vacio'], 203);
-        }
-        if (strlen($request->proveedorNumero) < 8 || strlen($request->proveedorNumero) > 8){
-            return response()->json(['Error'=>'El numero del proveedor tiene que ser igual a 8'], 203);
-        }
-        if (strlen($request->proveedorRTN) > 14 || strlen($request->proveedorRTN) < 14 ){
-            return response()->json(['Error'=>'El RTN del proveedor tiene que ser igual a 14 digitos'], 203);
-        }
-        if (strlen($request->proveedorCorreo) === 0){
-            return response()->json(['Error'=>'El Correo del proveedor no puede estar vacio'], 203);
-        }
-        if ($request->estado > 1|| $request->estado < 0){
-            return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
-        }*/
 
         $proveedore->update($request->all());
 
