@@ -78,6 +78,12 @@ class Empleado extends Model
       
         
       return $Empleado = DB::table('empleados')->where('empleadoUsuario', $empleadoUsuario)->get();
+    
+    }
+
+    public static function findByNumeroDocumento($numeroDocumento){
+
+      return $Empleado = DB::table('empleados')->where('numeroDocumento', $numeroDocumento)->get();
 
     }
 

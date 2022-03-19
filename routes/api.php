@@ -20,7 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('TipoDocumento', 'App\Http\Controllers\TipoDocumentoController@getTipoDocumento');
 Route::get('TipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoController@show');
-Route::get('TipoDocumentoND/{numeroDocumento}', 'App\Http\Controllers\TipoDocumentoController@getByNumeroDocumento');
 Route::post('addTipoDocumento', 'App\Http\Controllers\TipoDocumentoController@store');
 Route::put('updateTipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoController@update');
 Route::delete('deleteTipoDocumento/{id}', 'App\Http\Controllers\TipoDocumentoController@destroy');
@@ -29,6 +28,7 @@ Route::get('Empleado', 'App\Http\Controllers\EmpleadoController@getEmpleado');
 Route::get('Empleado/{id}', 'App\Http\Controllers\EmpleadoController@show');
 Route::get('EmpleadoN/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByEmpleadoNombre');
 Route::get('EmpleadoU/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByEmpleadoUsuario');
+Route::get('EmpleadoND/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByNumeroDocumento');
 Route::post('addEmpleado', 'App\Http\Controllers\EmpleadoController@store');
 Route::put('updateEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@update');
 Route::delete('deleteEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@destroy');
@@ -47,7 +47,6 @@ Route::post('addCargo', 'App\Http\Controllers\CargoController@store');
 Route::put('updateCargo/{id}', 'App\Http\Controllers\CargoController@update');
 Route::delete('deleteCargo/{id}', 'App\Http\Controllers\CargoController@destroy');
 
-
 Route::get('Sucursal', 'App\Http\Controllers\SucursaleController@getSucursal');
 Route::get('Sucursal/{id}', 'App\Http\Controllers\SucursaleController@show');
 Route::post('addSucursal', 'App\Http\Controllers\SucursaleController@store');
@@ -60,3 +59,16 @@ Route::get('ClienteN/{nombreCliente}', 'App\Http\Controllers\ClienteController@g
 Route::post('addCliente', 'App\Http\Controllers\ClienteController@store');
 Route::put('updateCliente/{id}', 'App\Http\Controllers\ClienteController@update');
 Route::delete('deleteCliente/{id}', 'App\Http\Controllers\ClienteController@destroy');
+
+Route::get('Mesa', 'App\Http\Controllers\MesaController@getMesa');
+Route::get('Mesa/{id}', 'App\Http\Controllers\MesaController@show');
+Route::post('addMesa', 'App\Http\Controllers\MesaController@store');
+Route::put('updateMesa/{id}', 'App\Http\Controllers\MesaController@update');
+Route::delete('deleteMesa/{id}', 'App\Http\Controllers\MesaController@destroy');
+
+Route::get('Insumo', 'App\Http\Controllers\InsumoController@getInsumo');
+Route::get('Insumo/{id}', 'App\Http\Controllers\InsumoController@show');
+Route::get('InsumoN/{nombreInsumo}', 'App\Http\Controllers\InsumoController@getByInsumoNombre');
+Route::post('addInsumo', 'App\Http\Controllers\InsumoController@store');
+Route::put('updateInsumo/{id}', 'App\Http\Controllers\InsumoController@update');
+Route::delete('deleteInsumo/{id}', 'App\Http\Controllers\InsumoController@destroy');
