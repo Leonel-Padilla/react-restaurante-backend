@@ -5,28 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Sucursale
+ * Class CargoHistorial
  *
  * @property $id
  * @property $empleadoId
- * @property $sucursalNombre
- * @property $sucursalDireccion
+ * @property $cargoId
+ * @property $fechaInicio
+ * @property $fechaFinal
  * @property $estado
  * @property $created_at
  * @property $updated_at
  *
  * @property Empleado $empleado
+ * @property Cargo $cargo
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-
-class Sucursale extends Model
+class CargoHistorial extends Model
 {
     
     static $rules = [
 		'empleadoId' => 'required',
-    'sucursalNombre' => 'required',
-		'sucursalDireccion' => 'required',
+    'cargoId' => 'required',
+		'fechaInicio' => 'required',
+		'fechaFinal' => 'required',
 		'estado' => 'required',
     ];
 
@@ -37,7 +39,7 @@ class Sucursale extends Model
      *
      * @var array
      */
-    protected $fillable = ['empleadoId', 'sucursalNombre', 'sucursalDireccion','estado'];
+    protected $fillable = ['empleadoId','cargoId','fechaInicio','fechaFinal','estado'];
 
 
     /**
@@ -46,6 +48,11 @@ class Sucursale extends Model
     public function empleado()
     {
         return $this->hasOne('App\Models\Empleado', 'id', 'empleadoId');
+    }
+
+    public function cargo()
+    {
+        return $this->hasOne('App\Models\Cargo', 'id', 'cargoId');
     }
     
 

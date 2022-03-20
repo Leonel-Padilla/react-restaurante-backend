@@ -13,7 +13,14 @@ use ESolution\DBEncryption\Traits\EncryptedAttribute;
  * @property $tipoDocumentoId
  * @property $empleadoNombre
  * @property $empleadoNumero
+ * @property $empleadoCorreo
+ * @property $empleadoUsuario
+ * @property $empleadoContrasenia
  * @property $empleadoDireccion
+ * @property $empleadoSueldo
+ * @property $cargoActualId
+ * @property $fechaContratacion
+ * @property $fechaNacimiento
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -41,9 +48,11 @@ class Empleado extends Model
     'empleadoUsuario' => 'required',
     'empleadoContrasenia' => 'required',
 		'empleadoDireccion' => 'required',
+    'empleadoSueldo' => 'required',
     'cargoActualId' => 'required',
     'fechaContratacion' => 'required',
     'fechaNacimiento' => 'required',
+    'fechaBloqueo' => 'nullable',
 		'estado' => 'required',
     ];
 
@@ -55,7 +64,8 @@ class Empleado extends Model
      * @var array
      */
     protected $fillable = ['tipoDocumentoId','numeroDocumento','empleadoNombre','empleadoNumero', 'empleadoCorreo',
-    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','cargoActualId','fechaContratacion','fechaNacimiento','estado'];
+    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','empleadoSueldo','cargoActualId','fechaContratacion','fechaNacimiento',
+    'fechaBloqueo','estado'];
 
 
     /**

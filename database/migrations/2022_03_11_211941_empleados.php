@@ -22,11 +22,13 @@ class Empleados extends Migration
             $table->string('empleadoNumero', 8)->unique();
             $table->string('empleadoCorreo', 50)->unique();
             $table->string('empleadoUsuario', 20)->unique();
-            $table->string('empleadoContrasenia', 20);
+            $table->string('empleadoContrasenia', 50);
             $table->string('empleadoDireccion', 100);
+            $table->string('empleadoSueldo', 6);
             $table->bigInteger('cargoActualId')->unsigned();
             $table->date('fechaContratacion');
             $table->date('fechaNacimiento');
+            $table->date('fechaBloqueo')->nullable();
             $table->tinyInteger('estado');
             $table->timestamps();
 

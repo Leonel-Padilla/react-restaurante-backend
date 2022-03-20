@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Sucursale
+ * Class SueldoHistorial
  *
  * @property $id
  * @property $empleadoId
- * @property $sucursalNombre
- * @property $sucursalDireccion
+ * @property $sueldo
+ * @property $fechaInicio
+ * @property $fechaFinal
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -19,14 +20,14 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-
-class Sucursale extends Model
+class SueldoHistorial extends Model
 {
     
     static $rules = [
 		'empleadoId' => 'required',
-    'sucursalNombre' => 'required',
-		'sucursalDireccion' => 'required',
+    'sueldo' => 'required',
+		'fechaInicio' => 'required',
+		'fechaFinal' => 'required',
 		'estado' => 'required',
     ];
 
@@ -37,7 +38,7 @@ class Sucursale extends Model
      *
      * @var array
      */
-    protected $fillable = ['empleadoId', 'sucursalNombre', 'sucursalDireccion','estado'];
+    protected $fillable = ['empleadoId','sueldo','fechaInicio','fechaFinal','estado'];
 
 
     /**

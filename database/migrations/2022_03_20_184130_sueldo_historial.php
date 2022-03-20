@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Sucursales extends Migration
+class SueldoHistorial extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class Sucursales extends Migration
      */
     public function up()
     {
-        Schema::create('sucursales', function (Blueprint $table) {
+        Schema::create('sueldo_historials', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->bigInteger('empleadoId')->unsigned();
-            $table->string('sucursalNombre', 40)->unique();
-            $table->string('sucursalDireccion', 100);
+            $table->string('sueldo');
+            $table->date('fechaInicio');
+            $table->date('fechaFinal');
             $table->tinyInteger('estado');
             $table->timestamps();
-
 
             $table->foreign('empleadoId')->references('id')->on('empleados');
         });

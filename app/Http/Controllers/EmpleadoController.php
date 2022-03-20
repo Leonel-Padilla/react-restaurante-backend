@@ -150,18 +150,26 @@ class EmpleadoController extends Controller
         }
         //
         $validator11 = Validator::make($request->all(), [ 
-            'fechaContratacion' => 'required',
+            'empleadoSueldo' => 'required|min:1|max:6',
         ]);
 
         if($validator11->fails()){
-            return response()->json(['Error'=>'Debe ingresar una fecha de contratación.'], 203);
+            return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
         }
         //
         $validator12 = Validator::make($request->all(), [ 
-            'fechaNacimiento' => 'required',
+            'fechaContratacion' => 'required',
         ]);
 
         if($validator12->fails()){
+            return response()->json(['Error'=>'Debe ingresar una fecha de contratación.'], 203);
+        }
+        //
+        $validator13 = Validator::make($request->all(), [ 
+            'fechaNacimiento' => 'required',
+        ]);
+
+        if($validator13->fails()){
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
 
@@ -261,6 +269,30 @@ class EmpleadoController extends Controller
 
         if($validator10->fails()){
             return response()->json(['Error'=>'La dirección del empleado debe tener de 10 a 50 caracteres.'], 203);
+        }
+        //
+        $validator11 = Validator::make($request->all(), [ 
+            'empleadoSueldo' => 'required|min:1|max:6',
+        ]);
+
+        if($validator11->fails()){
+            return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
+        }
+        //
+        $validator12 = Validator::make($request->all(), [ 
+            'fechaContratacion' => 'required',
+        ]);
+
+        if($validator12->fails()){
+            return response()->json(['Error'=>'Debe ingresar una fecha de contratación.'], 203);
+        }
+        //
+        $validator13 = Validator::make($request->all(), [ 
+            'fechaNacimiento' => 'required',
+        ]);
+
+        if($validator13->fails()){
+            return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
 
         $empleado->update($request->all());

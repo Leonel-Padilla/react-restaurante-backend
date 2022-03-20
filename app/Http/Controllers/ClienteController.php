@@ -37,7 +37,7 @@ class ClienteController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El nombre del cliente no puede estar vacio'], 203);
+            return response()->json(['Error'=>'El nombre del cliente no puede estar vacio y tiene que tener entre 4 y 40 caracteres'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
