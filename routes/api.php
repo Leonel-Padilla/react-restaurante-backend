@@ -83,6 +83,7 @@ Route::delete('deleteInsumo/{id}', 'App\Http\Controllers\InsumoController@destro
 
 //Cargo Historial
 Route::get('CargoHistorial', 'App\Http\Controllers\CargoHistorialController@getCargoHistorial');
+Route::get('CargoHistorialE/{empleadoId}', 'App\Http\Controllers\CargoHistorialController@getByEmpleadoId');
 Route::get('CargoHistorial/{id}', 'App\Http\Controllers\CargoHistorialController@show');
 Route::post('addCargoHistorial', 'App\Http\Controllers\CargoHistorialController@store');
 Route::put('updateCargoHistorial/{id}', 'App\Http\Controllers\CargoHistorialController@update');
@@ -90,6 +91,7 @@ Route::delete('deleteCargoHistorial/{id}', 'App\Http\Controllers\CargoHistorialC
 
 //Sueldo Historial
 Route::get('SueldoHistorial', 'App\Http\Controllers\SueldoHistorialController@getSueldoHistorial');
+Route::get('SueldoHistorialE/{empleadoId}', 'App\Http\Controllers\SueldoHistorialController@getByEmpleadoId');
 Route::get('SueldoHistorial/{id}', 'App\Http\Controllers\SueldoHistorialController@show');
 Route::post('addSueldoHistorial', 'App\Http\Controllers\SueldoHistorialController@store');
 Route::put('updateSueldoHistorial/{id}', 'App\Http\Controllers\SueldoHistorialController@update');

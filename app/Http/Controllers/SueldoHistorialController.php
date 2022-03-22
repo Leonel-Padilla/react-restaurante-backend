@@ -16,6 +16,19 @@ class SueldoHistorialController extends Controller
         return response()->json(SueldoHistorial::all(),200);
     }
 
+
+    //
+    public function getByEmpleadoId($empleadoId){
+
+        $sueldoHistorial = SueldoHistorial::findByEmpleadoId($empleadoId);
+
+        if(empty($sueldoHistorial)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($sueldoHistorial, 200);
+    }
+
     public function store(Request $request)
     {
         $validator0 = Validator::make($request->all(), [
@@ -34,7 +47,7 @@ class SueldoHistorialController extends Controller
             return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
         }
         //
-        $validator2 = Validator::make($request->all(), [
+        /*$validator2 = Validator::make($request->all(), [
             'fechaInicio' => 'required|date|before:fechaFinal'
         ]);
 
@@ -48,7 +61,7 @@ class SueldoHistorialController extends Controller
 
         if($validator3->fails()){
             return response()->json(['Error'=>'La fecha final no puede ser antes de la fecha inicial.'], 203);
-        }
+        }*/
         //
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
@@ -94,7 +107,7 @@ class SueldoHistorialController extends Controller
             return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
         }
         //
-        $validator2 = Validator::make($request->all(), [
+        /*$validator2 = Validator::make($request->all(), [
             'fechaInicio' => 'required|date|before:fechaFinal'
         ]);
 
@@ -108,7 +121,7 @@ class SueldoHistorialController extends Controller
 
         if($validator3->fails()){
             return response()->json(['Error'=>'La fecha final no puede ser antes de la fecha inicial.'], 203);
-        }
+        }*/
         //
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);

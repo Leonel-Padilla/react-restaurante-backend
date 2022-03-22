@@ -16,6 +16,18 @@ class CargoHistorialController extends Controller
         return response()->json(CargoHistorial::all(),200);
     }
 
+    //
+    public function getByEmpleadoId($empleadoId){
+
+        $cargoHistorial = CargoHistorial::findByEmpleadoId($empleadoId);
+
+        if(empty($cargoHistorial)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($cargoHistorial, 200);
+    }
+
     public function store(Request $request)
     {
 
@@ -35,7 +47,7 @@ class CargoHistorialController extends Controller
             return response()->json(['Error'=>'El Id del cargo no puede estar vacía.'], 203);
         }
 
-        $validator2 = Validator::make($request->all(), [
+        /*$validator2 = Validator::make($request->all(), [
             'fechaInicio' => 'required|date|before:fechaFinal'
         ]);
 
@@ -49,7 +61,7 @@ class CargoHistorialController extends Controller
 
         if($validator3->fails()){
             return response()->json(['Error'=>'La fecha final no puede ser antes de la fecha inicial.'], 203);
-        }
+        }*/
 
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
@@ -103,7 +115,7 @@ class CargoHistorialController extends Controller
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
 
-        $validator2 = Validator::make($request->all(), [
+        /*$validator2 = Validator::make($request->all(), [
             'fechaInicio' => 'required|date|before:fechaFinal'
         ]);
 
@@ -117,7 +129,7 @@ class CargoHistorialController extends Controller
 
         if($validator3->fails()){
             return response()->json(['Error'=>'La fecha final no puede ser antes de la fecha inicial.'], 203);
-        }
+        }*/
 
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);

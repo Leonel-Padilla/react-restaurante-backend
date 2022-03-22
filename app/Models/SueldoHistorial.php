@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class SueldoHistorial
@@ -49,5 +50,12 @@ class SueldoHistorial extends Model
         return $this->hasOne('App\Models\Empleado', 'id', 'empleadoId');
     }
     
+
+    //New Collections
+    public static function findByEmpleadoId($empleadoId){
+        
+      return $Empleado = DB::table('sueldo_historials')->where('empleadoId', $empleadoId)->get();
+    
+    }
 
 }

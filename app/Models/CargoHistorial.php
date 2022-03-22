@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class CargoHistorial
@@ -56,4 +57,10 @@ class CargoHistorial extends Model
     }
     
 
+        //New Collections
+        public static function findByEmpleadoId($empleadoId){
+        
+          return $Empleado = DB::table('cargo_historials')->where('empleadoId', $empleadoId)->get();
+    
+        }
 }
