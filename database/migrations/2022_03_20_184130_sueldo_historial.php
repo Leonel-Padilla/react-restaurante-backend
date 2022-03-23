@@ -19,7 +19,7 @@ class SueldoHistorial extends Migration
             $table->bigInteger('empleadoId')->unsigned();
             $table->string('sueldo');
             $table->date('fechaInicio');
-            $table->date('fechaFinal');
+            $table->date('fechaFinal')->nullable();
             $table->tinyInteger('estado');
             $table->timestamps();
 

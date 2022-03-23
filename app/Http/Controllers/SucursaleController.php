@@ -17,6 +17,29 @@ class SucursaleController extends Controller
         return response()->json(Sucursale::all(),200);
     }
 
+    public function getBySucursalNombre($nombreSucursal){
+
+        $sucursal = Sucursale::findBySucursalNombre($nombreSucursal);
+
+        if(empty($sucursal)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($sucursal, 200);
+    }
+
+    public function getBySucursalEncargado($empleadoId){
+
+        $sucursal = Sucursale::findBySucursalEncargado($empleadoId);
+
+        if(empty($sucursal)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($sucursal, 200);
+    }
+
+
 
     public function store(Request $request)
     {
@@ -25,7 +48,7 @@ class SucursaleController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'No puede estar vacia la dirección del sucursal y debe tener entre 10 a 100 caracteres'], 203);
+            return response()->json(['Error'=>'No puede estar vacía la dirección del sucursal y debe tener entre 10 a 100 caracteres'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
@@ -33,7 +56,15 @@ class SucursaleController extends Controller
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'No puede estar vacia el nombre del sucursal y debe tener entre 4 a 40 caracteres.'], 203);
+            return response()->json(['Error'=>'No puede estar vacía el nombre del sucursal y debe tener entre 4 a 40 caracteres.'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [ 
+            'sucursalNombre' => 'unique:sucursales',
+        ]);
+ 
+        if($validator2->fails()){
+            return response()->json(['Error'=>'El nombre del sucursal debe ser único.'], 203);
         }
 
         $sucursal = Sucursale::create($request->all());
@@ -75,7 +106,7 @@ class SucursaleController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'No puede estar vacia la dirección del sucursal y debe tener entre 10 a 100 caracteres.'], 203);
+            return response()->json(['Error'=>'No puede estar vacía la dirección del sucursal y debe tener entre 10 a 100 caracteres.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
@@ -83,7 +114,7 @@ class SucursaleController extends Controller
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'No puede estar vacia el nombre del sucursal y debe tener entre 4 a 40 caracteres.'], 203);
+            return response()->json(['Error'=>'No puede estar vacía el nombre del sucursal y debe tener entre 4 a 40 caracteres.'], 203);
         }
 
         $sucursal->update($request->all());

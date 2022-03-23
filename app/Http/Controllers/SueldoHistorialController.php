@@ -40,11 +40,11 @@ class SueldoHistorialController extends Controller
         }
         //
         $validator1 = Validator::make($request->all(), [
-            'sueldo' => 'required|min:1|max:6'
+            'sueldo' => 'required|min:4|max:6'
         ]);
 
         if($validator1->fails()){
-            return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
+            return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 digitos.'], 203);
         }
         //
         /*$validator2 = Validator::make($request->all(), [
@@ -100,11 +100,11 @@ class SueldoHistorialController extends Controller
         }
 
         $validator1 = Validator::make($request->all(), [
-            'sueldo' => 'required|min:1|max:6'
+            'sueldo' => 'required|min:4|max:6'
         ]);
 
         if($validator1->fails()){
-            return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
+            return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 digitos.'], 203);
         }
         //
         /*$validator2 = Validator::make($request->all(), [

@@ -17,6 +17,17 @@ class MesaController extends Controller
         return response()->json(Mesa::all(),200);
     }
 
+    public function getBySucursalId($sucursalId){
+
+        $mesa = Mesa::findBySucursalId($sucursalId);
+
+        if(empty($mesa)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($mesa, 200);
+    }
+
     public function store(Request $request)
     {
 
@@ -36,8 +47,8 @@ class MesaController extends Controller
             return response()->json(['Error'=>'La cantidad de asientos no puede estar vacía.'], 203);
         }
 
-        if ($request->cantidadAsientos > 50 || $request->cantidadAsientos < 0 ){
-            return response()->json(['Error'=>'La cantidad de asientos no puede ser mayor a 50 o menor a 0'], 203);
+        if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
+            return response()->json(['Error'=>'La cantidad de asientos no puede ser mayor a 20 o menor a 2'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
@@ -87,16 +98,16 @@ class MesaController extends Controller
             return response()->json(['Error'=>'El Id del sucursal no puede estar vacía.'], 203);
         }
 
-        if ($request->cantidadAsientos > 50 || $request->cantidadAsientos < 0 ){
-            return response()->json(['Error'=>'La cantidad de asientos no puede ser mayor a 50 o menor a 0'], 203);
+        if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
+            return response()->json(['Error'=>'La cantidad de asientos no puede ser mayor a 20 o menor a 2'], 203);
         }
 
-        $validator0 = Validator::make($request->all(), [
+        $validator1 = Validator::make($request->all(), [
             'cantidadAsientos' => 'required|max:2|min:1'
         ]);
 
-        if($validator0->fails()){
-            return response()->json(['Error'=>'La cantidad de asientos no puede estar vacía y debe ser un minimo de 0 y máximo de 50.'], 203);
+        if($validator1->fails()){
+            return response()->json(['Error'=>'La cantidad de asientos no puede estar vacía'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){

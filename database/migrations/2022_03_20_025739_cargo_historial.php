@@ -20,7 +20,7 @@ class CargoHistorial extends Migration
             $table->bigInteger('empleadoId')->unsigned();
             $table->bigInteger('cargoId')->unsigned();
             $table->date('fechaInicio');
-            $table->date('fechaFinal');
+            $table->date('fechaFinal')->nullable();
             $table->tinyInteger('estado');
             $table->timestamps();
 

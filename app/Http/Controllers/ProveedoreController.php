@@ -32,7 +32,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El nombre del proveedor no puede estar vacio y debe tener entre 3 y 50 caracteres.'],
+            return response()->json(['Error'=>'El nombre del proveedor no puede estar vacío y debe tener entre 3 y 50 caracteres.'],
             203);
         }
         //
@@ -49,7 +49,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'El numero del proveedor debe tener 8 digitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+            return response()->json(['Error'=>'El número del proveedor debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
         }
         //
         $validator3 = Validator::make($request->all(), [ 
@@ -57,7 +57,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'El numero del proveedor debe ser único.'], 203);
+            return response()->json(['Error'=>'El número del proveedor debe ser único.'], 203);
         }
         //
         $validator4 = Validator::make($request->all(), [ 
@@ -73,11 +73,11 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator5->fails()){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         if (!str_contains($request->proveedorCorreo, "@") || !str_contains($request->proveedorCorreo, ".")){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         $validator6 = Validator::make($request->all(), [ 
@@ -85,7 +85,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator6->fails()){
-            return response()->json(['Error'=>'El encargado debe tener de 4 a 50 caractes.'], 203);
+            return response()->json(['Error'=>'El encargado debe tener de 4 a 50 caracteres.'], 203);
         }
         //
         $validator7 = Validator::make($request->all(), [ 
@@ -101,15 +101,15 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator8->fails()){
-            return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caractes.'], 203);
+            return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caracteres.'], 203);
         }
 
         $validator9 = Validator::make($request->all(), [ 
-            'proveedorRTN' => 'starts_with:0',
+            'proveedorRTN' => 'starts_with:0,1',
         ]);
  
         if($validator9->fails()){
-            return response()->json(['Error'=>'El RTN debe empezar con 0.'], 203);
+            return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
         }
 
 
@@ -152,7 +152,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El nombre del proveedor no puede estar vacio y debe tener entre 3 y 50 caracteres.'],
+            return response()->json(['Error'=>'El nombre del proveedor no puede estar vacío y debe tener entre 3 y 50 caracteres.'],
             203);
         }
         //
@@ -161,7 +161,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'El numero del proveedor debe tener 8 digitos y debe comenzar con 2, 3, 7, 8 o 9.'], 203);
+            return response()->json(['Error'=>'El número del proveedor debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o 9.'], 203);
         }
         //
         $validator5 = Validator::make($request->all(), [ 
@@ -169,7 +169,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator5->fails()){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com.'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com.'], 203);
         }
         //
         $validator6 = Validator::make($request->all(), [ 
@@ -177,7 +177,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator6->fails()){
-            return response()->json(['Error'=>'El encargado debe tener de 4 a 50 caractes.'], 203);
+            return response()->json(['Error'=>'El encargado debe tener de 4 a 50 caracteres.'], 203);
         }
         //
         $validator8 = Validator::make($request->all(), [ 
@@ -185,7 +185,7 @@ class ProveedoreController extends Controller
         ]);
  
         if($validator8->fails()){
-            return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caractes.'], 203);
+            return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caracteres.'], 203);
         }
 
         $proveedore->update($request->all());

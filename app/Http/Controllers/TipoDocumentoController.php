@@ -16,7 +16,7 @@ class TipoDocumentoController extends Controller
     public function store(Request $request)
     {
         if (strlen($request->nombreDocumento) === 0){
-            return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
+            return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
@@ -57,7 +57,7 @@ class TipoDocumentoController extends Controller
 
         //Validaciones Actualizar
         if (strlen($request->nombreDocumento) === 0){
-            return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
+            return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
         if ($request->estado > 1 || $request->estado < 0 ){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);

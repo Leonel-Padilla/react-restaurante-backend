@@ -62,7 +62,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El numero de documento de empleado debe ser único.'], 203);
+            return response()->json(['Error'=>'El número de documento de empleado debe ser único.'], 203);
         }
         //
         $validator1 = Validator::make($request->all(), [ 
@@ -70,7 +70,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'El numero de documento no puede estar vacio.'], 203);
+            return response()->json(['Error'=>'El número de documento no puede estar vacío.'], 203);
         }
         //
         $validator2 = Validator::make($request->all(), [ 
@@ -78,7 +78,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'El nombre del empleado no puede estar vacio.'], 203);
+            return response()->json(['Error'=>'El nombre del empleado no puede estar vacío.'], 203);
         }
         //
         $validator3 = Validator::make($request->all(), [ 
@@ -86,7 +86,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'El numero del empleado debe ser único.'], 203);
+            return response()->json(['Error'=>'El número del empleado debe ser único.'], 203);
         }
         //
         $validator4 = Validator::make($request->all(), [ 
@@ -94,7 +94,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator4->fails()){
-            return response()->json(['Error'=>'El numero del empleado debe tener 8 digitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+            return response()->json(['Error'=>'El numero del empleado debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
         }
         //
         $validator5 = Validator::make($request->all(), [ 
@@ -110,11 +110,11 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator6->fails()){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         if (!str_contains($request->empleadoCorreo, "@") || !str_contains($request->empleadoCorreo, ".")){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         $validator7 = Validator::make($request->all(), [ 
@@ -150,11 +150,11 @@ class EmpleadoController extends Controller
         }
         //
         $validator11 = Validator::make($request->all(), [ 
-            'empleadoSueldo' => 'required|min:1|max:6',
+            'empleadoSueldo' => 'required|min:4|max:6',
         ]);
 
         if($validator11->fails()){
-            return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
+            return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 dígitos.'], 203);
         }
         //
         $validator12 = Validator::make($request->all(), [ 
@@ -172,8 +172,11 @@ class EmpleadoController extends Controller
         if($validator13->fails()){
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
+        //
+        if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
+            return response()->json(['Error'=>'El sueldo debe tener un minímo de L.5000 y un máximo de L.100,000'], 203);
+        }
 
-        
 
         $empleado = Empleado::create($request->all());
 
@@ -216,7 +219,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'El numero de documento no puede estar vacio.'], 203);
+            return response()->json(['Error'=>'El número de documento no puede estar vacío.'], 203);
         }
         //
         $validator2 = Validator::make($request->all(), [ 
@@ -224,7 +227,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'El nombre del empleado no puede estar vacio.'], 203);
+            return response()->json(['Error'=>'El nombre del empleado no puede estar vacío.'], 203);
         }
         //
         $validator4 = Validator::make($request->all(), [ 
@@ -232,7 +235,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator4->fails()){
-            return response()->json(['Error'=>'El numero del empleado debe tener 8 digitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+            return response()->json(['Error'=>'El número del empleado debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
         }
         //
         $validator6 = Validator::make($request->all(), [ 
@@ -240,11 +243,11 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator6->fails()){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         if (!str_contains($request->empleadoCorreo, "@") || !str_contains($request->empleadoCorreo, ".")){
-            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caractes y un formato valido ejemplo@gmail.com'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         $validator8 = Validator::make($request->all(), [ 
@@ -252,7 +255,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator8->fails()){
-            return response()->json(['Error'=>'El usuario del empleado debe tener de 4 a 20 caractes'], 203);
+            return response()->json(['Error'=>'El usuario del empleado debe tener de 4 a 20 caracteres'], 203);
         }
         //
         $validator9 = Validator::make($request->all(), [ 
@@ -276,7 +279,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator11->fails()){
-            return response()->json(['Error'=>'El sueldo no puede estar vacio y debe tener de 1 a 6 digitos.'], 203);
+            return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 dígitos.'], 203);
         }
         //
         $validator12 = Validator::make($request->all(), [ 
@@ -294,6 +297,11 @@ class EmpleadoController extends Controller
         if($validator13->fails()){
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
+        //
+        if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
+            return response()->json(['Error'=>'El sueldo debe tener un minímo de 5000 y un máximo de 100,000'], 203);
+        }
+
 
         $empleado->update($request->all());
 

@@ -54,6 +54,7 @@ Route::delete('deleteCargo/{id}', 'App\Http\Controllers\CargoController@destroy'
 //Sucursal
 Route::get('Sucursal', 'App\Http\Controllers\SucursaleController@getSucursal');
 Route::get('Sucursal/{id}', 'App\Http\Controllers\SucursaleController@show');
+Route::get('SucursalN/{sucursalNombre}', 'App\Http\Controllers\SucursaleController@getBySucursalNombre');
 Route::post('addSucursal', 'App\Http\Controllers\SucursaleController@store');
 Route::put('updateSucursal/{id}', 'App\Http\Controllers\SucursaleController@update');
 Route::delete('deleteSucursal/{id}', 'App\Http\Controllers\SucursaleController@destroy');
@@ -69,6 +70,7 @@ Route::delete('deleteCliente/{id}', 'App\Http\Controllers\ClienteController@dest
 //Mesa
 Route::get('Mesa', 'App\Http\Controllers\MesaController@getMesa');
 Route::get('Mesa/{id}', 'App\Http\Controllers\MesaController@show');
+Route::get('MesaN/{sucursalId}', 'App\Http\Controllers\MesaController@getBySucursalId');
 Route::post('addMesa', 'App\Http\Controllers\MesaController@store');
 Route::put('updateMesa/{id}', 'App\Http\Controllers\MesaController@update');
 Route::delete('deleteMesa/{id}', 'App\Http\Controllers\MesaController@destroy');

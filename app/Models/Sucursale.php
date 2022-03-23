@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Sucursale
@@ -48,5 +49,18 @@ class Sucursale extends Model
         return $this->hasOne('App\Models\Empleado', 'id', 'empleadoId');
     }
     
+    //New Collections
+    public static function findBySucursalNombre($sucursalNombre){
+        
+      return $Sucursal = DB::table('sucursales')->where('sucursalNombre', $sucursalNombre)->get();
+
+    }
+
+    public static function findBySucursalEncargado($empleadoId){
+        
+      return $Sucursal = DB::table('sucursales')->where('empleadoId', $empleadoId)->get();
+
+    }
+
 
 }

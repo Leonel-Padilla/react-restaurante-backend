@@ -47,7 +47,7 @@ class CargoController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'No se puede repetir la decripción del cargo'], 203);
+            return response()->json(['Error'=>'No se puede repetir la descripción del cargo'], 203);
         }
 
 
@@ -60,7 +60,7 @@ class CargoController extends Controller
         }*/
 
         if (strlen($request->cargoNombre) === 0){
-            return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
+            return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
 
         if (strlen($request->cargoNombre) < 4){
@@ -145,7 +145,7 @@ class CargoController extends Controller
 
 
         if (strlen($request->cargoNombre) === 0){
-            return response()->json(['Error'=>'El nombre no puede estar vacio'], 203);
+            return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
 
         if (strlen($request->cargoNombre) < 4){
