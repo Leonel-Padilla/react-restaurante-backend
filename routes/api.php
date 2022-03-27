@@ -79,6 +79,7 @@ Route::delete('deleteMesa/{id}', 'App\Http\Controllers\MesaController@destroy');
 Route::get('Insumo', 'App\Http\Controllers\InsumoController@getInsumo');
 Route::get('Insumo/{id}', 'App\Http\Controllers\InsumoController@show');
 Route::get('InsumoN/{nombreInsumo}', 'App\Http\Controllers\InsumoController@getByInsumoNombre');
+Route::get('InsumoP/{proveedorId}', 'App\Http\Controllers\InsumoController@getByProveedorId');
 Route::post('addInsumo', 'App\Http\Controllers\InsumoController@store');
 Route::put('updateInsumo/{id}', 'App\Http\Controllers\InsumoController@update');
 Route::delete('deleteInsumo/{id}', 'App\Http\Controllers\InsumoController@destroy');
@@ -98,3 +99,20 @@ Route::get('SueldoHistorial/{id}', 'App\Http\Controllers\SueldoHistorialControll
 Route::post('addSueldoHistorial', 'App\Http\Controllers\SueldoHistorialController@store');
 Route::put('updateSueldoHistorial/{id}', 'App\Http\Controllers\SueldoHistorialController@update');
 Route::delete('deleteSueldoHistorial/{id}', 'App\Http\Controllers\SueldoHistorialController@destroy');
+
+//Compra Encabezado
+Route::get('CompraEncabezado', 'App\Http\Controllers\CompraEncabezadoController@getCompraEncabezado');
+Route::get('CompraEncabezadoP/{proveedorId}', 'App\Http\Controllers\CompraEncabezadoController@getByProveedor');
+Route::get('CompraEncabezadoE/{estadoCompra}', 'App\Http\Controllers\CompraEncabezadoController@getByEstadoCompra');
+Route::get('CompraEncabezado/{id}', 'App\Http\Controllers\CompraEncabezadoController@show');
+Route::post('addCompraEncabezado', 'App\Http\Controllers\CompraEncabezadoController@store');
+Route::put('updateCompraEncabezado/{id}', 'App\Http\Controllers\CompraEncabezadoController@update');
+Route::delete('deleteCompraEncabezado/{id}', 'App\Http\Controllers\CompraEncabezadoController@destroy');
+
+//Compra Detalle
+Route::get('CompraDetalle', 'App\Http\Controllers\CompraDetalleController@getCompraDetalle');
+Route::get('CompraDetalleE/{compraEncabezadoId}', 'App\Http\Controllers\CompraDetalleController@getByCompraEncabezadoId');
+Route::get('CompraDetalle/{id}', 'App\Http\Controllers\CompraDetalleController@show');
+Route::post('addCompraDetalle', 'App\Http\Controllers\CompraDetalleController@store');
+Route::put('updateCompraDetalle/{id}', 'App\Http\Controllers\CompraDetalleController@update');
+Route::delete('deleteCompraDetalle/{id}', 'App\Http\Controllers\CompraDetalleController@destroy');

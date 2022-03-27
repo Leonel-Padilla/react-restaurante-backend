@@ -28,7 +28,7 @@ class Empleados extends Migration
             $table->bigInteger('cargoActualId')->unsigned();
             $table->date('fechaContratacion');
             $table->date('fechaNacimiento');
-            $table->date('fechaBloqueo')->nullable();
+            $table->dateTime('fechaBloqueo')->nullable();
             $table->tinyInteger('estado');
             $table->timestamps();
 

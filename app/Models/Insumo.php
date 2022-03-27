@@ -60,5 +60,11 @@ class Insumo extends Model
       return $Insumo = DB::table('insumos')->where('insumoNombre', $insumoNombre)->get();
   
     }
+    
+    public static function findByProveedorId($proveedorId){
+        
+      return $Insumo = DB::table('insumos')->where('proveedorId', $proveedorId)->get();
+  
+    }
 
 }

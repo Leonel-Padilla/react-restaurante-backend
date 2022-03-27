@@ -134,11 +134,11 @@ class EmpleadoController extends Controller
         }
         //
         $validator9 = Validator::make($request->all(), [ 
-            'empleadoContrasenia' => 'required|min:5|max:20',
+            'empleadoContrasenia' => 'required|min:5|max:16',
         ]);
  
         if($validator9->fails()){
-            return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 20 caracteres.'], 203);
+            return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 16 caracteres.'], 203);
         }
         //
         $validator10 = Validator::make($request->all(), [ 
@@ -259,11 +259,11 @@ class EmpleadoController extends Controller
         }
         //
         $validator9 = Validator::make($request->all(), [ 
-            'empleadoContrasenia' => 'required|min:5|max:20',
+            'empleadoContrasenia' => 'required|min:5|max:16',
         ]);
  
         if($validator9->fails()){
-            return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 20 caracteres.'], 203);
+            return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 16 caracteres.'], 203);
         }
         //
         $validator10 = Validator::make($request->all(), [ 

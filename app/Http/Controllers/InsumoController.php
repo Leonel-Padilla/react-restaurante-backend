@@ -28,6 +28,18 @@ class InsumoController extends Controller
         }
         return response($Insumo, 200);
     }
+
+
+    public function getByProveedorId($proveedorId){
+
+
+        $Insumo = Insumo::findByProveedorId($proveedorId);
+    
+        if(empty($Insumo)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+        return response($Insumo, 200);
+    }
    
     public function store(Request $request)
     {
@@ -89,7 +101,7 @@ class InsumoController extends Controller
         }
 
         if ($request->cantidad > 999 || $request->cantidad < 0 ){
-            return response()->json(['Error'=>'La cantidad no puede ser mayor a 999 o menor a 0'], 203);
+            return response()->json(['Error'=>'La cantidad actual no puede ser mayor a 999 o menor a 0'], 203);
         }
 
         if ($request->cantidadMax > 999 || $request->cantidadMax <= 0 ){
@@ -203,7 +215,7 @@ class InsumoController extends Controller
         }
 
         if ($request->cantidad > 999 || $request->cantidad < 0 ){
-            return response()->json(['Error'=>'La cantidad no puede ser mayor a 999 o menor a 0'], 203);
+            return response()->json(['Error'=>'La cantidad actual no puede ser mayor a 999 o menor a 0'], 203);
         }
 
         if ($request->cantidadMax > 999 || $request->cantidadMax <= 0 ){
