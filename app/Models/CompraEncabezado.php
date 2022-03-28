@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
  * Class CompraEncabezado
  *
  * @property $id
- * @property $proveedorId
+ * @property $proveedorId 
+ * @property $empleadoId
  * @property $fechaSolicitud
  * @property $fechaEntregaCompra
  * @property $fechaPagoCompra
@@ -29,6 +30,7 @@ class CompraEncabezado extends Model
     
     static $rules = [
 		'proveedorId' => 'required',
+    'empleadoId' => 'required',
 		'fechaSolicitud' => 'required',
 		'estadoCompra' => 'required',
 		'numeroFactura' => 'required',
@@ -43,7 +45,7 @@ class CompraEncabezado extends Model
      *
      * @var array
      */
-    protected $fillable = ['proveedorId','fechaSolicitud','fechaEntregaCompra','fechaPagoCompra','estadoCompra','numeroFactura','cai','estado'];
+    protected $fillable = ['proveedorId','empleadoId','fechaSolicitud','fechaEntregaCompra','fechaPagoCompra','estadoCompra','numeroFactura','cai','estado'];
 
 
     /**
@@ -52,6 +54,11 @@ class CompraEncabezado extends Model
     public function proveedore()
     {
         return $this->hasOne('App\Models\Proveedore', 'id', 'proveedorId');
+    }
+
+    public function empleado()
+    {
+        return $this->hasOne('App\Models\Empleado', 'id', 'empleadoId');
     }
 
     public static function findByProveedor($proveedorId){

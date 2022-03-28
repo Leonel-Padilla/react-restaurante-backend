@@ -45,64 +45,72 @@ class CompraEncabezadoController extends Controller
         $validator0 = Validator::make($request->all(), [ 
             'proveedorId' => 'required',
         ]);
- 
+
         if($validator0->fails()){
             return response()->json(['Error'=>'El proveedor no puede estar vacío.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
-            'fechaSolicitud' => 'required',
+            'empleadoId' => 'required',
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'La fecha de solicitud no estar vacío.'], 203);
+            return response()->json(['Error'=>'El empleado no puede estar vacío.'], 203);
         }
 
         $validator2 = Validator::make($request->all(), [ 
-            'fechaSolicitud' => 'date|before:fechaEntregaCompra',
+            'fechaSolicitud' => 'required',
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de entrega.'], 203);
+            return response()->json(['Error'=>'La fecha de solicitud no estar vacío.'], 203);
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'fechaSolicitud' => 'date|before:fechaPagoCompra',
+            'fechaSolicitud' => 'date|before:fechaEntregaCompra',
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de pago.'], 203);
+            return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de entrega.'], 203);
         }
 
         $validator4 = Validator::make($request->all(), [ 
-            'estadoCompra' => 'required|min:3|max:20',
+            'fechaSolicitud' => 'date|before:fechaPagoCompra',
         ]);
  
         if($validator4->fails()){
-            return response()->json(['Error'=>'El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres.'], 203);
+            return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de pago.'], 203);
         }
 
         $validator5 = Validator::make($request->all(), [ 
-            'numeroFactura' => 'unique:compra_encabezados',
+            'estadoCompra' => 'required|min:3|max:20',
         ]);
  
         if($validator5->fails()){
-            return response()->json(['Error'=>'El número de factura debe ser único.'], 203);
+            return response()->json(['Error'=>'El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
         $validator6 = Validator::make($request->all(), [ 
-            'numeroFactura' => 'required|min:16|max:16',
+            'numeroFactura' => 'unique:compra_encabezados',
         ]);
  
         if($validator6->fails()){
-            return response()->json(['Error'=>'El número de factura no puede estar vacío y debe de tener 16 caracteres.'], 203);
+            return response()->json(['Error'=>'El número de factura debe ser único.'], 203);
         }
 
         $validator7 = Validator::make($request->all(), [ 
-            'cai' => 'required|min:32|max:32',
+            'numeroFactura' => 'required|min:16|max:16',
         ]);
  
         if($validator7->fails()){
+            return response()->json(['Error'=>'El número de factura no puede estar vacío y debe de tener 16 caracteres.'], 203);
+        }
+
+        $validator8 = Validator::make($request->all(), [ 
+            'cai' => 'required|min:32|max:32',
+        ]);
+ 
+        if($validator8->fails()){
             return response()->json(['Error'=>'El CAI no puede estar vacío y debe de tener 32 caracteres.'], 203);
         }
 
@@ -151,50 +159,59 @@ class CompraEncabezadoController extends Controller
         }
 
         $validator1 = Validator::make($request->all(), [ 
+            'empleadoId' => 'required',
+        ]);
+
+        if($validator1->fails()){
+            return response()->json(['Error'=>'El empleado no puede estar vacío.'], 203);
+        }
+
+
+        $validator2 = Validator::make($request->all(), [ 
             'fechaSolicitud' => 'required',
         ]);
  
-        if($validator1->fails()){
+        if($validator2->fails()){
             return response()->json(['Error'=>'La fecha de solicitud no estar vacío.'], 203);
         }
 
-        $validator2 = Validator::make($request->all(), [ 
+        $validator3 = Validator::make($request->all(), [ 
             'fechaSolicitud' => 'date|before:fechaEntregaCompra',
         ]);
  
-        if($validator2->fails()){
+        if($validator3->fails()){
             return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de entrega.'], 203);
         }
 
-        $validator3 = Validator::make($request->all(), [ 
+        $validator4 = Validator::make($request->all(), [ 
             'fechaSolicitud' => 'date|before:fechaPagoCompra',
         ]);
  
-        if($validator3->fails()){
+        if($validator4->fails()){
             return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de pago.'], 203);
         }
 
-        $validator4 = Validator::make($request->all(), [ 
+        $validator5 = Validator::make($request->all(), [ 
             'estadoCompra' => 'required|min:3|max:20',
         ]);
  
-        if($validator4->fails()){
+        if($validator5->fails()){
             return response()->json(['Error'=>'El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
-        $validator5 = Validator::make($request->all(), [ 
+        $validator6 = Validator::make($request->all(), [ 
             'numeroFactura' => 'required|min:16|max:16',
         ]);
  
-        if($validator5->fails()){
+        if($validator6->fails()){
             return response()->json(['Error'=>'El número de factura no puede estar vacío y debe de tener 16 caracteres.'], 203);
         }
 
-        $validator6 = Validator::make($request->all(), [ 
+        $validator7 = Validator::make($request->all(), [ 
             'cai' => 'required|min:32|max:32',
         ]);
  
-        if($validator6->fails()){
+        if($validator7->fails()){
             return response()->json(['Error'=>'El CAI no puede estar vacío y debe de tener 32 caracteres.'], 203);
         }
 

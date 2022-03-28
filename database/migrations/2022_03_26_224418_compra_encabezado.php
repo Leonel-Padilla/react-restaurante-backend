@@ -17,6 +17,7 @@ class CompraEncabezado extends Migration
 
             $table->bigIncrements('id');
             $table->bigInteger('proveedorId')->unsigned();
+            $table->bigInteger('empleadoId')->unsigned();
             $table->date('fechaSolicitud');
             $table->date('fechaEntregaCompra')->nullable();
             $table->date('fechaPagoCompra')->nullable();
@@ -27,6 +28,7 @@ class CompraEncabezado extends Migration
             $table->timestamps();
 
             $table->foreign('proveedorId')->references('id')->on('proveedores');
+            $table->foreign('empleadoId')->references('id')->on('empleados');
         });
     }
 
