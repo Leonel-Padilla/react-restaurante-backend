@@ -27,7 +27,7 @@ class ProductoInsumoController extends Controller{
         return response($ProductoInsumo, 200);
     }
 
-    public function getByProductoId($productoNombre){
+    public function getByProductoId($productoId){
 
 
         $ProductoInsumo = ProductoInsumo::findByProductoId($productoId);
