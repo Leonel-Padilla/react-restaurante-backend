@@ -116,3 +116,29 @@ Route::get('CompraDetalle/{id}', 'App\Http\Controllers\CompraDetalleController@s
 Route::post('addCompraDetalle', 'App\Http\Controllers\CompraDetalleController@store');
 Route::put('updateCompraDetalle/{id}', 'App\Http\Controllers\CompraDetalleController@update');
 Route::delete('deleteCompraDetalle/{id}', 'App\Http\Controllers\CompraDetalleController@destroy');
+
+//Comentario
+Route::get('Comentario', 'App\Http\Controllers\ComentarioController@getComentario');
+Route::get('Comentario/{id}', 'App\Http\Controllers\ComentarioController@show');
+Route::get('ComentarioS/{sucursalId}', 'App\Http\Controllers\ComentarioController@getBySucursalId');
+Route::post('addComentario', 'App\Http\Controllers\ComentarioController@store');
+Route::put('updateComentario/{id}', 'App\Http\Controllers\ComentarioController@update');
+Route::delete('deleteComentario/{id}', 'App\Http\Controllers\ComentarioController@destroy');
+
+//Producto
+Route::get('Producto', 'App\Http\Controllers\ProductoController@getProducto');
+Route::get('Producto/{id}', 'App\Http\Controllers\ProductoController@show');
+Route::get('ProductoN/{productoNombre}', 'App\Http\Controllers\ProductoController@getByProductoNombre');
+Route::post('addProducto', 'App\Http\Controllers\ProductoController@store');
+Route::put('updateProducto/{id}', 'App\Http\Controllers\ProductoController@update');
+Route::delete('deleteProducto/{id}', 'App\Http\Controllers\ProductoController@destroy');
+
+//ProductoInsumo
+Route::get('ProductoInsumo', 'App\Http\Controllers\ProductoInsumoController@getProductoInsumo');
+Route::get('ProductoInsumo/{id}', 'App\Http\Controllers\ProductoInsumoController@show');
+Route::get('ProductoInsumoI/{insumoId}', 'App\Http\Controllers\ProductoInsumoController@getByInsumoId');
+Route::get('ProductoInsumoP/{productoId}', 'App\Http\Controllers\ProductoInsumoController@getByProductoId');
+Route::post('addProductoInsumo', 'App\Http\Controllers\ProductoInsumoController@store');
+Route::put('updateProductoInsumo/{id}', 'App\Http\Controllers\ProductoInsumoController@update');
+Route::delete('deleteProductoInsumo/{id}', 'App\Http\Controllers\ProductoInsumoController@destroy');
+
