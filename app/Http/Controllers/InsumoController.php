@@ -112,20 +112,20 @@ class InsumoController extends Controller
             return response()->json(['Error'=>'La cantidad mínima no puede ser mayor a 999 o menor a 0'], 203);
         }
 
-        if ($request->cantidadMax < $request->cantidadMin){
-            return response()->json(['Error'=>'La cantidad máxima no puede ser menor a la cantidad mínima'], 203);
+        if ($request->cantidadMax < $request->cantidadMin || $request->cantidadMax == $request->cantidadMin){
+            return response()->json(['Error'=>'La cantidad máxima no puede ser menor o igual a la cantidad mínima'], 203);
         }
 
-        if ($request->cantidadMin > $request->cantidadMax){
-            return response()->json(['Error'=>'La cantidad mínima no puede ser mayor a la cantidad máxima'], 203);
+        if ($request->cantidadMin > $request->cantidadMax || $request->cantidadMin == $request->cantidadMax){
+            return response()->json(['Error'=>'La cantidad mínima no puede ser mayor o igual a la cantidad máxima'], 203);
         }
 
         if ($request->cantidad < $request->cantidadMin){
-            return response()->json(['Error'=>'La cantidad no puede ser menor a la cantidad mínima'], 203);
+            return response()->json(['Error'=>'La cantidad actual no puede ser menor a la cantidad mínima'], 203);
         }
 
         if ($request->cantidad > $request->cantidadMax){
-            return response()->json(['Error'=>'La cantidad no puede ser mayor a la cantidad máxima'], 203);
+            return response()->json(['Error'=>'La cantidad actual no puede ser mayor a la cantidad máxima'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
@@ -226,20 +226,20 @@ class InsumoController extends Controller
             return response()->json(['Error'=>'La cantidad mínima no puede ser mayor a 999 o menor a 0'], 203);
         }
 
-        if ($request->cantidadMax < $request->cantidadMin){
-            return response()->json(['Error'=>'La cantidad máxima no puede ser menor a la cantidad mínima'], 203);
+        if ($request->cantidadMax < $request->cantidadMin || $request->cantidadMax == $request->cantidadMin){
+            return response()->json(['Error'=>'La cantidad máxima no puede ser menor o igual a la cantidad mínima'], 203);
         }
 
-        if ($request->cantidadMin > $request->cantidadMax){
-            return response()->json(['Error'=>'La cantidad mínima no puede ser mayor a la cantidad máxima'], 203);
+        if ($request->cantidadMin > $request->cantidadMax || $request->cantidadMin == $request->cantidadMax){
+            return response()->json(['Error'=>'La cantidad mínima no puede ser mayor o igual a la cantidad máxima'], 203);
         }
 
         if ($request->cantidad < $request->cantidadMin){
-            return response()->json(['Error'=>'La cantidad no puede ser menor a la cantidad mínima'], 203);
+            return response()->json(['Error'=>'La cantidad actual no puede ser menor a la cantidad mínima'], 203);
         }
 
         if ($request->cantidad > $request->cantidadMax){
-            return response()->json(['Error'=>'La cantidad no puede ser mayor a la cantidad máxima'], 203);
+            return response()->json(['Error'=>'La cantidad actual no puede ser mayor a la cantidad máxima'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
