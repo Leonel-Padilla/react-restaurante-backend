@@ -55,11 +55,11 @@ class ComentarioController extends Controller{
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'correoCliente' => 'required|min:10|max:50',
+            'correoCliente' => 'required|email|min:10|max:50',
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'El correo no puede estar vacío y debe tener entre 10 a 50 caracteres.'], 203);
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){

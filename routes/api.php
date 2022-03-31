@@ -133,7 +133,7 @@ Route::post('addProducto', 'App\Http\Controllers\ProductoController@store');
 Route::put('updateProducto/{id}', 'App\Http\Controllers\ProductoController@update');
 Route::delete('deleteProducto/{id}', 'App\Http\Controllers\ProductoController@destroy');
 
-//ProductoInsumo
+//Producto Insumo
 Route::get('ProductoInsumo', 'App\Http\Controllers\ProductoInsumoController@getProductoInsumo');
 Route::get('ProductoInsumo/{id}', 'App\Http\Controllers\ProductoInsumoController@show');
 Route::get('ProductoInsumoI/{insumoId}', 'App\Http\Controllers\ProductoInsumoController@getByInsumoId');
@@ -141,4 +141,12 @@ Route::get('ProductoInsumoP/{productoId}', 'App\Http\Controllers\ProductoInsumoC
 Route::post('addProductoInsumo', 'App\Http\Controllers\ProductoInsumoController@store');
 Route::put('updateProductoInsumo/{id}', 'App\Http\Controllers\ProductoInsumoController@update');
 Route::delete('deleteProductoInsumo/{id}', 'App\Http\Controllers\ProductoInsumoController@destroy');
+
+//Producto Historial
+Route::get('ProductoHistorial', 'App\Http\Controllers\ProductoHistorialController@getProductoHistorial');
+Route::get('ProductoHistorialP/{productoId}', 'App\Http\Controllers\ProductoHistorialController@getByProductoId');
+Route::get('ProductoHistorial/{id}', 'App\Http\Controllers\ProductoHistorialController@show');
+Route::post('addProductoHistorial', 'App\Http\Controllers\ProductoHistorialController@store');
+Route::put('updateProductoHistorial/{id}', 'App\Http\Controllers\ProductoHistorialController@update');
+Route::delete('deleteProductoHistorial/{id}', 'App\Http\Controllers\ProductoHistorialController@destroy');
 
