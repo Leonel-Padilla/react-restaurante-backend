@@ -40,11 +40,31 @@ class MesaController extends Controller
         }
 
         $validator1 = Validator::make($request->all(), [
-            'cantidadAsientos' => 'required|max:2|min:1'
+            'cantidadAsientos' => 'required'
         ]);
 
         if($validator1->fails()){
             return response()->json(['Error'=>'La cantidad de asientos no puede estar vacía.'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [ 
+            'descripcion' => 'required|max:100|min:10',
+        ]);
+ 
+        if($validator2->fails()){
+            return response()->json(['Error'=>'La descripcion de la mesa no puede estar vacio y debe tener entre 10 y 100 carácteres'], 203);
+        }
+
+        $validator3 = Validator::make($request->all(), [ 
+            'numero' => 'required',
+        ]);
+ 
+        if($validator3->fails()){
+            return response()->json(['Error'=>'El numero de la mesa no puede estar vacio.'], 203);
+        }
+
+        if ($request->numero > 999 || $request->numero < 1 ){
+            return response()->json(['Error'=>'El numero de la mesa debe estar entre 1 y 999.'], 203);
         }
 
         if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
@@ -98,16 +118,36 @@ class MesaController extends Controller
             return response()->json(['Error'=>'El Id del sucursal no puede estar vacía.'], 203);
         }
 
-        if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
-            return response()->json(['Error'=>'La cantidad de asientos no puede ser mayor a 20 o menor a 2'], 203);
-        }
-
         $validator1 = Validator::make($request->all(), [
-            'cantidadAsientos' => 'required|max:2|min:1'
+            'cantidadAsientos' => 'required'
         ]);
 
         if($validator1->fails()){
             return response()->json(['Error'=>'La cantidad de asientos no puede estar vacía'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [ 
+            'descripcion' => 'required|max:100|min:10',
+        ]);
+ 
+        if($validator2->fails()){
+            return response()->json(['Error'=>'La descripcion de la mesa no puede estar vacio y debe tener entre 10 y 100 carácteres'], 203);
+        }
+
+        $validator3 = Validator::make($request->all(), [ 
+            'numero' => 'required|max:1|min:3',
+        ]);
+ 
+        if($validator3->fails()){
+            return response()->json(['Error'=>'El numero de la mesa no puede estar vacio.'], 203);
+        }
+
+        if ($request->numero > 999 || $request->numero < 0 ){
+            return response()->json(['Error'=>'El numero de la mesa debe estar entre 1 y 999.'], 203);
+        }
+
+        if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
+            return response()->json(['Error'=>'La cantidad de asientos no puede ser mayor a 20 o menor a 2'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){

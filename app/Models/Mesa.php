@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
  * @property $id
  * @property $sucursalId
  * @property $cantidadAsientos
+ * @property $descripcion
+ * @property $precio
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -25,6 +27,8 @@ class Mesa extends Model
     static $rules = [
 		'sucursalId' => 'required',
 		'cantidadAsientos' => 'required',
+    'descripcion' => 'required',
+    'numero' => 'required',
 		'estado' => 'required',
     ];
 
@@ -35,7 +39,7 @@ class Mesa extends Model
      *
      * @var array
      */
-    protected $fillable = ['sucursalId','cantidadAsientos','estado'];
+    protected $fillable = ['sucursalId','cantidadAsientos','descripcion','numero','estado'];
 
 
     /**

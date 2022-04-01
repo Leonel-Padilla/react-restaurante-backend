@@ -18,6 +18,8 @@ class Mesas extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('sucursalId')->unsigned();
             $table->string('cantidadAsientos', 3);
+            $table->string('descripcion', 100);
+            $table->string('numero', 3);
             $table->tinyInteger('estado');
             $table->timestamps();
 

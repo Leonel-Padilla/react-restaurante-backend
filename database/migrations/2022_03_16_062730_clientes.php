@@ -16,12 +16,15 @@ class Clientes extends Migration
         Schema::create('clientes', function (Blueprint $table) {
 
             $table->bigIncrements('id');
+            $table->bigInteger('tipoDocumentoId')->unsigned();
             $table->string('clienteNombre', 40);
             $table->string('clienteNumero', 8)->unique();
             $table->string('clienteCorreo', 50)->unique();
-            $table->string('clienteRTN', 14)->unique();
+            $table->string('clienteRTN', 14)->nullable();
             $table->tinyInteger('estado');
             $table->timestamps();
+
+            $table->foreign('tipoDocumentoId')->references('id')->on('tipo_documentos');
         });
     }
 

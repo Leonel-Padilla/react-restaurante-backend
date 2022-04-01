@@ -33,59 +33,67 @@ class ClienteController extends Controller
     public function store(Request $request){
 
         $validator0 = Validator::make($request->all(), [ 
-            'clienteNombre' => 'required|min:4|max:40',
+            'tipoDocumentoId' => 'required|min:1|max:1',
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El nombre del cliente no puede estar vacío y tiene que tener entre 4 y 40 caracteres'], 203);
+            return response()->json(['Error'=>'El tipo de documento no puede estar vacío'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
-            'clienteNumero' => 'required|starts_with:2,3,7,8,9|min:8|max:8',
+            'clienteNombre' => 'required|min:4|max:40',
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'El número del cliente debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+            return response()->json(['Error'=>'El nombre del cliente no puede estar vacío y tiene que tener entre 4 y 40 caracteres'], 203);
         }
 
         $validator2 = Validator::make($request->all(), [ 
-            'clienteNumero' => 'unique:clientes',
+            'clienteNumero' => 'required|starts_with:2,3,7,8,9|min:8|max:8',
         ]);
  
         if($validator2->fails()){
+            return response()->json(['Error'=>'El número del cliente debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+        }
+
+        $validator3 = Validator::make($request->all(), [ 
+            'clienteNumero' => 'unique:clientes',
+        ]);
+ 
+        if($validator3->fails()){
             return response()->json(['Error'=>'El número del cliente debe ser único.'], 203);
         }
 
-        $validator3 = Validator::make($request->all(), [
+        $validator4 = Validator::make($request->all(), [
             'clienteCorreo' => 'required|min:10|max:50',
         ]);
 
-        if($validator3->fails()){
+        if($validator4->fails()){
             return response()->json(['Error'=>'El correo del cliente no puede estar vacío'], 203);
         }
 
-        $validator4 = Validator::make($request->all(), [
+        $validator5 = Validator::make($request->all(), [
             'clienteCorreo' => 'unique:clientes',
         ]);
 
-        if($validator4->fails()){
+        if($validator5->fails()){
             return response()->json(['Error'=>'El correo del cliente debe ser único.'], 203);
         }
 
-        $validator5 = Validator::make($request->all(), [
+        $validator6 = Validator::make($request->all(), [
             'clienteRTN' => 'unique:clientes',
         ]);
 
-        if($validator5->fails()){
+        if($validator6->fails()){
             return response()->json(['Error'=>'El RTN del cliente debe ser único.'], 203);
         }
 
-        $validator6 = Validator::make($request->all(), [
-            'clienteRTN' => 'required|min:14|max:14',
+        $validator7 = Validator::make($request->all(), [
+            'clienteRTN' => 'min:14|max:14',
         ]);
 
-        if($validator6->fails()){
-            return response()->json(['Error'=>'El RTN del cliente no puede estar vacío y debe ser de 14 dígitos.'], 203);
+        if($validator7->fails()){
+            return response()->json(['Error'=>'El RTN del cliente debe ser de 14 dígitos.'], 203);
         }
 
 
@@ -124,35 +132,43 @@ class ClienteController extends Controller
         }
 
         $validator0 = Validator::make($request->all(), [ 
-            'clienteNombre' => 'required|min:4|max:40',
+            'tipoDocumentoId' => 'required|min:1|max:1',
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El nombre del cliente no puede estar vacío'], 203);
+            return response()->json(['Error'=>'El tipo de documento no puede estar vacío'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
-            'clienteNumero' => 'required|starts_with:2,3,7,8,9|min:8|max:8',
+            'clienteNombre' => 'required|min:4|max:40',
         ]);
  
         if($validator1->fails()){
+            return response()->json(['Error'=>'El nombre del cliente no puede estar vacío'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [ 
+            'clienteNumero' => 'required|starts_with:2,3,7,8,9|min:8|max:8',
+        ]);
+ 
+        if($validator2->fails()){
             return response()->json(['Error'=>'El número del cliente debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
         }
 
-        $validator2 = Validator::make($request->all(), [
+        $validator3 = Validator::make($request->all(), [
             'clienteCorreo' => 'required|min:10|max:50',
         ]);
 
-        if($validator2->fails()){
+        if($validator3->fails()){
             return response()->json(['Error'=>'El correo del cliente no puede estar vacío'], 203);
         }
 
-        $validator3 = Validator::make($request->all(), [
-            'clienteRTN' => 'required|min:14|max:14',
+        $validator4 = Validator::make($request->all(), [
+            'clienteRTN' => 'min:14|max:14',
         ]);
 
-        if($validator3->fails()){
-            return response()->json(['Error'=>'El RTN del cliente no puede estar vacío y debe ser de 14 dígitos.'], 203);
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El RTN del cliente debe ser de 14 dígitos.'], 203);
         }
 
         $cliente->update($request->all());

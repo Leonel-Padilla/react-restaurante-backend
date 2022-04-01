@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
  * Class Cliente
  *
  * @property $id
+ * @property $tipoDocumentoId
  * @property $clienteNombre
  * @property $clienteNumero
  * @property $clienteCorreo
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\DB;
  * @property $created_at
  * @property $updated_at
  *
+ * @property TipoDocumento $tipoDocumento
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -24,6 +26,7 @@ class Cliente extends Model
 {
     
     static $rules = [
+    'tipoDocumentoId' => 'required',
 		'clienteNombre' => 'required',
 		'clienteNumero' => 'required',
 		'clienteCorreo' => 'required',
@@ -38,9 +41,17 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['clienteNombre','clienteNumero','clienteCorreo','clienteRTN','estado'];
+    protected $fillable = ['tipoDocumentoId','clienteNombre','clienteNumero','clienteCorreo','clienteRTN','estado'];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function tipoDocumento()
+    {
+        return $this->hasOne('App\Models\TipoDocumento', 'id', 'tipoDocumentoId');
+    }
+    
+    
     public static function findByClienteNombre($clienteNombre){
         
       return $cliente = DB::table('clientes')->where('clienteNombre', $clienteNombre)->get();
