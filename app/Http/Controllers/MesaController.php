@@ -63,6 +63,14 @@ class MesaController extends Controller
             return response()->json(['Error'=>'El numero de la mesa no puede estar vacio.'], 203);
         }
 
+        $validator4 = Validator::make($request->all(), [ 
+            'numero' => 'unique:mesas',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El numero de la mesa debe ser único.'], 203);
+        }
+
         if ($request->numero > 999 || $request->numero < 1 ){
             return response()->json(['Error'=>'El numero de la mesa debe estar entre 1 y 999.'], 203);
         }

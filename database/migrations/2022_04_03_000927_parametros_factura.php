@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Mesas extends Migration
+class ParametrosFactura extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class Mesas extends Migration
      */
     public function up()
     {
-        Schema::create('mesas', function (Blueprint $table) {
+        Schema::create('parametros_facturas', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->bigInteger('sucursalId')->unsigned();
-            $table->string('cantidadAsientos', 3);
-            $table->string('descripcion', 100);
-            $table->string('numero', 3)->unique();
+            $table->string('cai_Restaurante', 32);
+            $table->string('rtn_Restaurante', 14);
             $table->tinyInteger('estado');
             $table->timestamps();
-
-            $table->foreign('sucursalId')->references('id')->on('sucursales');
         });
     }
 

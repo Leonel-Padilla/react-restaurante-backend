@@ -61,6 +61,7 @@ class CompraEncabezado extends Model
         return $this->hasOne('App\Models\Empleado', 'id', 'empleadoId');
     }
 
+    //New Collections
     public static function findByProveedor($proveedorId){
       
       return $CompraEncabezado = DB::table('compra_encabezados')->where('proveedorId', $proveedorId)->get();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Mesas extends Migration
+class OrdenDetalle extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class Mesas extends Migration
      */
     public function up()
     {
-        Schema::create('mesas', function (Blueprint $table) {
+        Schema::create('orden_detalles', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->bigInteger('sucursalId')->unsigned();
-            $table->string('cantidadAsientos', 3);
-            $table->string('descripcion', 100);
-            $table->string('numero', 3)->unique();
+            $table->bigInteger('ordenEncabezadoId')->unsigned();
+            $table->bigInteger('productoId')->unsigned();
+            $table->string('precio');
+            $table->string('cantidad');
             $table->tinyInteger('estado');
             $table->timestamps();
 
-            $table->foreign('sucursalId')->references('id')->on('sucursales');
+            $table->foreign('ordenEncabezadoId')->references('id')->on('orden_encabezados');
+            $table->foreign('productoId')->references('id')->on('productos');
         });
     }
 

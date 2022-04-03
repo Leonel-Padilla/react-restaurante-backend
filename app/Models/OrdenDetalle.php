@@ -6,28 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class CompraDetalle
+ * Class OrdenDetalle
  *
  * @property $id
- * @property $insumoId
- * @property $compraEncabezadoId
+ * @property $ordenEncabezadoId
+ * @property $productoId
  * @property $precio
  * @property $cantidad
  * @property $estado
  * @property $created_at
  * @property $updated_at
  *
- * @property CompraEncabezado $compraEncabezado
- * @property Insumo $insumo
+ * @property Producto $producto
+ * @property Empleado $empleado
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class CompraDetalle extends Model
+class OrdenDetalle extends Model
 {
     
     static $rules = [
-		'insumoId' => 'required',
-		'compraEncabezadoId' => 'required',
+		'ordenEncabezadoId' => 'required',
+		'productoId' => 'required',
 		'precio' => 'required',
 		'cantidad' => 'required',
 		'estado' => 'required',
@@ -40,31 +40,31 @@ class CompraDetalle extends Model
      *
      * @var array
      */
-    protected $fillable = ['insumoId','compraEncabezadoId','precio','cantidad','estado'];
+    protected $fillable = ['ordenEncabezadoId','productoId','precio','cantidad','estado'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function compraEncabezado()
+    public function ordenEncabezado()
     {
-        return $this->hasOne('App\Models\CompraEncabezado', 'id', 'compraEncabezadoId');
+        return $this->hasOne('App\Models\OrdenEncabezado', 'id', 'ordenEncabezadoId');
     }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function insumo()
+    public function producto()
     {
-        return $this->hasOne('App\Models\Insumo', 'id', 'insumoId');
+        return $this->hasOne('App\Models\Producto', 'id', 'productoId');
     }
 
     //New Collections
-    public static function findByCompraEncabezadoId($compraEncabezado){
+    public static function findByOrdenEncabezadoId($ordenEncabezado){
       
-        return $CompraDetalle = DB::table('compra_detalles')->where('compraencabezadoId', $compraEncabezado)->get();
+        return $CompraDetalle = DB::table('orden_detalles')->where('ordenEncabezadoId', $ordenEncabezado)->get();
       
-      }
+    }
     
 
 }

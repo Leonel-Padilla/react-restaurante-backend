@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @property $id
  * @property $tipoDocumentoId
+ * @property $numeroDocumento
  * @property $clienteNombre
  * @property $clienteNumero
  * @property $clienteCorreo
@@ -27,6 +28,7 @@ class Cliente extends Model
     
     static $rules = [
     'tipoDocumentoId' => 'required',
+    'numeroDocumento' => 'required',
 		'clienteNombre' => 'required',
 		'clienteNumero' => 'required',
 		'clienteCorreo' => 'required',
@@ -41,7 +43,7 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['tipoDocumentoId','clienteNombre','clienteNumero','clienteCorreo','clienteRTN','estado'];
+    protected $fillable = ['tipoDocumentoId','numeroDocumento','clienteNombre','clienteNumero','clienteCorreo','clienteRTN','estado'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

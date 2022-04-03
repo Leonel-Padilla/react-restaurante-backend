@@ -17,6 +17,7 @@ class Clientes extends Migration
 
             $table->bigIncrements('id');
             $table->bigInteger('tipoDocumentoId')->unsigned();
+            $table->string('numeroDocumento', 14)->unique();
             $table->string('clienteNombre', 40);
             $table->string('clienteNumero', 8)->unique();
             $table->string('clienteCorreo', 50)->unique();

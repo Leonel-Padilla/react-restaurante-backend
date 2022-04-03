@@ -62,6 +62,10 @@ class ComentarioController extends Controller{
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
 
+        if (!str_contains($request->correoCliente, "@") || !str_contains($request->correoCliente, ".")){
+            return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
+        }
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
