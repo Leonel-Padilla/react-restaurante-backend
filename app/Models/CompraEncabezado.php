@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
  * @property $estadoCompra
  * @property $numeroFactura
  * @property $cai
+ * @property $numeroFacturaCai
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -35,6 +36,7 @@ class CompraEncabezado extends Model
 		'estadoCompra' => 'required',
 		'numeroFactura' => 'required',
 		'cai' => 'required',
+    'numeroFacturaCai' => 'required',
 		'estado' => 'required',
     ];
 
@@ -45,7 +47,7 @@ class CompraEncabezado extends Model
      *
      * @var array
      */
-    protected $fillable = ['proveedorId','empleadoId','fechaSolicitud','fechaEntregaCompra','fechaPagoCompra','estadoCompra','numeroFactura','cai','estado'];
+    protected $fillable = ['proveedorId','empleadoId','fechaSolicitud','fechaEntregaCompra','fechaPagoCompra','estadoCompra','numeroFactura','cai','numeroFacturaCai','estado'];
 
 
     /**

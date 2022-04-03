@@ -22,8 +22,9 @@ class CompraEncabezado extends Migration
             $table->date('fechaEntregaCompra')->nullable();
             $table->date('fechaPagoCompra')->nullable();
             $table->string('estadoCompra', 20);
-            $table->string('numeroFactura', 20)->unique();
+            $table->string('numeroFactura', 20);
             $table->string('cai', 50);
+            $table->string('numeroFacturaCai', 50);
             $table->tinyInteger('estado');
             $table->timestamps();
 

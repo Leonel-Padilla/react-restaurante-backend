@@ -90,13 +90,13 @@ class CompraEncabezadoController extends Controller
             return response()->json(['Error'=>'El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
-        $validator6 = Validator::make($request->all(), [ 
+        /*$validator6 = Validator::make($request->all(), [ 
             'numeroFactura' => 'unique:compra_encabezados',
         ]);
  
         if($validator6->fails()){
             return response()->json(['Error'=>'El número de factura debe ser único.'], 203);
-        }
+        }*/
 
         $validator7 = Validator::make($request->all(), [ 
             'numeroFactura' => 'required|min:16|max:16',
@@ -112,6 +112,23 @@ class CompraEncabezadoController extends Controller
  
         if($validator8->fails()){
             return response()->json(['Error'=>'El CAI no puede estar vacío y debe de tener 32 caracteres.'], 203);
+        }
+
+        //
+        $validator9 = Validator::make($request->all(), [ 
+            'numeroFacturaCai' => 'unique:compra_encabezados',
+        ]);
+ 
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El numero factura y CAI no pueden ser repetidos.'], 203);
+        }
+
+        $validator10 = Validator::make($request->all(), [ 
+            'numeroFacturaCai' => 'required|min:49|max:49',
+        ]);
+ 
+        if($validator10->fails()){
+            return response()->json(['Error'=>'Debe ingresar los datos del número de factura y el CAI.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
