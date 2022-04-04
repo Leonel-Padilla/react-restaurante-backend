@@ -108,6 +108,14 @@ class ClienteController extends Controller
             return response()->json(['Error'=>'El RTN del cliente debe ser de 14 dígitos.'], 203);
         }
 
+        $validator9 = Validator::make($request->all(), [ 
+            'clienteRTN' => 'starts_with:0,1',
+        ]);
+ 
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
+        }
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
@@ -197,6 +205,14 @@ class ClienteController extends Controller
 
         if($validator8->fails()){
             return response()->json(['Error'=>'El RTN del cliente debe ser de 14 dígitos.'], 203);
+        }
+
+        $validator9 = Validator::make($request->all(), [ 
+            'clienteRTN' => 'starts_with:0,1',
+        ]);
+ 
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){

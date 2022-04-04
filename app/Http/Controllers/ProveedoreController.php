@@ -188,6 +188,14 @@ class ProveedoreController extends Controller
             return response()->json(['Error'=>'El RTN de cada proveedor debe tener 14 caracteres.'], 203);
         }
 
+        $validator9 = Validator::make($request->all(), [ 
+            'proveedorRTN' => 'starts_with:0,1',
+        ]);
+ 
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
+        }
+
         $proveedore->update($request->all());
 
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
