@@ -70,26 +70,34 @@ class FacturaController extends Controller
         }
 
         $validator5 = Validator::make($request->all(), [
-            'impuesto' => 'required',
+            'fechaHora' => 'required|date',
         ]);
 
         if($validator5->fails()){
-            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
+            return response()->json(['Error'=>'La fecha y hora de la factura no puede estar vacío.'], 203);
         }
 
         $validator6 = Validator::make($request->all(), [
-            'subTotal' => 'required',
+            'impuesto' => 'required',
         ]);
 
         if($validator6->fails()){
-            return response()->json(['Error'=>'El sub total no puede estar vacío.'], 203);
+            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
-        
+
         $validator7 = Validator::make($request->all(), [
-            'total' => 'required',
+            'subTotal' => 'required',
         ]);
 
         if($validator7->fails()){
+            return response()->json(['Error'=>'El sub total no puede estar vacío.'], 203);
+        }
+        
+        $validator8 = Validator::make($request->all(), [
+            'total' => 'required',
+        ]);
+
+        if($validator8->fails()){
             return response()->json(['Error'=>'El total no puede estar vacío.'], 203);
         }
 
@@ -180,28 +188,36 @@ class FacturaController extends Controller
         if($validator4->fails()){
             return response()->json(['Error'=>'El número de factura no puede estar vacío y debe tener 16 dígitos.'], 203);
         }
-
+        
         $validator5 = Validator::make($request->all(), [
-            'impuesto' => 'required',
+            'fechaHora' => 'required|date',
         ]);
 
         if($validator5->fails()){
-            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
+            return response()->json(['Error'=>'La fecha y hora de la factura no puede estar vacío.'], 203);
         }
 
         $validator6 = Validator::make($request->all(), [
-            'subTotal' => 'required',
+            'impuesto' => 'required',
         ]);
 
         if($validator6->fails()){
-            return response()->json(['Error'=>'El sub total no puede estar vacío.'], 203);
+            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
-        
+
         $validator7 = Validator::make($request->all(), [
-            'total' => 'required',
+            'subTotal' => 'required',
         ]);
 
         if($validator7->fails()){
+            return response()->json(['Error'=>'El sub total no puede estar vacío.'], 203);
+        }
+        
+        $validator8 = Validator::make($request->all(), [
+            'total' => 'required',
+        ]);
+
+        if($validator8->fails()){
             return response()->json(['Error'=>'El total no puede estar vacío.'], 203);
         }
 

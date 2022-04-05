@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
  * @property $empleadoCocinaId
  * @property $tipoEntregaId
  * @property $fechaHora
- * @property $estadoOrden
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -35,7 +34,6 @@ class OrdenEncabezado extends Model
 		'empleadoCocinaId' => 'required',
 		'tipoEntregaId' => 'required',
 		'fechaHora' => 'required',
-		'estadoOrden' => 'required',
 		'estado' => 'required',
     ];
 
@@ -98,13 +96,6 @@ class OrdenEncabezado extends Model
       
       return $OrdenEncabezado = DB::table('orden_encabezados')->where('empleadoCocinaId', $empleadoCocinaId)->get();
       
-    }
-  
-    public static function findByEstadoOrden($estadoOrden){
-        
-      return $OrdenEncabezado = DB::table('orden_encabezados')->where('estadoOrden', $estadoOrden)->get();
-      
-    }
-      
+    } 
 
 }

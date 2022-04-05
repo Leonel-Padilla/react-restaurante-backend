@@ -48,17 +48,6 @@ class OrdenEncabezadoController extends Controller
 
         return response($ordenEncabezado, 200);
     }
-
-    public function getByEstadoOrden($estadoOrden){
-
-        $ordenEncabezado = OrdenEncabezado::findByEstadoOrden($estadoOrden);
-
-        if(empty($ordenEncabezado)){
-            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
-        }
-
-        return response($ordenEncabezado, 200);
-    }
    
     public function store(Request $request)
     {
@@ -101,14 +90,6 @@ class OrdenEncabezadoController extends Controller
 
         if($validator4->fails()){
             return response()->json(['Error'=>'La fecha y hora de la orden no puede estar vacía.'], 203);
-        }
-
-        $validator4 = Validator::make($request->all(), [ 
-            'estadoOrden' => 'required|min:3|max:20',
-        ]);
-
-        if($validator4->fails()){
-            return response()->json(['Error'=>'El estado de la orden no puede estar vacía y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
@@ -177,14 +158,6 @@ class OrdenEncabezadoController extends Controller
 
         if($validator4->fails()){
             return response()->json(['Error'=>'La fecha y hora de la orden no puede estar vacía.'], 203);
-        }
-
-        $validator4 = Validator::make($request->all(), [ 
-            'estadoOrden' => 'required|min:3|max:20',
-        ]);
-
-        if($validator4->fails()){
-            return response()->json(['Error'=>'El estado de la orden no puede estar vacía y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){

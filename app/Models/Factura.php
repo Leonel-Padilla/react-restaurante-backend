@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
  * @property $empleadoCajeroId
  * @property $parametroFacturaId
  * @property $formaPagosId
+ * @property $fechaHora
  * @property $numeroFactura
  * @property $impuesto
  * @property $subTotal
@@ -36,6 +37,7 @@ class Factura extends Model
 		'empleadoCajeroId' => 'required',
 		'parametroFacturaId' => 'required',
 		'formaPagosId' => 'required',
+        'numeroFactura' => 'required',
 		'numeroFactura' => 'required',
 		'impuesto' => 'required',
 		'subTotal' => 'required',
@@ -50,7 +52,7 @@ class Factura extends Model
      *
      * @var array
      */
-    protected $fillable = ['ordenEncabezadoId','empleadoCajeroId','parametroFacturaId','formaPagosId','numeroFactura','impuesto','subTotal','total','estado'];
+    protected $fillable = ['ordenEncabezadoId','empleadoCajeroId','parametroFacturaId','formaPagosId','fechaHora','numeroFactura','impuesto','subTotal','total','estado'];
 
 
     /**

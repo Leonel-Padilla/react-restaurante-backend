@@ -20,6 +20,7 @@ class Factura extends Migration
             $table->bigInteger('empleadoCajeroId')->unsigned();
             $table->bigInteger('parametroFacturaId')->unsigned();
             $table->bigInteger('formaPagosId')->unsigned();
+            $table->dateTime('fechaHora');
             $table->string('numeroFactura');
             $table->string('impuesto');
             $table->string('subTotal');

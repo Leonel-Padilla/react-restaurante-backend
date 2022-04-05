@@ -21,7 +21,6 @@ class OrdenEncabezado extends Migration
             $table->bigInteger('empleadoCocinaId')->unsigned();
             $table->bigInteger('tipoEntregaId')->unsigned();
             $table->dateTime('fechaHora');
-            $table->string('estadoOrden', 20);
             $table->tinyInteger('estado');
             $table->timestamps();
 
