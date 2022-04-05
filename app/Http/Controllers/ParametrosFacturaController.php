@@ -20,18 +20,90 @@ class ParametrosFacturaController extends Controller
     public function store(Request $request)
     {
         $validator0 = Validator::make($request->all(), [
-            'cai_Restaurante' => 'required|min:32|max:32',
+            'numeroCAI' => 'required',
         ]);
 
         if($validator0->fails()){
-            return response()->json(['Error'=>'El CAI del restaurante no puede estar vacío y debe tener 32 caracteres.'], 203);
+            return response()->json(['Error'=>'El número del CAI no puede estar vacío.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [
-            'rtn_Restaurante' => 'required|min:14|max:14',
+            'fechaDesde' => 'required|date',
         ]);
 
         if($validator1->fails()){
+            return response()->json(['Error'=>'La fecha desde no puede estar vacía.'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [
+            'fechaDesde' => 'before:fechaHasta',
+        ]);
+
+        if($validator2->fails()){
+            return response()->json(['Error'=>'La fecha desde no puede ser despues de la fecha hasta.'], 203);
+        }
+
+        $validator3 = Validator::make($request->all(), [
+            'fechaHasta' => 'required|date',
+        ]);
+
+        if($validator3->fails()){
+            return response()->json(['Error'=>'La fecha hasta no puede estar vacía.'], 203);
+        }
+
+        $validator4 = Validator::make($request->all(), [
+            'rangoInicial' => 'required',
+        ]);
+
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El rango inicial no puede estar vacío.'], 203);
+        }
+
+        $validator5 = Validator::make($request->all(), [
+            'rangoFinal' => 'required',
+        ]);
+
+        if($validator5->fails()){
+            return response()->json(['Error'=>'El rango final no puede estar vacío.'], 203);
+        }
+
+        $validator6 = Validator::make($request->all(), [
+            'numeroFacturaActual' => 'required',
+        ]);
+
+        if($validator6->fails()){
+            return response()->json(['Error'=>'El número de factura actual no puede estar vacío.'], 203);
+        }
+
+        $validator7 = Validator::make($request->all(), [
+            'puntoEmision' => 'required|min:3|max:3',
+        ]);
+
+        if($validator7->fails()){
+            return response()->json(['Error'=>'El número de punto de emisión no puede estar vacío y debe contener 3 dígitos.'], 203);
+        }
+
+        $validator8 = Validator::make($request->all(), [
+            'establecimiento' => 'required|min:2|max:2',
+        ]);
+
+        if($validator8->fails()){
+            return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 2 dígitos.'], 203);
+        }
+
+        $validator9 = Validator::make($request->all(), [
+            'tipoDocumento' => 'required|min:2|max:2',
+        ]);
+
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El número de tipo de documento no puede estar vacío y debe contener 2 dígitos.'], 203);
+        }
+
+        $validator10 = Validator::make($request->all(), [
+            'rtn_Restaurante' => 'required|min:14|max:14',
+        ]);
+
+        if($validator10->fails()){
             return response()->json(['Error'=>'El RTN del restaurante no puede estar vacío y debe tener 14 digitos.'], 203);
         }
 
@@ -72,18 +144,90 @@ class ParametrosFacturaController extends Controller
         }
 
         $validator0 = Validator::make($request->all(), [
-            'cai_Restaurante' => 'required|min:32|max:32',
+            'numeroCAI' => 'required',
         ]);
 
         if($validator0->fails()){
-            return response()->json(['Error'=>'El CAI del restaurante no puede estar vacío y debe tener 32 caracteres.'], 203);
+            return response()->json(['Error'=>'El número del CAI no puede estar vacío.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [
-            'rtn_Restaurante' => 'required|min:14|max:14',
+            'fechaDesde' => 'required|date',
         ]);
 
         if($validator1->fails()){
+            return response()->json(['Error'=>'La fecha desde no puede estar vacía.'], 203);
+        }
+
+        $validator2 = Validator::make($request->all(), [
+            'fechaDesde' => 'before:fechaHasta',
+        ]);
+
+        if($validator2->fails()){
+            return response()->json(['Error'=>'La fecha desde no puede ser despues de la fecha hasta.'], 203);
+        }
+
+        $validator3 = Validator::make($request->all(), [
+            'fechaHasta' => 'required|date',
+        ]);
+
+        if($validator3->fails()){
+            return response()->json(['Error'=>'La fecha hasta no puede estar vacía.'], 203);
+        }
+
+        $validator4 = Validator::make($request->all(), [
+            'rangoInicial' => 'required',
+        ]);
+
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El rango inicial no puede estar vacío.'], 203);
+        }
+
+        $validator5 = Validator::make($request->all(), [
+            'rangoFinal' => 'required',
+        ]);
+
+        if($validator5->fails()){
+            return response()->json(['Error'=>'El rango final no puede estar vacío.'], 203);
+        }
+
+        $validator6 = Validator::make($request->all(), [
+            'numeroFacturaActual' => 'required',
+        ]);
+
+        if($validator6->fails()){
+            return response()->json(['Error'=>'El número de factura actual no puede estar vacío.'], 203);
+        }
+
+        $validator7 = Validator::make($request->all(), [
+            'puntoEmision' => 'required|min:3|max:3',
+        ]);
+
+        if($validator7->fails()){
+            return response()->json(['Error'=>'El número de punto de emisión no puede estar vacío y debe contener 3 dígitos.'], 203);
+        }
+
+        $validator8 = Validator::make($request->all(), [
+            'establecimiento' => 'required|min:2|max:2',
+        ]);
+
+        if($validator8->fails()){
+            return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 2 dígitos.'], 203);
+        }
+
+        $validator9 = Validator::make($request->all(), [
+            'tipoDocumento' => 'required|min:2|max:2',
+        ]);
+
+        if($validator9->fails()){
+            return response()->json(['Error'=>'El número de tipo de documento no puede estar vacío y debe contener 2 dígitos.'], 203);
+        }
+
+        $validator10 = Validator::make($request->all(), [
+            'rtn_Restaurante' => 'required|min:14|max:14',
+        ]);
+
+        if($validator10->fails()){
             return response()->json(['Error'=>'El RTN del restaurante no puede estar vacío y debe tener 14 digitos.'], 203);
         }
 

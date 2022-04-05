@@ -16,7 +16,15 @@ class ParametrosFactura extends Migration
         Schema::create('parametros_facturas', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('cai_Restaurante', 32);
+            $table->string('numeroCAI');
+            $table->date('fechaDesde');
+            $table->date('fechaHasta');
+            $table->string('rangoInicial');
+            $table->string('rangoFinal');
+            $table->string('numeroFacturaActual');
+            $table->string('puntoEmision',3);
+            $table->string('establecimiento',3);
+            $table->string('tipoDocumento',2);
             $table->string('rtn_Restaurante', 14);
             $table->tinyInteger('estado');
             $table->timestamps();

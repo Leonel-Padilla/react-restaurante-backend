@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
  * Class ParametrosFactura
  *
  * @property $id
- * @property $cai_Restaurante
+ * @property $numeroCAI
+ * @property $fechaDesde
+ * @property $fechaHasta
+ * @property $rangoInicial
+ * @property $rangoFinal
+ * @property $numeroFacturaActual
+ * @property $puntoEmision
+ * @property $establecimiento
+ * @property $tipoDocumento
  * @property $rtn_Restaurante
  * @property $estado
  * @property $created_at
@@ -21,7 +29,15 @@ class ParametrosFactura extends Model
 {
     
     static $rules = [
-		'cai_Restaurante' => 'required',
+		'numeroCAI' => 'required',
+    'fechaDesde' => 'required',
+    'fechaHasta' => 'required',
+    'rangoInicial' => 'required',
+    'rangoFinal' => 'required',
+    'numeroFacturaActual' => 'required',
+    'puntoEmision' => 'required',
+    'establecimiento' => 'required',
+    'tipoDocumento' => 'required',
 		'rtn_Restaurante' => 'required',
 		'estado' => 'required',
     ];
@@ -33,7 +49,7 @@ class ParametrosFactura extends Model
      *
      * @var array
      */
-    protected $fillable = ['cai_Restaurante','rtn_Restaurante','estado'];
+    protected $fillable = ['numeroCAI','fechaDesde','fechaHasta','rangoInicial','rangoFinal','numeroFacturaActual','puntoEmision','establecimiento','tipoDocumento','rtn_Restaurante','estado'];
 
 
 
