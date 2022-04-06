@@ -16,7 +16,7 @@ class ParametrosFactura extends Migration
         Schema::create('parametros_facturas', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('numeroCAI');
+            $table->string('numeroCAI')->unique();
             $table->date('fechaDesde');
             $table->date('fechaHasta');
             $table->string('rangoInicial');

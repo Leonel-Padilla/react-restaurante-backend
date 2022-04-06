@@ -92,6 +92,10 @@ class OrdenEncabezadoController extends Controller
             return response()->json(['Error'=>'La fecha y hora de la orden no puede estar vacía.'], 203);
         }
 
+        if ($request->empleadoMeseroId == $request->empleadoCocinaId) {
+            return response()->json(['Error'=>'El mesero y el cocinero no pueden ser el mismo.'], 203);
+        }
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
@@ -158,6 +162,10 @@ class OrdenEncabezadoController extends Controller
 
         if($validator4->fails()){
             return response()->json(['Error'=>'La fecha y hora de la orden no puede estar vacía.'], 203);
+        }
+
+        if ($request->empleadoMeseroId == $request->empleadoCocinaId) {
+            return response()->json(['Error'=>'El mesero y el cocinero no pueden ser el mismo.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
