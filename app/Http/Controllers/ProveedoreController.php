@@ -196,9 +196,19 @@ class ProveedoreController extends Controller
             return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
         }
 
-        $proveedore->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $proveedore->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre, Número, Correo y RTN.'], 203);
+            }
+        }
+
     }
 
     public function destroy($id)

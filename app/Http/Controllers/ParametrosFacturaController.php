@@ -32,7 +32,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator1->fails()){
-            return response()->json(['Error'=>'El número del CAI no puede estar vacío.'], 203);
+            return response()->json(['Error'=>'El número del CAI debe ser único.'], 203);
         }
 
         $validator2 = Validator::make($request->all(), [
@@ -239,9 +239,20 @@ class ParametrosFacturaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $parametrosFactura->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $parametrosFactura->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número CAI.'], 203);
+            }
+        }
+
+
     }
 
     public function destroy($id)

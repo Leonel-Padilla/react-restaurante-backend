@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TipoDocumentoController extends Controller
 {
@@ -15,9 +16,23 @@ class TipoDocumentoController extends Controller
     //
     public function store(Request $request)
     {
-        if (strlen($request->nombreDocumento) === 0){
-            return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
+        $validator0 = Validator::make($request->all(), [
+            'nombreDocumento' => 'required'
+        ]);
+
+        if($validator0->fails()){
+            return response()->json(['Error'=>'El nombre no puede estar vacío.'], 203);
         }
+
+        $validator1 = Validator::make($request->all(), [
+            'nombreDocumento' => 'unique:tipo_documentos'
+        ]);
+
+        if($validator1->fails()){
+            return response()->json(['Error'=>'El nombre del documento debe ser único.'], 203);
+        }
+        //
+        
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
@@ -56,16 +71,31 @@ class TipoDocumentoController extends Controller
         }
 
         //Validaciones Actualizar
-        if (strlen($request->nombreDocumento) === 0){
-            return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
+        $validator0 = Validator::make($request->all(), [
+            'nombreDocumento' => 'required'
+        ]);
+
+        if($validator0->fails()){
+            return response()->json(['Error'=>'El nombre no puede estar vacío.'], 203);
         }
+
         if ($request->estado > 1 || $request->estado < 0 ){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $tipoDocumento->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $tipoDocumento->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre Documento.'], 203);
+            }
+        }
+
     }
 
     //

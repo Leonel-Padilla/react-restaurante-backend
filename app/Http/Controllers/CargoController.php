@@ -42,15 +42,6 @@ class CargoController extends Controller
             return response()->json(['Error'=>'No se puede repetir el nombre del cargo'], 203);
         }
 
-        $validator2 = Validator::make($request->all(), [ 
-            'cargoDescripcion' => 'unique:cargos',
-        ]);
- 
-        if($validator2->fails()){
-            return response()->json(['Error'=>'No se puede repetir la descripción del cargo'], 203);
-        }
-
-
         /*if str_contains($request->cargoNombre, "@" || str_contains($request->cargoNombre, ".") 
         || str_contains($request->cargoNombre, "/") || str_contains($request->cargoNombre, "#") 
         || str_contains($request->cargoNombre, "$") || str_contains($request->cargoNombre, "-")
@@ -126,24 +117,6 @@ class CargoController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
-        ////
-        /*$validator1 = Validator::make($request->all(), [ 
-            'cargoNombre' => 'unique:cargos',
-        ]);
- 
-        if($validator1->fails()){
-            return response()->json(['Mensaje'=>'No se puede repetir el nombre del cargo'], 203);
-        }
-
-        $validator2 = Validator::make($request->all(), [ 
-            'cargoDescripcion' => 'unique:cargos',
-        ]);
- 
-        if($validator2->fails()){
-            return response()->json(['Mensaje'=>'No se puede repetir la decripción del cargo'], 203);
-        }*/
-
-
         if (strlen($request->cargoNombre) === 0){
             return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
@@ -174,9 +147,18 @@ class CargoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $cargo->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $cargo->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Cargo Nombre.'], 203);
+            }
+        }
 
     }
 

@@ -84,9 +84,19 @@ class FormaPagoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $formaPago->update($request->all());
+        
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $formaPago->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre de Forma de Pago.'], 203);
+            }
+        }
     }
 
     public function destroy($id)

@@ -24,7 +24,7 @@ class CompraEncabezado extends Migration
             $table->string('estadoCompra', 20);
             $table->string('numeroFactura', 20);
             $table->string('cai', 50);
-            $table->string('numeroFacturaCai', 50);
+            $table->string('numeroFacturaCai', 50)->unique();
             $table->tinyInteger('estado');
             $table->timestamps();
 

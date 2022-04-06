@@ -122,6 +122,14 @@ class CompraEncabezadoController extends Controller
             return response()->json(['Error'=>'Debe ingresar los datos del número de factura y el CAI.'], 203);
         }
 
+        $validator9 = Validator::make($request->all(), [ 
+            'numeroFacturaCai' => 'unique:compra_encabezados',
+        ]);
+ 
+        if($validator9->fails()){
+            return response()->json(['Error'=>'La combinación del número de factura y CAI deben ser únicos.'], 203);
+        }
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
@@ -231,14 +239,32 @@ class CompraEncabezadoController extends Controller
             return response()->json(['Error'=>'El CAI no puede estar vacío y debe de tener 32 caracteres.'], 203);
         }
 
+        $validator8 = Validator::make($request->all(), [ 
+            'numeroFacturaCai' => 'required|min:49|max:49',
+        ]);
+ 
+        if($validator8->fails()){
+            return response()->json(['Error'=>'Debe ingresar los datos del número de factura y el CAI.'], 203);
+        }
+
+
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
+        try {
 
-        $compraEncabezado->update($request->all());
+            $compraEncabezado->update($request->all());
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Combinación de Número de factura y CAI.'], 203);
+            }
+        }
+
     }
 
     public function destroy($id)

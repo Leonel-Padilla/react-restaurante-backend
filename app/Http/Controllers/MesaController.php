@@ -36,7 +36,7 @@ class MesaController extends Controller
         ]);
 
         if($validator0->fails()){
-            return response()->json(['Error'=>'El Id del sucursal no puede estar vacía.'], 203);
+            return response()->json(['Error'=>'La sucursal no puede estar vacía.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [
@@ -52,7 +52,7 @@ class MesaController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'La descripcion de la mesa no puede estar vacio y debe tener entre 10 y 100 carácteres'], 203);
+            return response()->json(['Error'=>'La descripción de la mesa no puede estar vacio y debe tener entre 10 y 100 caracteres'], 203);
         }
 
         $validator3 = Validator::make($request->all(), [ 
@@ -60,7 +60,7 @@ class MesaController extends Controller
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'El numero de la mesa no puede estar vacio.'], 203);
+            return response()->json(['Error'=>'El número de la mesa no puede estar vacío.'], 203);
         }
 
         $validator4 = Validator::make($request->all(), [ 
@@ -68,11 +68,11 @@ class MesaController extends Controller
         ]);
  
         if($validator4->fails()){
-            return response()->json(['Error'=>'El numero de la mesa debe ser único.'], 203);
+            return response()->json(['Error'=>'El número de la mesa debe ser único.'], 203);
         }
 
         if ($request->numero > 999 || $request->numero < 1 ){
-            return response()->json(['Error'=>'El numero de la mesa debe estar entre 1 y 999.'], 203);
+            return response()->json(['Error'=>'El número de la mesa debe estar entre 1 y 999.'], 203);
         }
 
         if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
@@ -123,7 +123,7 @@ class MesaController extends Controller
         ]);
 
         if($validator0->fails()){
-            return response()->json(['Error'=>'El Id del sucursal no puede estar vacía.'], 203);
+            return response()->json(['Error'=>'La sucursal no puede estar vacía.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [
@@ -139,19 +139,19 @@ class MesaController extends Controller
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'La descripcion de la mesa no puede estar vacio y debe tener entre 10 y 100 carácteres'], 203);
+            return response()->json(['Error'=>'La descripción de la mesa no puede estar vacio y debe tener entre 10 y 100 caracteres'], 203);
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'numero' => 'required|max:1|min:3',
+            'numero' => 'required|max:3|min:1',
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'El numero de la mesa no puede estar vacio.'], 203);
+            return response()->json(['Error'=>'El número de la mesa no puede estar vacío.'], 203);
         }
 
         if ($request->numero > 999 || $request->numero < 0 ){
-            return response()->json(['Error'=>'El numero de la mesa debe estar entre 1 y 999.'], 203);
+            return response()->json(['Error'=>'El número de la mesa debe estar entre 1 y 999.'], 203);
         }
 
         if ($request->cantidadAsientos > 20 || $request->cantidadAsientos < 2 ){
@@ -162,9 +162,19 @@ class MesaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $mesa->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $mesa->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número de Mesa.'], 203);
+            }
+        }
+
     }
 
 

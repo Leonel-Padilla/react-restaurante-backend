@@ -47,22 +47,6 @@ class CargoHistorialController extends Controller
             return response()->json(['Error'=>'El Id del cargo no puede estar vacía.'], 203);
         }
 
-        /*$validator2 = Validator::make($request->all(), [
-            'fechaInicio' => 'required|date|before:fechaFinal'
-        ]);
-
-        if($validator2->fails()){
-            return response()->json(['Error'=>'La fecha inicial no puede ser antes de la fecha final'], 203);
-        }
-
-        $validator3 = Validator::make($request->all(), [
-            'fechaFinal' => 'required|date|after:fechaInicio'
-        ]);
-
-        if($validator3->fails()){
-            return response()->json(['Error'=>'La fecha final no puede ser antes de la fecha inicial.'], 203);
-        }*/
-
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
@@ -114,22 +98,6 @@ class CargoHistorialController extends Controller
         if($validator1->fails()){
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
-
-        /*$validator2 = Validator::make($request->all(), [
-            'fechaInicio' => 'required|date|before:fechaFinal'
-        ]);
-
-        if($validator2->fails()){
-            return response()->json(['Error'=>'La fecha inicial no puede ser antes de la fecha final'], 203);
-        }
-
-        $validator3 = Validator::make($request->all(), [
-            'fechaFinal' => 'required|date|after:fechaInicio'
-        ]);
-
-        if($validator3->fails()){
-            return response()->json(['Error'=>'La fecha final no puede ser antes de la fecha inicial.'], 203);
-        }*/
 
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);

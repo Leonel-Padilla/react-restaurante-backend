@@ -302,10 +302,20 @@ class EmpleadoController extends Controller
             return response()->json(['Error'=>'El sueldo debe tener un minímo de 5000 y un máximo de 100,000'], 203);
         }
 
+        try {
 
-        $empleado->update($request->all());
+            $empleado->update($request->all());
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número Documento, Número Empleado,
+                Correo Empleado y el Usuario del Empleado.'], 203);
+            }
+        }
+
     }
 
     //

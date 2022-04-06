@@ -49,34 +49,42 @@ class ClienteController extends Controller
         }
 
         $validator2 = Validator::make($request->all(), [ 
-            'clienteNombre' => 'required|min:4|max:40',
+            'numeroDocumento' => 'unique:clientes',
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'El nombre del cliente no puede estar vacío y tiene que tener entre 4 y 40 caracteres'], 203);
+            return response()->json(['Error'=>'El número de documento debe ser único.'], 203);
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'clienteNumero' => 'required|starts_with:2,3,7,8,9|min:8|max:8',
+            'clienteNombre' => 'required|min:4|max:40',
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'El número del cliente debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+            return response()->json(['Error'=>'El nombre del cliente no puede estar vacío y tiene que tener entre 4 y 40 caracteres'], 203);
         }
 
         $validator4 = Validator::make($request->all(), [ 
-            'clienteNumero' => 'unique:clientes',
+            'clienteNumero' => 'required|starts_with:2,3,7,8,9|min:8|max:8',
         ]);
  
         if($validator4->fails()){
+            return response()->json(['Error'=>'El número del cliente debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
+        }
+
+        $validator5 = Validator::make($request->all(), [ 
+            'clienteNumero' => 'unique:clientes',
+        ]);
+ 
+        if($validator5->fails()){
             return response()->json(['Error'=>'El número del cliente debe ser único.'], 203);
         }
 
-        $validator5 = Validator::make($request->all(), [
+        $validator6 = Validator::make($request->all(), [
             'clienteCorreo' => 'required|email|min:10|max:50',
         ]);
 
-        if($validator5->fails()){
+        if($validator6->fails()){
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
 
@@ -84,35 +92,35 @@ class ClienteController extends Controller
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
 
-        $validator6 = Validator::make($request->all(), [
+        $validator7 = Validator::make($request->all(), [
             'clienteCorreo' => 'unique:clientes',
         ]);
 
-        if($validator6->fails()){
+        if($validator7->fails()){
             return response()->json(['Error'=>'El correo del cliente debe ser único.'], 203);
         }
 
-        $validator7 = Validator::make($request->all(), [
+        $validator8 = Validator::make($request->all(), [
             'clienteRTN' => 'unique:clientes',
         ]);
 
-        if($validator7->fails()){
+        if($validator8->fails()){
             return response()->json(['Error'=>'El RTN del cliente debe ser único.'], 203);
         }
 
-        $validator8 = Validator::make($request->all(), [
+        $validator9 = Validator::make($request->all(), [
             'clienteRTN' => 'min:14|max:14',
         ]);
 
-        if($validator8->fails()){
+        if($validator9->fails()){
             return response()->json(['Error'=>'El RTN del cliente debe ser de 14 dígitos.'], 203);
         }
 
-        $validator9 = Validator::make($request->all(), [ 
+        $validator10 = Validator::make($request->all(), [ 
             'clienteRTN' => 'starts_with:0,1',
         ]);
  
-        if($validator9->fails()){
+        if($validator10->fails()){
             return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
         }
 
@@ -219,9 +227,18 @@ class ClienteController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $cliente->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $cliente->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número Documento, Número Cliente, Cliente Correo, RTN Cliente'], 203);
+            }
+        }
 
     }
 
