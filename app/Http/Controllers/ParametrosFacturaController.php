@@ -84,11 +84,11 @@ class ParametrosFacturaController extends Controller
         }
 
         $validator8 = Validator::make($request->all(), [
-            'establecimiento' => 'required|min:2|max:2',
+            'establecimiento' => 'required|min:3|max:3',
         ]);
 
         if($validator8->fails()){
-            return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 2 dígitos.'], 203);
+            return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 3 dígitos.'], 203);
         }
 
         $validator9 = Validator::make($request->all(), [
@@ -208,11 +208,11 @@ class ParametrosFacturaController extends Controller
         }
 
         $validator8 = Validator::make($request->all(), [
-            'establecimiento' => 'required|min:2|max:2',
+            'establecimiento' => 'required|min:3|max:3',
         ]);
 
         if($validator8->fails()){
-            return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 2 dígitos.'], 203);
+            return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 3 dígitos.'], 203);
         }
 
         $validator9 = Validator::make($request->all(), [
