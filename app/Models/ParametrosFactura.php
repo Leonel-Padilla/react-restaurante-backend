@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class ParametrosFactura
  *
  * @property $id
+ * @property $sucursalId
  * @property $numeroCAI
  * @property $fechaDesde
  * @property $fechaHasta
@@ -29,6 +30,7 @@ class ParametrosFactura extends Model
 {
     
     static $rules = [
+    'sucursalId' => 'required',
 		'numeroCAI' => 'required',
     'fechaDesde' => 'required',
     'fechaHasta' => 'required',
@@ -49,8 +51,14 @@ class ParametrosFactura extends Model
      *
      * @var array
      */
-    protected $fillable = ['numeroCAI','fechaDesde','fechaHasta','rangoInicial','rangoFinal','numeroFacturaActual','puntoEmision','establecimiento','tipoDocumento','rtn_Restaurante','estado'];
+    protected $fillable = ['sucursalId','numeroCAI','fechaDesde','fechaHasta','rangoInicial','rangoFinal','numeroFacturaActual','puntoEmision','establecimiento','tipoDocumento','rtn_Restaurante','estado'];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sucursal()
+    {
+        return $this->hasOne('App\Models\Sucursal', 'id', 'sucursalId');
+    }
 
 }

@@ -173,6 +173,14 @@ class EmpleadoController extends Controller
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
         //
+        $validator14 = Validator::make($request->all(), [ 
+            'sucursalId' => 'required',
+        ]);
+
+        if($validator14->fails()){
+            return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
+        }
+        //
         if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
             return response()->json(['Error'=>'El sueldo debe tener un minímo de L.5000 y un máximo de L.100,000'], 203);
         }
@@ -296,6 +304,14 @@ class EmpleadoController extends Controller
 
         if($validator13->fails()){
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
+        }
+        //
+        $validator14 = Validator::make($request->all(), [ 
+            'sucursalId' => 'required',
+        ]);
+
+        if($validator14->fails()){
+            return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
         //
         if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){

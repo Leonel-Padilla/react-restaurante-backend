@@ -57,10 +57,10 @@ class CargoHistorial extends Model
     }
     
 
-        //New Collections
-        public static function findByEmpleadoId($empleadoId){
+    //New Collections
+    public static function findByEmpleadoId($empleadoId){
         
-          return $Empleado = DB::table('cargo_historials')->where('empleadoId', $empleadoId)->get();
+      return $Empleado = DB::table('cargo_historials')->where('empleadoId', $empleadoId)->get();
     
-        }
+    }
 }

@@ -31,7 +31,7 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $validator0 = Validator::make($request->all(), [ 
-            'productoNombre' => 'required|min:4|max:50',
+            'impuestoId' => 'required',
         ]);
  
         if($validator0->fails()){
@@ -39,28 +39,45 @@ class ProductoController extends Controller
         }
 
         $validator1 = Validator::make($request->all(), [ 
-            'productoNombre' => 'unique:productos',
+            'productoNombre' => 'required|min:4|max:50',
         ]);
  
         if($validator1->fails()){
-            return response()->json(['Error'=>'El nombre del producto debe ser único.'], 203);
+            return response()->json(['Error'=>'El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres.'], 203);
         }
 
         $validator2 = Validator::make($request->all(), [ 
-            'productoDescripcion' => 'required|min:10|max:100',
+            'productoNombre' => 'unique:productos',
         ]);
  
         if($validator2->fails()){
-            return response()->json(['Error'=>'La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres.'], 203);
+            return response()->json(['Error'=>'El nombre del producto debe ser único.'], 203);
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'precio' => 'required|min:1|max:5',
+            'productoDescripcion' => 'required|min:10|max:100',
         ]);
  
         if($validator3->fails()){
+            return response()->json(['Error'=>'La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres.'], 203);
+        }
+
+        $validator4 = Validator::make($request->all(), [ 
+            'precio' => 'required|min:1|max:5',
+        ]);
+ 
+        if($validator4->fails()){
             return response()->json(['Error'=>'El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos.'], 203);
         }
+
+        $validator4 = Validator::make($request->all(), [ 
+            'descuento' => 'min:1|max:3',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El descuento debe tener entre 1 y 3 dígitos.'], 203);
+        }
+
 
         if ($request->precio > 20000 || $request->precio < 100){
             return response()->json(['Error'=>'El precio debe estar entre L.100 y L.20,000.'], 203);
@@ -103,7 +120,7 @@ class ProductoController extends Controller
         }
 
         $validator0 = Validator::make($request->all(), [ 
-            'productoNombre' => 'required|min:4|max:50',
+            'impuestoId' => 'required',
         ]);
  
         if($validator0->fails()){
@@ -111,19 +128,35 @@ class ProductoController extends Controller
         }
 
         $validator1 = Validator::make($request->all(), [ 
-            'productoDescripcion' => 'required|min:10|max:100',
+            'productoNombre' => 'required|min:4|max:50',
         ]);
  
         if($validator1->fails()){
+            return response()->json(['Error'=>'El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres.'], 203);
+        }
+
+        $validator3 = Validator::make($request->all(), [ 
+            'productoDescripcion' => 'required|min:10|max:100',
+        ]);
+ 
+        if($validator3->fails()){
             return response()->json(['Error'=>'La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres.'], 203);
         }
 
-        $validator2 = Validator::make($request->all(), [ 
+        $validator4 = Validator::make($request->all(), [ 
             'precio' => 'required|min:1|max:5',
         ]);
  
-        if($validator2->fails()){
+        if($validator4->fails()){
             return response()->json(['Error'=>'El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos.'], 203);
+        }
+
+        $validator4 = Validator::make($request->all(), [ 
+            'descuento' => 'min:1|max:3',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El descuento debe tener entre 1 y 3 dígitos.'], 203);
         }
 
         if ($request->precio > 20000 || $request->precio < 100){

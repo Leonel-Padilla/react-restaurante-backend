@@ -92,6 +92,21 @@ Route::post('addFormaPago', 'App\Http\Controllers\FormaPagoController@store');
 Route::put('updateFormaPago/{id}', 'App\Http\Controllers\FormaPagoController@update');
 Route::delete('deleteFormaPago/{id}', 'App\Http\Controllers\FormaPagoController@destroy');
 
+//Impuesto
+Route::get('Impuesto', 'App\Http\Controllers\ImpuestoController@getImpuesto');
+Route::get('Impuesto/{id}', 'App\Http\Controllers\ImpuestoController@show');
+Route::post('addImpuesto', 'App\Http\Controllers\ImpuestoController@store');
+Route::put('updateImpuesto/{id}', 'App\Http\Controllers\ImpuestoController@update');
+Route::delete('deleteImpuesto/{id}', 'App\Http\Controllers\ImpuestoController@destroy');
+
+//Impuesto Historial
+Route::get('ImpuestoHistorial', 'App\Http\Controllers\ImpuestoHistorialController@getImpuestoHistorial');
+Route::get('ImpuestoHistorialI/{impuestoId}', 'App\Http\Controllers\ImpuestoHistorialController@getByImpuestoId');
+Route::get('ImpuestoHistorial/{id}', 'App\Http\Controllers\ImpuestoHistorialController@show');
+Route::post('addImpuestoHistorial', 'App\Http\Controllers\ImpuestoHistorialController@store');
+Route::put('updateImpuestoHistorial/{id}', 'App\Http\Controllers\ImpuestoHistorialController@update');
+Route::delete('deleteImpuestoHistorial/{id}', 'App\Http\Controllers\ImpuestoHistorialController@destroy');
+
 //Insumo
 Route::get('Insumo', 'App\Http\Controllers\InsumoController@getInsumo');
 Route::get('Insumo/{id}', 'App\Http\Controllers\InsumoController@show');

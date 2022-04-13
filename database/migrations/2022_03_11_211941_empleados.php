@@ -17,6 +17,7 @@ class Empleados extends Migration
 
             $table->bigIncrements('id');
             $table->bigInteger('tipoDocumentoId')->unsigned();
+            $table->bigInteger('sucursalId')->unsigned();
             $table->string('numeroDocumento', 14)->unique();
             $table->string('empleadoNombre', 50);
             $table->string('empleadoNumero', 8)->unique();
@@ -35,6 +36,7 @@ class Empleados extends Migration
 
             $table->foreign('tipoDocumentoId')->references('id')->on('tipo_documentos');
             $table->foreign('cargoActualId')->references('id')->on('cargos');
+            $table->foreign('sucursalId')->references('id')->on('sucursales');
         });
     }
 

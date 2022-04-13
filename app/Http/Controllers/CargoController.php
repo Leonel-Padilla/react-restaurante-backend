@@ -156,7 +156,7 @@ class CargoController extends Controller
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Cargo Nombre.'], 203);
+                return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del cargo.'], 203);
             }
         }
 

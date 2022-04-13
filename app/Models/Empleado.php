@@ -21,6 +21,7 @@ use ESolution\DBEncryption\Traits\EncryptedAttribute;
  * @property $cargoActualId
  * @property $fechaContratacion
  * @property $fechaNacimiento
+ * @property $sucursalId
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -53,6 +54,7 @@ class Empleado extends Model
     'fechaContratacion' => 'required',
     'fechaNacimiento' => 'required',
     'fechaBloqueo' => 'nullable',
+    'sucursalId' => 'required',
 		'estado' => 'required',
     ];
 
@@ -65,7 +67,7 @@ class Empleado extends Model
      */
     protected $fillable = ['tipoDocumentoId','numeroDocumento','empleadoNombre','empleadoNumero', 'empleadoCorreo',
     'empleadoUsuario','empleadoContrasenia','empleadoDireccion','empleadoSueldo','cargoActualId','fechaContratacion','fechaNacimiento',
-    'fechaBloqueo','estado'];
+    'fechaBloqueo','sucursalId','estado'];
 
 
     /**
@@ -74,6 +76,11 @@ class Empleado extends Model
     public function tipoDocumento()
     {
         return $this->hasOne('App\Models\TipoDocumento', 'id', 'tipoDocumentoId');
+    }
+
+    public function sucursal()
+    {
+        return $this->hasOne('App\Models\Sucursal', 'id', 'sucursalId');
     }
     
 

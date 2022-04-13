@@ -3,33 +3,30 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 /**
- * Class Producto
+ * Class ImpuestoHistorial
  *
  * @property $id
  * @property $impuestoId
- * @property $productoNombre
- * @property $productoDescripcion
- * @property $precio
- * @property $descuento
+ * @property $valorImpuesto
+ * @property $fechaInicio
+ * @property $fechaFinal
  * @property $estado
  * @property $created_at
  * @property $updated_at
  *
+ * @property Impuesto $impuesto
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Producto extends Model
+class ImpuestoHistorial extends Model
 {
     
     static $rules = [
-    'impuestoId' => 'required',
-		'productoNombre' => 'required',
-		'productoDescripcion' => 'required',
-		'precio' => 'required',
-    'descuento' => 'required',
+		'impuestoId' => 'required',
+		'valorImpuesto' => 'required',
+		'fechaInicio' => 'required',
 		'estado' => 'required',
     ];
 
@@ -40,22 +37,23 @@ class Producto extends Model
      *
      * @var array
      */
-    protected $fillable = ['impuestoId','productoNombre','productoDescripcion','precio','descuento','estado'];
+    protected $fillable = ['impuestoId','valorImpuesto','fechaInicio','fechaFinal','estado'];
 
 
-     /**
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function impuesto()
     {
         return $this->hasOne('App\Models\Impuesto', 'id', 'impuestoId');
     }
-    //New Collections
-    public static function findByProductoNombre($productoNombre){
-        
-      return $Producto = DB::table('productos')->where('productoNombre', $productoNombre)->get();
-  
-    }
 
+    //New Collections
+    public static function findByImpuestoId($impuestoId){
+        
+      return $Impuesto = DB::table('impuesto_historials')->where('impuestoId', $impuestoId)->get();
+        
+    }
+    
 
 }
