@@ -62,8 +62,8 @@ class CompraDetalleController extends Controller
             return response()->json(['Error'=>'La cantidad no puede estar vacía.'], 203);
         }
 
-        if ($request->precio < 1 || $request->precio > 50000){
-            return response()->json(['Error'=>'El precio tiene que estar entre 1 a 50,000.'], 203);
+        if ($request->precio < 0 || $request->precio > 50000){
+            return response()->json(['Error'=>'El precio tiene que estar entre 0 a 50,000.'], 203);
         }
 
         if ($request->cantidad < 0 || $request->cantidad > 999){
@@ -140,8 +140,8 @@ class CompraDetalleController extends Controller
             return response()->json(['Error'=>'La cantidad no puede estar vacía.'], 203);
         }
 
-        if ($request->precio < 100|| $request->precio > 50000){
-            return response()->json(['Error'=>'El precio tiene que estar entre 100 a 50,000.'], 203);
+        if ($request->precio < 0|| $request->precio > 50000){
+            return response()->json(['Error'=>'El precio tiene que estar entre 0 a 50,000.'], 203);
         }
 
         if ($request->cantidad < 0|| $request->cantidad > 999){

@@ -98,4 +98,10 @@ class OrdenEncabezado extends Model
       
     } 
 
+    public static function findByTipoEntrega($tipoEntregaId){
+      
+      return $OrdenEncabezado = DB::table('orden_encabezados')->where('tipoEntregaId', $tipoEntregaId)->get();
+      
+    } 
+
 }

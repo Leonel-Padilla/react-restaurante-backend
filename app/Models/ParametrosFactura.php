@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ParametrosFactura
@@ -59,6 +60,13 @@ class ParametrosFactura extends Model
     public function sucursal()
     {
         return $this->hasOne('App\Models\Sucursal', 'id', 'sucursalId');
+    }
+
+    //New Collections
+    public static function findBySucursal($sucursalId){
+        
+      return $ParametrosFactura = DB::table('parametros_facturas')->where('sucursalId', $sucursalId)->get();
+        
     }
 
 }

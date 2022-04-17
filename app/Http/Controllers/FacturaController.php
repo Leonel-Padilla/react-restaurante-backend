@@ -101,16 +101,16 @@ class FacturaController extends Controller
             return response()->json(['Error'=>'El total no puede estar vacío.'], 203);
         }
 
-        if ($request->impuesto <= 0){
-            return response()->json(['Error'=>'El impuesto no puede ser menor o igual que 0'], 203);
+        if ($request->impuesto < 0){
+            return response()->json(['Error'=>'El impuesto no puede ser menor a 0'], 203);
         }
 
-        if ($request->subTotal <= 0){
-            return response()->json(['Error'=>'El sub total no puede ser menor o igual que 0'], 203);
+        if ($request->subTotal < 0){
+            return response()->json(['Error'=>'El sub total no puede ser menor a 0'], 203);
         }
 
-        if ($request->total <= 0){
-            return response()->json(['Error'=>'El total no puede ser menor o igual que 0'], 203);
+        if ($request->total < 0){
+            return response()->json(['Error'=>'El total no puede ser menor a 0'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
@@ -221,18 +221,17 @@ class FacturaController extends Controller
             return response()->json(['Error'=>'El total no puede estar vacío.'], 203);
         }
 
-        if ($request->impuesto <= 0){
-            return response()->json(['Error'=>'El impuesto no puede ser menor o igual que 0'], 203);
+        if ($request->impuesto < 0){
+            return response()->json(['Error'=>'El impuesto no puede ser menor a 0'], 203);
         }
 
-        if ($request->subTotal <= 0){
-            return response()->json(['Error'=>'El sub total no puede ser menor o igual que 0'], 203);
+        if ($request->subTotal < 0){
+            return response()->json(['Error'=>'El sub total no puede ser menor a 0'], 203);
         }
 
-        if ($request->total <= 0){
-            return response()->json(['Error'=>'El total no puede ser menor o igual que 0'], 203);
+        if ($request->total < 0){
+            return response()->json(['Error'=>'El total no puede ser menor a 0'], 203);
         }
-
 
         if ($request->estado > 1|| $request->estado < 0){
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);

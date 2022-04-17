@@ -16,6 +16,18 @@ class ParametrosFacturaController extends Controller
     public function getParametrosFactura(){
         return response()->json(ParametrosFactura::all(),200);
     }
+
+    //
+    public function getBySucursal($sucursalId){
+
+        $parametrosFactura = ParametrosFactura::findBySucursal($sucursalId);
+        
+        if(empty($parametrosFactura)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+        
+        return response($parametrosFactura, 200);
+    }
   
     public function store(Request $request)
     {

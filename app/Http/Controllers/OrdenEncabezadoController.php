@@ -48,6 +48,17 @@ class OrdenEncabezadoController extends Controller
 
         return response($ordenEncabezado, 200);
     }
+
+    public function getByTipoEntregaId($tipoEntregaId){
+
+        $ordenEncabezado = OrdenEncabezado::findByTipoEntrega($tipoEntregaId);
+
+        if(empty($ordenEncabezado)){
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+
+        return response($ordenEncabezado, 200);
+    }
    
     public function store(Request $request)
     {

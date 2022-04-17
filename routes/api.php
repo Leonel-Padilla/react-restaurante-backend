@@ -67,6 +67,14 @@ Route::post('addCompraEncabezado', 'App\Http\Controllers\CompraEncabezadoControl
 Route::put('updateCompraEncabezado/{id}', 'App\Http\Controllers\CompraEncabezadoController@update');
 Route::delete('deleteCompraEncabezado/{id}', 'App\Http\Controllers\CompraEncabezadoController@destroy');
 
+//Delivery
+Route::get('Delivery', 'App\Http\Controllers\DeliveryController@getDelivery');
+Route::get('Delivery/{id}', 'App\Http\Controllers\DeliveryController@show');
+Route::get('DeliveryC/{clienteId}', 'App\Http\Controllers\DeliveryController@getByCliente');
+Route::post('addDelivery', 'App\Http\Controllers\DeliveryController@store');
+Route::put('updateDelivery/{id}', 'App\Http\Controllers\DeliveryController@update');
+Route::delete('deleteDelivery/{id}', 'App\Http\Controllers\DeliveryController@destroy');
+
 //Empleado
 Route::get('Empleado', 'App\Http\Controllers\EmpleadoController@getEmpleado');
 Route::get('Empleado/{id}', 'App\Http\Controllers\EmpleadoController@show');
@@ -129,7 +137,7 @@ Route::get('OrdenEncabezado', 'App\Http\Controllers\OrdenEncabezadoController@ge
 Route::get('OrdenEncabezadoC/{clienteId}', 'App\Http\Controllers\OrdenEncabezadoController@getByClienteId');
 Route::get('OrdenEncabezadoM/{empleadoId}', 'App\Http\Controllers\OrdenEncabezadoController@getByEmpleadoMeseroId');
 Route::get('OrdenEncabezadoCO/{empleadoId}', 'App\Http\Controllers\OrdenEncabezadoController@getByEmpleadoCocinaId');
-Route::get('OrdenEncabezadoE/{estadoOrden}', 'App\Http\Controllers\OrdenEncabezadoController@getByEstadoOrden');
+Route::get('OrdenEncabezadoE/{tipoEntregaId}', 'App\Http\Controllers\OrdenEncabezadoController@getByTipoEntregaId');
 Route::get('OrdenEncabezado/{id}', 'App\Http\Controllers\OrdenEncabezadoController@show');
 Route::post('addOrdenEncabezado', 'App\Http\Controllers\OrdenEncabezadoController@store');
 Route::put('updateOrdenEncabezado/{id}', 'App\Http\Controllers\OrdenEncabezadoController@update');
@@ -146,6 +154,7 @@ Route::delete('deleteOrdenDetalle/{id}', 'App\Http\Controllers\OrdenDetalleContr
 //Parametros Factura
 Route::get('ParametrosFactura', 'App\Http\Controllers\ParametrosFacturaController@getParametrosFactura');
 Route::get('ParametrosFactura/{id}', 'App\Http\Controllers\ParametrosFacturaController@show');
+Route::get('ParametrosFacturaI/{sucursalId}', 'App\Http\Controllers\ParametrosFacturaController@getBySucursal');
 Route::post('addParametrosFactura', 'App\Http\Controllers\ParametrosFacturaController@store');
 Route::put('updateParametrosFactura/{id}', 'App\Http\Controllers\ParametrosFacturaController@update');
 Route::delete('deleteParametrosFactura/{id}', 'App\Http\Controllers\ParametrosFacturaController@destroy');
@@ -182,6 +191,23 @@ Route::get('ProveedorN/{nombreProveedor}', 'App\Http\Controllers\ProveedoreContr
 Route::post('addProveedor', 'App\Http\Controllers\ProveedoreController@store');
 Route::put('updateProveedor/{id}', 'App\Http\Controllers\ProveedoreController@update');
 Route::delete('deleteProveedor/{id}', 'App\Http\Controllers\ProveedoreController@destroy');
+
+//Reservacion
+Route::get('Reservacion', 'App\Http\Controllers\ReservacioneController@getReservacion');
+Route::get('Reservacion/{id}', 'App\Http\Controllers\ReservacioneController@show');
+Route::get('ReservacionC/{clienteId}', 'App\Http\Controllers\ReservacioneController@getByCliente');
+Route::post('addReservacion', 'App\Http\Controllers\ReservacioneController@store');
+Route::put('updateReservacion/{id}', 'App\Http\Controllers\ReservacioneController@update');
+Route::delete('deleteReservacion/{id}', 'App\Http\Controllers\ReservacioneController@destroy');
+
+//Reservacion Mesa
+Route::get('ReservacionMesa', 'App\Http\Controllers\ReservacionMesaController@getReservacionMesa');
+Route::get('ReservacionMesa/{id}', 'App\Http\Controllers\ReservacionMesaController@show');
+Route::get('ReservacionMesaR/{reservacionId}', 'App\Http\Controllers\ReservacionMesaController@getByReservacionId');
+Route::get('ReservacionMesaM/{mesaId}', 'App\Http\Controllers\ReservacionMesaController@getByMesaId');
+Route::post('addReservacionMesa', 'App\Http\Controllers\ReservacionMesaController@store');
+Route::put('updateReservacionMesa/{id}', 'App\Http\Controllers\ReservacionMesaController@update');
+Route::delete('deleteReservacionMesa/{id}', 'App\Http\Controllers\ReservacionMesaController@destroy');
 
 //Sucursal
 Route::get('Sucursal', 'App\Http\Controllers\SucursaleController@getSucursal');
