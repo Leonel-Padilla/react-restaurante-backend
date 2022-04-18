@@ -101,6 +101,38 @@ class FacturaController extends Controller
             return response()->json(['Error'=>'El total no puede estar vacío.'], 203);
         }
 
+        $validator9 = Validator::make($request->all(), [
+            'informacionPago' => 'required',
+        ]);
+
+        if($validator9->fails()){
+            return response()->json(['Error'=>'La información de pago no puede estar vacío.'], 203);
+        }
+
+        $validator10 = Validator::make($request->all(), [
+            'justificacion' => 'max:200',
+        ]);
+
+        if($validator10->fails()){
+            return response()->json(['Error'=>'La justificación tiene un máximo de 200 caracteres.'], 203);
+        }
+
+        $validator11 = Validator::make($request->all(), [
+            'descuentoPorcentaje' => 'required',
+        ]);
+
+        if($validator11->fails()){
+            return response()->json(['Error'=>'El porcentaje del descuento no puede estar vacío.'], 203);
+        }
+
+        $validator12 = Validator::make($request->all(), [
+            'descuentoCantidad' => 'required',
+        ]);
+
+        if($validator12->fails()){
+            return response()->json(['Error'=>'La cantidad del descuento no puede estar vacío.'], 203);
+        }
+
         if ($request->impuesto < 0){
             return response()->json(['Error'=>'El impuesto no puede ser menor a 0'], 203);
         }
@@ -219,6 +251,38 @@ class FacturaController extends Controller
 
         if($validator8->fails()){
             return response()->json(['Error'=>'El total no puede estar vacío.'], 203);
+        }
+
+        $validator9 = Validator::make($request->all(), [
+            'informacionPago' => 'required',
+        ]);
+
+        if($validator9->fails()){
+            return response()->json(['Error'=>'La información de pago no puede estar vacío.'], 203);
+        }
+
+        $validator10 = Validator::make($request->all(), [
+            'justificacion' => 'max:200',
+        ]);
+
+        if($validator10->fails()){
+            return response()->json(['Error'=>'La justificación tiene un máximo de 200 caracteres.'], 203);
+        }
+
+        $validator11 = Validator::make($request->all(), [
+            'descuentoPorcentaje' => 'required',
+        ]);
+
+        if($validator11->fails()){
+            return response()->json(['Error'=>'El porcentaje del descuento no puede estar vacío.'], 203);
+        }
+
+        $validator12 = Validator::make($request->all(), [
+            'descuentoCantidad' => 'required',
+        ]);
+
+        if($validator12->fails()){
+            return response()->json(['Error'=>'La cantidad del descuento no puede estar vacío.'], 203);
         }
 
         if ($request->impuesto < 0){

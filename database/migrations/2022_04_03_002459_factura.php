@@ -25,6 +25,10 @@ class Factura extends Migration
             $table->string('impuesto');
             $table->string('subTotal');
             $table->string('total');
+            $table->string('informacionPago');
+            $table->string('justificacion', 200)->nullable();
+            $table->string('descuentoPorcentaje');
+            $table->string('descuentoCantidad');
             $table->tinyInteger('estado');
             $table->timestamps();
 
