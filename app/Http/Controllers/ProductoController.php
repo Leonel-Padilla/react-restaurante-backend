@@ -124,7 +124,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator0->fails()){
-            return response()->json(['Error'=>'El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres.'], 203);
+            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
 
         $validator1 = Validator::make($request->all(), [ 
