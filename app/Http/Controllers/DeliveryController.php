@@ -57,11 +57,11 @@ class DeliveryController extends Controller
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'fechaEntrega' => 'required|date',
+            'ordenEncabezadoId' => 'unique:deliveries',
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
+            return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery.'], 203);
         }
 
         $validator4 = Validator::make($request->all(), [ 
@@ -73,10 +73,18 @@ class DeliveryController extends Controller
         }
 
         $validator5 = Validator::make($request->all(), [ 
-            'comentario' => 'max:200',
+            'fechaEntrega' => 'required|date',
         ]);
  
         if($validator5->fails()){
+            return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
+        }
+
+        $validator6 = Validator::make($request->all(), [ 
+            'comentario' => 'max:200',
+        ]);
+ 
+        if($validator6->fails()){
             return response()->json(['Error'=>'El comentario tiene un máximo de 200 caracteres.'], 203);
         }
 
@@ -159,11 +167,11 @@ class DeliveryController extends Controller
         }
 
         $validator3 = Validator::make($request->all(), [ 
-            'fechaEntrega' => 'required|date',
+            'ordenEncabezadoId' => 'unique:deliveries',
         ]);
  
         if($validator3->fails()){
-            return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
+            return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery.'], 203);
         }
 
         $validator4 = Validator::make($request->all(), [ 
@@ -175,10 +183,18 @@ class DeliveryController extends Controller
         }
 
         $validator5 = Validator::make($request->all(), [ 
-            'comentario' => 'max:200',
+            'fechaEntrega' => 'required|date',
         ]);
  
         if($validator5->fails()){
+            return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
+        }
+
+        $validator6 = Validator::make($request->all(), [ 
+            'comentario' => 'max:200',
+        ]);
+ 
+        if($validator6->fails()){
             return response()->json(['Error'=>'El comentario tiene un máximo de 200 caracteres.'], 203);
         }
 
@@ -202,9 +218,19 @@ class DeliveryController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $delivery->update($request->all());
+        try {
 
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $delivery->update($request->all());
+
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery'], 203);
+            }
+        }
+
     }
 
     public function destroy($id)

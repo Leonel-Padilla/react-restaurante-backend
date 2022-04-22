@@ -20,6 +20,8 @@ class OrdenDetalle extends Migration
             $table->bigInteger('productoId')->unsigned();
             $table->string('precio');
             $table->string('cantidad');
+            $table->string('descuentoProducto');
+            $table->string('impuestoProducto');
             $table->tinyInteger('estado');
             $table->timestamps();
 

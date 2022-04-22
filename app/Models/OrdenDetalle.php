@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
  * @property $productoId
  * @property $precio
  * @property $cantidad
+ * @property $descuentoProducto
+ * @property $impuestoProducto
  * @property $estado
  * @property $created_at
  * @property $updated_at
@@ -30,6 +32,8 @@ class OrdenDetalle extends Model
 		'productoId' => 'required',
 		'precio' => 'required',
 		'cantidad' => 'required',
+        'descuentoProducto' => 'required',
+        'impuestoProducto' => 'required',
 		'estado' => 'required',
     ];
 
@@ -40,7 +44,7 @@ class OrdenDetalle extends Model
      *
      * @var array
      */
-    protected $fillable = ['ordenEncabezadoId','productoId','precio','cantidad','estado'];
+    protected $fillable = ['ordenEncabezadoId','productoId','precio','cantidad','descuentoProducto','impuestoProducto','estado'];
 
 
     /**

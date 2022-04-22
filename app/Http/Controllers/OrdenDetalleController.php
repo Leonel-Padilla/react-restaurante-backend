@@ -61,6 +61,30 @@ class OrdenDetalleController extends Controller
             return response()->json(['Error'=>'La cantidad no puede estar vacía.'], 203);
         }
 
+        $validator4 = Validator::make($request->all(), [ 
+            'descuentoProducto' => 'required',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El descuento no puede estar vacío.'], 203);
+        }
+
+        $validator5 = Validator::make($request->all(), [ 
+            'impuestoProducto' => 'required',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
+        }
+
+        if ($request->descuentoProducto < 0 || $request->descuentoProducto > 100){
+            return response()->json(['Error'=>'El descuento tiene que estar entre 0 y 100.'], 203);
+        }
+
+        if ($request->impuestoProducto < 0 || $request->impuestoProducto > 100){
+            return response()->json(['Error'=>'El impuesto tiene que estar entre 0 y 100.'], 203);
+        }
+
         if ($request->precio < 1 || $request->precio > 50000){
             return response()->json(['Error'=>'El precio tiene que estar entre 1 a 50,000.'], 203);
         }
@@ -137,12 +161,36 @@ class OrdenDetalleController extends Controller
             return response()->json(['Error'=>'La cantidad no puede estar vacía.'], 203);
         }
 
+        $validator4 = Validator::make($request->all(), [ 
+            'descuentoProducto' => 'required',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El descuento no puede estar vacío.'], 203);
+        }
+
+        $validator5 = Validator::make($request->all(), [ 
+            'impuestoProducto' => 'required',
+        ]);
+ 
+        if($validator4->fails()){
+            return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
+        }
+
+        if ($request->descuentoProducto < 0 || $request->descuentoProducto > 100){
+            return response()->json(['Error'=>'El descuento tiene que estar entre 0 y 100.'], 203);
+        }
+
+        if ($request->impuestoProducto < 0 || $request->impuestoProducto > 100){
+            return response()->json(['Error'=>'El impuesto tiene que estar entre 0 y 100.'], 203);
+        }
+
         if ($request->precio < 1 || $request->precio > 50000){
             return response()->json(['Error'=>'El precio tiene que estar entre 1 a 50,000.'], 203);
         }
 
-        if ($request->cantidad < 0 || $request->cantidad > 999){
-            return response()->json(['Error'=>'La cantidad excede lo permitido, debe estar entre 0 a 999.'], 203);
+        if ($request->cantidad < 1|| $request->cantidad > 999){
+            return response()->json(['Error'=>'La cantidad excede lo permitido, debe estar entre 1 a 999.'], 203);
         }
 
         if ($request->estado > 1 || $request->estado < 0){
