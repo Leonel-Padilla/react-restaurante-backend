@@ -79,8 +79,8 @@ class ProductoController extends Controller
         }
 
 
-        if ($request->precio > 20000 || $request->precio < 100){
-            return response()->json(['Error'=>'El precio debe estar entre L.100 y L.20,000.'], 203);
+        if ($request->precio > 20000 || $request->precio < 10){
+            return response()->json(['Error'=>'El precio debe estar entre L.10 y L.20,000.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
