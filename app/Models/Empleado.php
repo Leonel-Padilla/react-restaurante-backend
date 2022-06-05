@@ -87,21 +87,35 @@ class Empleado extends Model
     //New Collections
     public static function findByEmpleadoNombre($empleadoNombre){
         
-      return $Empleado = DB::table('empleados')->where('empleadoNombre', $empleadoNombre)->get();
+      return $Empleado = DB::table('empleados')->where('empleadoNombre','LIKE', "%$empleadoNombre%")->get();
 
     }
 
     public static function findByEmpleadoUsuario($empleadoUsuario){
       
         
-      return $Empleado = DB::table('empleados')->where('empleadoUsuario', $empleadoUsuario)->get();
+      return $Empleado = DB::table('empleados')->where('empleadoUsuario','LIKE', "%$empleadoUsuario%")->get();
     
     }
 
     public static function findByNumeroDocumento($numeroDocumento){
 
-      return $Empleado = DB::table('empleados')->where('numeroDocumento', $numeroDocumento)->get();
+      return $Empleado = DB::table('empleados')->where('numeroDocumento','LIKE', "%$numeroDocumento%")->get();
 
     }
+
+    public static function findByNumeroEmpleado($empleadoNumero){
+
+      return $Empleado = DB::table('empleados')->where('empleadoNumero','LIKE', "%$empleadoNumero%")->get();
+
+    }
+
+    public static function findByCorreoEmpleado($empleadoCorreo){
+
+      return $Empleado = DB::table('empleados')->where('empleadoCorreo','LIKE', "%$empleadoCorreo%")->get();
+
+    }
+
+
 
 }

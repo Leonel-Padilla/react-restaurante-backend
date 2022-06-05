@@ -52,13 +52,13 @@ class Sucursale extends Model
     //New Collections
     public static function findBySucursalNombre($sucursalNombre){
         
-      return $Sucursal = DB::table('sucursales')->where('sucursalNombre', $sucursalNombre)->get();
+      return $Sucursal = DB::table('sucursales')->where('sucursalNombre','LIKE', "%$sucursalNombre%")->get();
 
     }
 
     public static function findBySucursalEncargado($empleadoId){
         
-      return $Sucursal = DB::table('sucursales')->where('empleadoId', $empleadoId)->get();
+      return $Sucursal = DB::table('sucursales')->where('empleadoId','LIKE', "%$empleadoId%")->get();
 
     }
 

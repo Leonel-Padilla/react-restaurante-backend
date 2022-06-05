@@ -79,8 +79,10 @@ Route::delete('deleteDelivery/{id}', 'App\Http\Controllers\DeliveryController@de
 Route::get('Empleado', 'App\Http\Controllers\EmpleadoController@getEmpleado');
 Route::get('Empleado/{id}', 'App\Http\Controllers\EmpleadoController@show');
 Route::get('EmpleadoN/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByEmpleadoNombre');
-Route::get('EmpleadoU/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByEmpleadoUsuario');
-Route::get('EmpleadoND/{nombreEmpleado}', 'App\Http\Controllers\EmpleadoController@getByNumeroDocumento');
+Route::get('EmpleadoU/{empleadoUsuario}', 'App\Http\Controllers\EmpleadoController@getByEmpleadoUsuario');
+Route::get('EmpleadoND/{numeroDocumento}', 'App\Http\Controllers\EmpleadoController@getByNumeroDocumento');
+Route::get('EmpleadoC/{empleadoCorreo}', 'App\Http\Controllers\EmpleadoController@getByCorreoEmpleado');
+Route::get('EmpleadoNum/{empleadoNumero}', 'App\Http\Controllers\EmpleadoController@getByNumeroEmpleado');
 Route::post('addEmpleado', 'App\Http\Controllers\EmpleadoController@store');
 Route::put('updateEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@update');
 Route::delete('deleteEmpleado/{id}', 'App\Http\Controllers\EmpleadoController@destroy');

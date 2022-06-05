@@ -56,7 +56,7 @@ class Cliente extends Model
     
     public static function findByClienteNombre($clienteNombre){
         
-      return $cliente = DB::table('clientes')->where('clienteNombre', $clienteNombre)->get();
+      return $cliente = DB::table('clientes')->where('clienteNombre','LIKE', "%$clienteNombre%")->get();
 
     }
 

@@ -53,7 +53,7 @@ class Producto extends Model
     //New Collections
     public static function findByProductoNombre($productoNombre){
         
-      return $Producto = DB::table('productos')->where('productoNombre', $productoNombre)->get();
+      return $Producto = DB::table('productos')->where('productoNombre','LIKE', "%$productoNombre%")->get();
   
     }
 
