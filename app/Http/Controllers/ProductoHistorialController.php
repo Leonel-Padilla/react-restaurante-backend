@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductoHistorial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 
 /**
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 class ProductoHistorialController extends Controller
 {
     public function getProductoHistorial(){
+        Log::channel("productohistorial")->info("Registros encontrado");
         return response()->json(ProductoHistorial::all(),200);
     }
 
@@ -24,9 +26,10 @@ class ProductoHistorialController extends Controller
         $productoHistorial = ProductoHistorial::findByProductoId($productoId);
 
         if(empty($productoHistorial)){
+            Log::channel("productohistorial")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("productohistorial")->info($productoHistorial);
         return response($productoHistorial, 200);
     }
 
@@ -37,6 +40,7 @@ class ProductoHistorialController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("productohistorial")->error("El Id del producto no puede estar vacía");
             return response()->json(['Error'=>'El Id del producto no puede estar vacía.'], 203);
         }
         //
@@ -45,15 +49,17 @@ class ProductoHistorialController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("productohistorial")->error("El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos");
             return response()->json(['Error'=>'El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("productohistorial")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $productoHistorial = ProductoHistorial::create($request->all());
-
+        Log::channel("productohistorial")->info($productoHistorial);
         return response($productoHistorial, 200);
     }
 
@@ -63,13 +69,15 @@ class ProductoHistorialController extends Controller
         $productoHistorial = ProductoHistorial::find($id);
 
         if  ($id < 1){
+            Log::channel("productohistorial")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($productoHistorial)){
+            Log::channel("productohistorial")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-
+        Log::channel("productohistorial")->info($productoHistorial);
         return response($productoHistorial, 200); 
     }
 
@@ -77,11 +85,22 @@ class ProductoHistorialController extends Controller
     {
         $productoHistorial = ProductoHistorial::find($id);
 
+        if  ($id < 1){
+            Log::channel("productohistorial")->error("El Id no puede ser menor o igual a cero");
+            return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
+        }
+
+        if  (is_null($productoHistorial)){
+            Log::channel("productohistorial")->error("No existe este registro");
+            return response()->json(['Error'=>'No existe este registro'], 203);
+        }
+
         $validator0 = Validator::make($request->all(), [
             'productoId' => 'required'
         ]);
 
         if($validator0->fails()){
+            Log::channel("productohistorial")->error("El Id del producto no puede estar vacía");
             return response()->json(['Error'=>'El Id del producto no puede estar vacía.'], 203);
         }
         //
@@ -90,15 +109,17 @@ class ProductoHistorialController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("productohistorial")->error("El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos");
             return response()->json(['Error'=>'El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("productohistorial")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $productoHistorial->update($request->all());
-
+        Log::channel("productohistorial")->info($productoHistorial);
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
     }
 

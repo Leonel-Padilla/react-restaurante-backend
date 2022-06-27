@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ParametrosFactura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class ParametrosFacturaController
@@ -14,6 +15,7 @@ class ParametrosFacturaController extends Controller
 {
 
     public function getParametrosFactura(){
+        Log::channel("parametrosfactura")->info("Registros encontrado");
         return response()->json(ParametrosFactura::all(),200);
     }
 
@@ -23,9 +25,10 @@ class ParametrosFacturaController extends Controller
         $parametrosFactura = ParametrosFactura::findBySucursal($sucursalId);
         
         if(empty($parametrosFactura)){
+            Log::channel("parametrosfactura")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        
+        Log::channel("parametrosfactura")->info($parametrosFactura);
         return response($parametrosFactura, 200);
     }
   
@@ -36,6 +39,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("parametrosfactura")->error("La sucursal no puede estar vacío");
             return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
 
@@ -44,6 +48,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("parametrosfactura")->error("El número del CAI no puede estar vacío");
             return response()->json(['Error'=>'El número del CAI no puede estar vacío.'], 203);
         }
 
@@ -52,6 +57,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator2->fails()){
+            Log::channel("parametrosfactura")->error("El número del CAI debe ser único");
             return response()->json(['Error'=>'El número del CAI debe ser único.'], 203);
         }
 
@@ -60,6 +66,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator3->fails()){
+            Log::channel("parametrosfactura")->error("La fecha desde no puede estar vacía");
             return response()->json(['Error'=>'La fecha desde no puede estar vacía.'], 203);
         }
 
@@ -68,6 +75,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator4->fails()){
+            Log::channel("parametrosfactura")->error("La fecha desde no puede ser despues de la fecha hasta");
             return response()->json(['Error'=>'La fecha desde no puede ser despues de la fecha hasta.'], 203);
         }
 
@@ -76,6 +84,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator5->fails()){
+            Log::channel("parametrosfactura")->error("La fecha hasta no puede estar vacía");
             return response()->json(['Error'=>'La fecha hasta no puede estar vacía.'], 203);
         }
 
@@ -84,6 +93,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator6->fails()){
+            Log::channel("parametrosfactura")->error("El rango inicial no puede estar vacío");
             return response()->json(['Error'=>'El rango inicial no puede estar vacío.'], 203);
         }
 
@@ -92,6 +102,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator7->fails()){
+            Log::channel("parametrosfactura")->error("El rango final no puede estar vacío");
             return response()->json(['Error'=>'El rango final no puede estar vacío.'], 203);
         }
 
@@ -100,6 +111,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator8->fails()){
+            Log::channel("parametrosfactura")->error("El número de factura actual no puede estar vacío");
             return response()->json(['Error'=>'El número de factura actual no puede estar vacío.'], 203);
         }
 
@@ -108,6 +120,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator9->fails()){
+            Log::channel("parametrosfactura")->error("El número de punto de emisión no puede estar vacío y debe contener 3 dígitos");
             return response()->json(['Error'=>'El número de punto de emisión no puede estar vacío y debe contener 3 dígitos.'], 203);
         }
 
@@ -116,6 +129,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator10->fails()){
+            Log::channel("parametrosfactura")->error("El número de establecimiento no puede estar vacío y debe contener 3 dígitos");
             return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 3 dígitos.'], 203);
         }
 
@@ -124,6 +138,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator11->fails()){
+            Log::channel("parametrosfactura")->error("El número de tipo de documento no puede estar vacío y debe contener 2 dígitos");
             return response()->json(['Error'=>'El número de tipo de documento no puede estar vacío y debe contener 2 dígitos.'], 203);
         }
 
@@ -132,15 +147,17 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator12->fails()){
+            Log::channel("parametrosfactura")->error("El RTN del restaurante no puede estar vacío y debe contener 14 dígitos");
             return response()->json(['Error'=>'El RTN del restaurante no puede estar vacío y debe contener 14 dígitos.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("parametrosfactura")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $parametrosFactura = ParametrosFactura::create($request->all());
-
+        Log::channel("parametrosfactura")->info($parametrosFactura);
         return response($parametrosFactura, 200);
     }
 
@@ -149,13 +166,15 @@ class ParametrosFacturaController extends Controller
         $parametrosFactura = ParametrosFactura::find($id);
 
         if  ($id < 1){
+            Log::channel("parametrosfactura")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($parametrosFactura)){
+            Log::channel("parametrosfactura")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-
+        Log::channel("parametrosfactura")->info($parametrosFactura);
         return response($parametrosFactura, 200); 
     }
 
@@ -164,10 +183,12 @@ class ParametrosFacturaController extends Controller
         $parametrosFactura = ParametrosFactura::find($id);
 
         if  ($id < 1){
+            Log::channel("parametrosfactura")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($parametrosFactura)){
+            Log::channel("parametrosfactura")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -176,6 +197,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("parametrosfactura")->error("La sucursal no puede estar vacío");
             return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
 
@@ -184,6 +206,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("parametrosfactura")->error("El número del CAI no puede estar vacío");
             return response()->json(['Error'=>'El número del CAI no puede estar vacío.'], 203);
         }
 
@@ -192,6 +215,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator3->fails()){
+            Log::channel("parametrosfactura")->error("La fecha desde no puede estar vacía");
             return response()->json(['Error'=>'La fecha desde no puede estar vacía.'], 203);
         }
 
@@ -200,6 +224,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator4->fails()){
+            Log::channel("parametrosfactura")->error("La fecha desde no puede ser despues de la fecha hasta");
             return response()->json(['Error'=>'La fecha desde no puede ser despues de la fecha hasta.'], 203);
         }
 
@@ -208,6 +233,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator5->fails()){
+            Log::channel("parametrosfactura")->error("La fecha hasta no puede estar vacía");
             return response()->json(['Error'=>'La fecha hasta no puede estar vacía.'], 203);
         }
 
@@ -216,6 +242,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator6->fails()){
+            Log::channel("parametrosfactura")->error("El rango inicial no puede estar vacío");
             return response()->json(['Error'=>'El rango inicial no puede estar vacío.'], 203);
         }
 
@@ -224,6 +251,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator7->fails()){
+            Log::channel("parametrosfactura")->error("El rango final no puede estar vacío");
             return response()->json(['Error'=>'El rango final no puede estar vacío.'], 203);
         }
 
@@ -232,6 +260,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator8->fails()){
+            Log::channel("parametrosfactura")->error("El número de factura actual no puede estar vacío");
             return response()->json(['Error'=>'El número de factura actual no puede estar vacío.'], 203);
         }
 
@@ -240,6 +269,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator9->fails()){
+            Log::channel("parametrosfactura")->error("El número de punto de emisión no puede estar vacío y debe contener 3 dígitos");
             return response()->json(['Error'=>'El número de punto de emisión no puede estar vacío y debe contener 3 dígitos.'], 203);
         }
 
@@ -248,6 +278,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator10->fails()){
+            Log::channel("parametrosfactura")->error("El número de establecimiento no puede estar vacío y debe contener 3 dígitos");
             return response()->json(['Error'=>'El número de establecimiento no puede estar vacío y debe contener 3 dígitos.'], 203);
         }
 
@@ -256,6 +287,7 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator11->fails()){
+            Log::channel("parametrosfactura")->error("El número de tipo de documento no puede estar vacío y debe contener 2 dígitos");
             return response()->json(['Error'=>'El número de tipo de documento no puede estar vacío y debe contener 2 dígitos.'], 203);
         }
 
@@ -264,22 +296,25 @@ class ParametrosFacturaController extends Controller
         ]);
 
         if($validator12->fails()){
+            Log::channel("parametrosfactura")->error("El RTN del restaurante no puede estar vacío y debe contener 14 dígitos");
             return response()->json(['Error'=>'El RTN del restaurante no puede estar vacío y debe contener 14 dígitos.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("parametrosfactura")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         try {
 
             $parametrosFactura->update($request->all());
-
+            Log::channel("parametrosfactura")->info($parametrosFactura);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
+                Log::channel("parametrosfactura")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número CAI.'], 203);
             }
         }

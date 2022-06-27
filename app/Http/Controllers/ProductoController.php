@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class ProductoController
@@ -14,6 +15,7 @@ class ProductoController extends Controller
 {
 
     public function getProducto(){
+        Log::channel("producto")->info("Registros encontrado");
         return response()->json(Producto::all(),200);
     }
 
@@ -23,8 +25,10 @@ class ProductoController extends Controller
         $Producto = Producto::findByProductoNombre($productoNombre);
 
         if(empty($Producto)){
+            Log::channel("producto")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
+        Log::channel("producto")->info($Producto);
         return response($Producto, 200);
     }
     
@@ -35,6 +39,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("producto")->error("El impuesto no puede estar vacío");
             return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
 
@@ -43,6 +48,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("producto")->error("El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres");
             return response()->json(['Error'=>'El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres.'], 203);
         }
 
@@ -51,6 +57,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("producto")->error("El nombre del producto debe ser único");
             return response()->json(['Error'=>'El nombre del producto debe ser único.'], 203);
         }
 
@@ -59,6 +66,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("producto")->error("La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres");
             return response()->json(['Error'=>'La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres.'], 203);
         }
 
@@ -67,28 +75,32 @@ class ProductoController extends Controller
         ]);
  
         if($validator4->fails()){
+            Log::channel("producto")->error("El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos");
             return response()->json(['Error'=>'El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos.'], 203);
         }
 
-        $validator4 = Validator::make($request->all(), [ 
+        $validator5 = Validator::make($request->all(), [ 
             'descuento' => 'min:1|max:3',
         ]);
  
-        if($validator4->fails()){
+        if($validator5->fails()){
+            Log::channel("producto")->error("El descuento debe tener entre 1 y 3 dígitos");
             return response()->json(['Error'=>'El descuento debe tener entre 1 y 3 dígitos.'], 203);
         }
 
 
         if ($request->precio > 20000 || $request->precio < 10){
+            Log::channel("producto")->error("El precio debe estar entre L.10 y L.20,000");
             return response()->json(['Error'=>'El precio debe estar entre L.10 y L.20,000.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("producto")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $producto = Producto::create($request->all());
-
+        Log::channel("producto")->info($Producto);
         return response($producto, 200);
     }
 
@@ -97,13 +109,15 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         
         if  ($id < 1){
+            Log::channel("producto")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero.'], 203);
         }
 
         if  (is_null($producto)){
+            Log::channel("producto")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro.'], 203);
         }
-
+        Log::channel("producto")->info($Producto);
         return response($producto, 200); 
     }
 
@@ -112,10 +126,12 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         
         if  ($id < 1){
+            Log::channel("producto")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero.'], 203);
         }
 
         if  (is_null($producto)){
+            Log::channel("producto")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro.'], 203);
         }
 
@@ -124,6 +140,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("producto")->error("El impuesto no puede estar vacío");
             return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
 
@@ -132,6 +149,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("producto")->error("El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres");
             return response()->json(['Error'=>'El nombre del producto no puede estar vacío y debe tener entre 4 y 50 caracteres.'], 203);
         }
 
@@ -140,6 +158,7 @@ class ProductoController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("producto")->error("La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres");
             return response()->json(['Error'=>'La descripción del producto no puede estar vacío y debe tener entre 10 y 100 caracteres.'], 203);
         }
 
@@ -148,34 +167,39 @@ class ProductoController extends Controller
         ]);
  
         if($validator4->fails()){
+            Log::channel("producto")->error("El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos");
             return response()->json(['Error'=>'El precio del producto no puede estar vacío y debe tener entre 1 y 5 dígitos.'], 203);
         }
 
-        $validator4 = Validator::make($request->all(), [ 
+        $validator5 = Validator::make($request->all(), [ 
             'descuento' => 'min:1|max:3',
         ]);
  
-        if($validator4->fails()){
+        if($validator5->fails()){
+            Log::channel("producto")->error("El descuento debe tener entre 1 y 3 dígitos");
             return response()->json(['Error'=>'El descuento debe tener entre 1 y 3 dígitos.'], 203);
         }
 
         if ($request->precio > 20000 || $request->precio < 10){
+            Log::channel("producto")->error("El precio debe estar entre L.10 y L.20,000");
             return response()->json(['Error'=>'El precio debe estar entre L.10 y L.20,000.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("producto")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         try {
 
             $producto->update($request->all());
-
+            Log::channel("producto")->info($Producto);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
+                Log::channel("producto")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del Producto.'], 203);
             }
         }

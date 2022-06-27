@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompraEncabezado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CompraEncabezadoController
@@ -14,6 +15,7 @@ class CompraEncabezadoController extends Controller
 {
 
     public function getCompraEncabezado(){
+        Log::channel("compraencabezado")->info("Registros encontrado");
         return response()->json(CompraEncabezado::all(),200);
     }
 
@@ -22,9 +24,10 @@ class CompraEncabezadoController extends Controller
         $compraEncabezado = CompraEncabezado::findByProveedor($proveedorId);
 
         if(empty($compraEncabezado)){
+            Log::channel("compraencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("compraencabezado")->info($compraEncabezado);
         return response($compraEncabezado, 200);
     }
 
@@ -33,9 +36,10 @@ class CompraEncabezadoController extends Controller
         $compraEncabezado = CompraEncabezado::findByEstadoCompra($estadoCompra);
 
         if(empty($compraEncabezado)){
+            Log::channel("compraencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("compraencabezado")->info($compraEncabezado);
         return response($compraEncabezado, 200);
     }
 
@@ -47,6 +51,7 @@ class CompraEncabezadoController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("compraencabezado")->error("El proveedor no puede estar vacío");
             return response()->json(['Error'=>'El proveedor no puede estar vacío.'], 203);
         }
 
@@ -55,6 +60,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("compraencabezado")->error("El empleado no puede estar vacío");
             return response()->json(['Error'=>'El empleado no puede estar vacío.'], 203);
         }
 
@@ -63,6 +69,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("compraencabezado")->error("La fecha de solicitud no estar vacío");
             return response()->json(['Error'=>'La fecha de solicitud no estar vacío.'], 203);
         }
 
@@ -73,6 +80,7 @@ class CompraEncabezadoController extends Controller
             ]);
      
             if($validator3->fails()){
+                Log::channel("compraencabezado")->error("La fecha de solicitud no puede ser después de la fecha de entrega");
                 return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de entrega.'], 203);
             }
         }
@@ -84,6 +92,7 @@ class CompraEncabezadoController extends Controller
             ]);
      
             if($validator4->fails()){
+                Log::channel("compraencabezado")->error("La fecha de solicitud no puede ser después de la fecha de pago");
                 return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de pago.'], 203);
             }
     
@@ -94,6 +103,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator5->fails()){
+            Log::channel("compraencabezado")->error("El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres");
             return response()->json(['Error'=>'El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
@@ -102,6 +112,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator6->fails()){
+            Log::channel("compraencabezado")->error("El número de factura no puede estar vacío y debe de tener 16 caracteres");
             return response()->json(['Error'=>'El número de factura no puede estar vacío y debe de tener 16 caracteres.'], 203);
         }
 
@@ -110,6 +121,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator7->fails()){
+            Log::channel("compraencabezado")->error("El CAI no puede estar vacío y debe de tener 32 caracteres");
             return response()->json(['Error'=>'El CAI no puede estar vacío y debe de tener 32 caracteres.'], 203);
         }
         //
@@ -119,6 +131,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator8->fails()){
+            Log::channel("compraencabezado")->error("Debe ingresar los datos del número de factura y el CAI");
             return response()->json(['Error'=>'Debe ingresar los datos del número de factura y el CAI.'], 203);
         }
 
@@ -127,15 +140,18 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator9->fails()){
+            Log::channel("compraencabezado")->error("La combinación del número de factura y CAI deben ser únicos");
             return response()->json(['Error'=>'La combinación del número de factura y CAI deben ser únicos.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("compraencabezado")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $compraEncabezado = CompraEncabezado::create($request->all());
 
+        Log::channel("compraencabezado")->info($compraEncabezado);
         return response($compraEncabezado, 200);
     }
 
@@ -144,10 +160,12 @@ class CompraEncabezadoController extends Controller
         $compraEncabezado = CompraEncabezado::find($id);
 
         if  ($id < 1){
+            Log::channel("compraencabezado")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($compraEncabezado)){
+            Log::channel("compraencabezado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -159,10 +177,12 @@ class CompraEncabezadoController extends Controller
         $compraEncabezado = CompraEncabezado::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
+            Log::channel("compraencabezado")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($compraEncabezado)){
+            Log::channel("compraencabezado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -171,6 +191,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("compraencabezado")->error("El proveedor no puede estar vacío");
             return response()->json(['Error'=>'El proveedor no puede estar vacío.'], 203);
         }
 
@@ -179,6 +200,7 @@ class CompraEncabezadoController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("compraencabezado")->error("El empleado no puede estar vacío");
             return response()->json(['Error'=>'El empleado no puede estar vacío.'], 203);
         }
 
@@ -188,6 +210,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("compraencabezado")->error("La fecha de solicitud no estar vacío");
             return response()->json(['Error'=>'La fecha de solicitud no estar vacío.'], 203);
         }
 
@@ -198,6 +221,7 @@ class CompraEncabezadoController extends Controller
             ]);
      
             if($validator3->fails()){
+                Log::channel("compraencabezado")->error("La fecha de solicitud no puede ser después de la fecha de entrega");
                 return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de entrega.'], 203);
             }
         }
@@ -209,6 +233,7 @@ class CompraEncabezadoController extends Controller
             ]);
      
             if($validator4->fails()){
+                Log::channel("compraencabezado")->error("La fecha de solicitud no puede ser después de la fecha de pago");
                 return response()->json(['Error'=>'La fecha de solicitud no puede ser después de la fecha de pago.'], 203);
             }
     
@@ -220,6 +245,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator5->fails()){
+            Log::channel("compraencabezado")->error("El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres");
             return response()->json(['Error'=>'El estado de compra no puede estar vacío y debe tener entre 3 a 20 caracteres.'], 203);
         }
 
@@ -228,6 +254,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator6->fails()){
+            Log::channel("compraencabezado")->error("El número de factura no puede estar vacío y debe de tener 16 caracteres");
             return response()->json(['Error'=>'El número de factura no puede estar vacío y debe de tener 16 caracteres.'], 203);
         }
 
@@ -236,6 +263,7 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator7->fails()){
+            Log::channel("compraencabezado")->error("El CAI no puede estar vacío y debe de tener 32 caracteres");
             return response()->json(['Error'=>'El CAI no puede estar vacío y debe de tener 32 caracteres.'], 203);
         }
 
@@ -244,18 +272,20 @@ class CompraEncabezadoController extends Controller
         ]);
  
         if($validator8->fails()){
+            Log::channel("compraencabezado")->error("Debe ingresar los datos del número de factura y el CAI");
             return response()->json(['Error'=>'Debe ingresar los datos del número de factura y el CAI.'], 203);
         }
 
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("compraencabezado")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         try {
 
             $compraEncabezado->update($request->all());
-
+            Log::channel("compraencabezado")->info($compraEncabezado);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){

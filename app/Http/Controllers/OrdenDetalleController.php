@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrdenDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrdenDetalleController
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class OrdenDetalleController extends Controller
 {
     public function getOrdenDetalle(){
+        Log::channel("ordendetalle")->info("Registros encontrado");
         return response()->json(OrdenDetalle::all(),200);
     }
 
@@ -21,9 +23,10 @@ class OrdenDetalleController extends Controller
         $ordenEncabezado = OrdenDetalle::findByOrdenEncabezadoId($ordenEncabezado);
 
         if(empty($ordenEncabezado)){
+            Log::channel("ordendetalle")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("ordendetalle")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
 
@@ -34,6 +37,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("ordendetalle")->error("El encabezado de la orden no puede estar vacío");
             return response()->json(['Error'=>'El encabezado de la orden no puede estar vacío.'], 203);
         }
 
@@ -42,6 +46,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("ordendetalle")->error("El producto no puede estar vacío");
             return response()->json(['Error'=>'El producto no puede estar vacío.'], 203);
         }
 
@@ -50,6 +55,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("ordendetalle")->error("El precio no puede estar vacío");
             return response()->json(['Error'=>'El precio no puede estar vacío.'], 203);
         }
         
@@ -58,6 +64,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("ordendetalle")->error("La cantidad no puede estar vacía");
             return response()->json(['Error'=>'La cantidad no puede estar vacía.'], 203);
         }
 
@@ -66,6 +73,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator4->fails()){
+            Log::channel("ordendetalle")->error("El descuento no puede estar vacío");
             return response()->json(['Error'=>'El descuento no puede estar vacío.'], 203);
         }
 
@@ -73,32 +81,38 @@ class OrdenDetalleController extends Controller
             'impuestoProducto' => 'required',
         ]);
  
-        if($validator4->fails()){
+        if($validator5->fails()){
+            Log::channel("ordendetalle")->error("El impuesto no puede estar vacío");
             return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
 
         if ($request->descuentoProducto < 0 || $request->descuentoProducto > 100){
+            Log::channel("ordendetalle")->error("El descuento tiene que estar entre 0 y 100");
             return response()->json(['Error'=>'El descuento tiene que estar entre 0 y 100.'], 203);
         }
 
         if ($request->impuestoProducto < 0 || $request->impuestoProducto > 100){
+            Log::channel("ordendetalle")->error("El impuesto tiene que estar entre 0 y 100");
             return response()->json(['Error'=>'El impuesto tiene que estar entre 0 y 100.'], 203);
         }
 
         if ($request->precio < 1 || $request->precio > 50000){
+            Log::channel("ordendetalle")->error("El precio tiene que estar entre 1 a 50,000");
             return response()->json(['Error'=>'El precio tiene que estar entre 1 a 50,000.'], 203);
         }
 
         if ($request->cantidad < 1|| $request->cantidad > 999){
+            Log::channel("ordendetalle")->error("La cantidad excede lo permitido, debe estar entre 1 a 999");
             return response()->json(['Error'=>'La cantidad excede lo permitido, debe estar entre 1 a 999.'], 203);
         }
 
         if ($request->estado > 1 || $request->estado < 0){
+            Log::channel("ordendetalle")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $ordenDetalle = OrdenDetalle::create($request->all());
-
+        Log::channel("ordendetalle")->info($ordenDetalle);
         return response($ordenDetalle, 200);
     }
 
@@ -107,13 +121,15 @@ class OrdenDetalleController extends Controller
         $ordenDetalle = OrdenDetalle::find($id);
 
         if  ($id < 1){
+            Log::channel("ordendetalle")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($ordenDetalle)){
+            Log::channel("ordendetalle")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-
+        Log::channel("ordendetalle")->info($ordenDetalle);
         return response($ordenDetalle, 200);
     }
 
@@ -122,10 +138,12 @@ class OrdenDetalleController extends Controller
         $ordenDetalle = OrdenDetalle::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
+            Log::channel("ordendetalle")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($ordenDetalle)){
+            Log::channel("ordendetalle")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -134,6 +152,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("ordendetalle")->error("El encabezado de la orden no puede estar vacío");
             return response()->json(['Error'=>'El encabezado de la orden no puede estar vacío.'], 203);
         }
 
@@ -142,6 +161,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("ordendetalle")->error("El producto no puede estar vacío");
             return response()->json(['Error'=>'El producto no puede estar vacío.'], 203);
         }
 
@@ -150,6 +170,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("ordendetalle")->error("El precio no puede estar vacío");
             return response()->json(['Error'=>'El precio no puede estar vacío.'], 203);
         }
         
@@ -158,6 +179,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("ordendetalle")->error("La cantidad no puede estar vacía");
             return response()->json(['Error'=>'La cantidad no puede estar vacía.'], 203);
         }
 
@@ -166,6 +188,7 @@ class OrdenDetalleController extends Controller
         ]);
  
         if($validator4->fails()){
+            Log::channel("ordendetalle")->error("El descuento no puede estar vacío");
             return response()->json(['Error'=>'El descuento no puede estar vacío.'], 203);
         }
 
@@ -173,32 +196,38 @@ class OrdenDetalleController extends Controller
             'impuestoProducto' => 'required',
         ]);
  
-        if($validator4->fails()){
+        if($validator5->fails()){
+            Log::channel("ordendetalle")->error("El impuesto no puede estar vacío");
             return response()->json(['Error'=>'El impuesto no puede estar vacío.'], 203);
         }
 
         if ($request->descuentoProducto < 0 || $request->descuentoProducto > 100){
+            Log::channel("ordendetalle")->error("El descuento tiene que estar entre 0 y 100");
             return response()->json(['Error'=>'El descuento tiene que estar entre 0 y 100.'], 203);
         }
 
         if ($request->impuestoProducto < 0 || $request->impuestoProducto > 100){
+            Log::channel("ordendetalle")->error("El impuesto tiene que estar entre 0 y 100");
             return response()->json(['Error'=>'El impuesto tiene que estar entre 0 y 100.'], 203);
         }
 
         if ($request->precio < 1 || $request->precio > 50000){
+            Log::channel("ordendetalle")->error("El precio tiene que estar entre 1 a 50,000");
             return response()->json(['Error'=>'El precio tiene que estar entre 1 a 50,000.'], 203);
         }
 
         if ($request->cantidad < 1|| $request->cantidad > 999){
+            Log::channel("ordendetalle")->error("La cantidad excede lo permitido, debe estar entre 1 a 999");
             return response()->json(['Error'=>'La cantidad excede lo permitido, debe estar entre 1 a 999.'], 203);
         }
 
         if ($request->estado > 1 || $request->estado < 0){
+            Log::channel("ordendetalle")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $ordenDetalle->update($request->all());
-
+        Log::channel("ordendetalle")->info($ordenDetalle);
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
     }
 

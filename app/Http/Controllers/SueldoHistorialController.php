@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SueldoHistorial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SueldoHistorialController
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class SueldoHistorialController extends Controller
 {
     public function getSueldoHistorial(){
+        Log::channel("sueldo")->info("Registros encontrado");
         return response()->json(SueldoHistorial::all(),200);
     }
 
@@ -23,9 +25,10 @@ class SueldoHistorialController extends Controller
         $sueldoHistorial = SueldoHistorial::findByEmpleadoId($empleadoId);
 
         if(empty($sueldoHistorial)){
+            Log::channel("sueldo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("sueldo")->info($sueldoHistorial);
         return response($sueldoHistorial, 200);
     }
 
@@ -36,6 +39,7 @@ class SueldoHistorialController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("sueldo")->error("El Id del empleado no puede estar vacía");
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
         //
@@ -44,6 +48,7 @@ class SueldoHistorialController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("sueldo")->error("El sueldo no puede estar vacío y debe tener de 4 a 6 digitos");
             return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 digitos.'], 203);
         }
         //
@@ -64,11 +69,12 @@ class SueldoHistorialController extends Controller
         }*/
         //
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("sueldo")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $sueldoHistorial = SueldoHistorial::create($request->all());
-
+        Log::channel("sueldo")->info($sueldoHistorial);
         return response($sueldoHistorial, 200);
     }
 
@@ -77,13 +83,15 @@ class SueldoHistorialController extends Controller
         $sueldoHistorial = SueldoHistorial::find($id);
 
         if  ($id < 1){
+            Log::channel("sueldo")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($sueldoHistorial)){
+            Log::channel("sueldo")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-
+        Log::channel("sueldo")->info($sueldoHistorial);
         return response($sueldoHistorial, 200); 
     }
 
@@ -96,6 +104,7 @@ class SueldoHistorialController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("sueldo")->error("El Id del empleado no puede estar vacía");
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
 
@@ -104,6 +113,7 @@ class SueldoHistorialController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("sueldo")->error("El sueldo no puede estar vacío y debe tener de 4 a 6 digitos");
             return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 digitos.'], 203);
         }
         //
@@ -124,11 +134,12 @@ class SueldoHistorialController extends Controller
         }*/
         //
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("sueldo")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
         //
         $sueldoHistorial->update($request->all());
-
+        Log::channel("sueldo")->info($sueldoHistorial);
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
     }
 

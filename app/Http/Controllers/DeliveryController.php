@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class DeliveryController
@@ -14,6 +15,7 @@ class DeliveryController extends Controller
 {
 
     public function getDelivery(){
+        Log::channel("delivery")->info("Registros encontrado");
         return response()->json(Delivery::all(),200);
     }
 
@@ -23,9 +25,10 @@ class DeliveryController extends Controller
         $delivery = Delivery::findByCliente($clienteId);
     
         if(empty($delivery)){
+            Log::channel("delivery")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-    
+        Log::channel("delivery")->info($delivery);
         return response($delivery, 200);
     }
 
@@ -37,6 +40,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("delivery")->error("El cliente no puede estar vacío");
             return response()->json(['Error'=>'El cliente no puede estar vacío.'], 203);
         }
 
@@ -45,6 +49,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("delivery")->error("El empleado no puede estar vacío");
             return response()->json(['Error'=>'El empleado no puede estar vacío.'], 203);
         }
 
@@ -53,6 +58,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("delivery")->error("El orden no puede estar vacío");
             return response()->json(['Error'=>'El orden no puede estar vacío.'], 203);
         }
 
@@ -61,6 +67,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("delivery")->error("Esta orden ya esta registrada en un delivery");
             return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery.'], 203);
         }
 
@@ -69,14 +76,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator4->fails()){
-            return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
-        }
-
-        $validator5 = Validator::make($request->all(), [ 
-            'fechaEntrega' => 'required|date',
-        ]);
- 
-        if($validator5->fails()){
+            Log::channel("delivery")->error("La fecha de entrega no puede estar vacía");
             return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
         }
 
@@ -85,31 +85,34 @@ class DeliveryController extends Controller
         ]);
  
         if($validator6->fails()){
+            Log::channel("delivery")->error("El comentario tiene un máximo de 200 caracteres");
             return response()->json(['Error'=>'El comentario tiene un máximo de 200 caracteres.'], 203);
         }
 
         if($request->horaEntrega != null && $request->horaDespacho == null){
-            
+            Log::channel("delivery")->error("La hora de despacho no puede estar vacío si ya existe hora de entrega");
             return response()->json(['Error'=>'La hora de despacho no puede estar vacío si ya existe hora de entrega.'], 203);
         }
 
         if($request->horaEntrega != null){
 
-            $validator6 = Validator::make($request->all(), [ 
+            $validator7 = Validator::make($request->all(), [ 
                 'horaDespacho' => 'before:horaEntrega',
             ]);
      
-            if($validator6->fails()){
+            if($validator7->fails()){
+                Log::channel("delivery")->error("La hora del despacho no puede ser antes de la hora de entrega");
                 return response()->json(['Error'=>'La hora del despacho no puede ser antes de la hora de entrega.'], 203);
             }
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("delivery")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $delivery = Delivery::create($request->all());
-
+        Log::channel("delivery")->info($delivery);
         return response($delivery, 200);
     }
 
@@ -118,13 +121,16 @@ class DeliveryController extends Controller
         $delivery = Delivery::find($id);
 
         if  ($id < 1){
+            Log::channel("delivery")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($delivery)){
+            Log::channel("delivery")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
+        Log::channel("delivery")->info($delivery);
         return response($delivery, 200);
     }
 
@@ -135,10 +141,12 @@ class DeliveryController extends Controller
         $delivery = Delivery::find($id);
 
         if  ($id < 1){
+            Log::channel("delivery")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($delivery)){
+            Log::channel("delivery")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -147,6 +155,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("delivery")->error("El cliente no puede estar vacío");
             return response()->json(['Error'=>'El cliente no puede estar vacío.'], 203);
         }
 
@@ -155,6 +164,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("delivery")->error("El empleado no puede estar vacío");
             return response()->json(['Error'=>'El empleado no puede estar vacío.'], 203);
         }
 
@@ -163,6 +173,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("delivery")->error("El orden no puede estar vacío");
             return response()->json(['Error'=>'El orden no puede estar vacío.'], 203);
         }
 
@@ -171,6 +182,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("delivery")->error("Esta orden ya esta registrada en un delivery");
             return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery.'], 203);
         }
 
@@ -179,14 +191,7 @@ class DeliveryController extends Controller
         ]);
  
         if($validator4->fails()){
-            return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
-        }
-
-        $validator5 = Validator::make($request->all(), [ 
-            'fechaEntrega' => 'required|date',
-        ]);
- 
-        if($validator5->fails()){
+            Log::channel("delivery")->error("La fecha de entrega no puede estar vacía");
             return response()->json(['Error'=>'La fecha de entrega no puede estar vacía.'], 203);
         }
 
@@ -195,38 +200,42 @@ class DeliveryController extends Controller
         ]);
  
         if($validator6->fails()){
+            Log::channel("delivery")->error("El comentario tiene un máximo de 200 caracteres");
             return response()->json(['Error'=>'El comentario tiene un máximo de 200 caracteres.'], 203);
         }
 
         if($request->horaEntrega != null && $request->horaDespacho == null){
-            
+            Log::channel("delivery")->error("La hora de despacho no puede estar vacío si ya existe hora de entrega");
             return response()->json(['Error'=>'La hora de despacho no puede estar vacío si ya existe hora de entrega.'], 203);
         }
 
         if($request->horaEntrega != null){
 
-            $validator6 = Validator::make($request->all(), [ 
+            $validator7 = Validator::make($request->all(), [ 
                 'horaDespacho' => 'before:horaEntrega',
             ]);
      
-            if($validator6->fails()){
+            if($validator7->fails()){
+                Log::channel("delivery")->error("La hora del despacho no puede ser antes de la hora de entrega");
                 return response()->json(['Error'=>'La hora del despacho no puede ser antes de la hora de entrega.'], 203);
             }
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("delivery")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         try {
 
             $delivery->update($request->all());
-
+            Log::channel("delivery")->info($delivery);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
+                Log::channel("delivery")->error("Datos repetidos");
                 return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery'], 203);
             }
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cargo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CargoController
@@ -15,18 +16,20 @@ class CargoController extends Controller
 
 
     public function getCargo(){
+        Log::channel("cargo")->info("Registros encontrado");
         return response()->json(Cargo::all(),200);
     }
 
     //
     public function getByCargoNombre($nombreCargo){
 
-
         $Cargo = Cargo::findByCargoNombre($nombreCargo);
 
         if(empty($Cargo)){
+            Log::channel("cargo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
+        Log::channel("cargo")->info($Cargo);
         return response($Cargo, 200);
     }
     
@@ -39,6 +42,7 @@ class CargoController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("cargo")->error("No se puede repetir el nombre del cargo");
             return response()->json(['Error'=>'No se puede repetir el nombre del cargo'], 203);
         }
 
@@ -51,38 +55,46 @@ class CargoController extends Controller
         }*/
 
         if (strlen($request->cargoNombre) === 0){
+            Log::channel("cargo")->error("El nombre no puede estar vacío");
             return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
 
         if (strlen($request->cargoNombre) < 4){
+            Log::channel("cargo")->error("El nombre del cargo no puede ser menor de 4 caracteres");
             return response()->json(['Error'=>'El nombre del cargo no puede ser menor de 4 caracteres'], 203);
         }
 
         if (strlen($request->cargoNombre) > 30){
+            Log::channel("cargo")->error("El nombre del cargo no puede ser mayor de 30 caracteres");
             return response()->json(['Error'=>'El nombre del cargo no puede ser mayor de 30 caracteres'], 203);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (strlen($request->cargoDescripcion) === 0){
+            Log::channel("cargo")->error("La descripción del cargo no puede estar vacía");
             return response()->json(['Error'=>'La descripción del cargo no puede estar vacía'], 203);
         }
 
         if (strlen($request->cargoDescripcion) > 100){
+            Log::channel("cargo")->error("La descripción del cargo no puede ser mayor de 100 caracteres");
             return response()->json(['Error'=>'La descripción del cargo no puede ser mayor de 100 caracteres'], 203);
         }
 
         if (strlen($request->cargoDescripcion) < 20){
+            Log::channel("cargo")->error("La descripción del cargo no puede ser menor de 20 caracteres");
             return response()->json(['Error'=>'La descripción del cargo no puede ser menor de 20 caracteres'], 203);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("cargo")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $cargo = Cargo::create($request->all());
 
+        Log::channel("cargo")->info($cargo);
         return response($cargo, 200);
     }
 
@@ -93,13 +105,16 @@ class CargoController extends Controller
 
          //Validaciones Busqueda
         if  ($id < 1){
+            Log::channel("cargo")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($cargo)){
+            Log::channel("cargo")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
+        Log::channel("cargo")->info($cargo);
         return response($cargo, 200);
     }
 
@@ -110,52 +125,63 @@ class CargoController extends Controller
 
          //Validaciones Busqueda
         if  ($id < 1){
+            Log::channel("cargo")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($cargo)){
+            Log::channel("cargo")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
         if (strlen($request->cargoNombre) === 0){
+            Log::channel("cargo")->error("El nombre no puede estar vacío");
             return response()->json(['Error'=>'El nombre no puede estar vacío'], 203);
         }
 
         if (strlen($request->cargoNombre) < 4){
+            
+            Log::channel("cargo")->error("El nombre del cargo no puede ser menor de 4 caracteres");
             return response()->json(['Error'=>'El nombre del cargo no puede ser menor de 4 caracteres'], 203);
         }
 
         if (strlen($request->cargoNombre) > 30){
+            Log::channel("cargo")->error("El nombre del cargo no puede ser mayor de 30 caracteres");
             return response()->json(['Error'=>'El nombre del cargo no puede ser mayor de 30 caracteres'], 203);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (strlen($request->cargoDescripcion) === 0){
+            Log::channel("cargo")->error("La descripción del cargo no puede estar vacía");
             return response()->json(['Error'=>'La descripción del cargo no puede estar vacía'], 203);
         }
 
         if (strlen($request->cargoDescripcion) > 100){
+            Log::channel("cargo")->error("La descripción del cargo no puede ser mayor de 100 caracteres");
             return response()->json(['Error'=>'La descripción del cargo no puede ser mayor de 100 caracteres'], 203);
         }
 
         if (strlen($request->cargoDescripcion) < 20){
+            Log::channel("cargo")->error("La descripción del cargo no puede ser menor de 20 caracteres");
             return response()->json(['Error'=>'La descripción del cargo no puede ser menor de 20 caracteres'], 203);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("cargo")->error("El estado solo puede ser 1 o 0'");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         try {
 
             $cargo->update($request->all());
-
+            Log::channel("cargo")->info($cargo);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
+                Log::channel("cargo")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del cargo.'], 203);
             }
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrdenEncabezado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrdenEncabezadoController
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class OrdenEncabezadoController extends Controller
 {
     public function getOrdenEncabezado(){
+        Log::channel("ordenencabezado")->info("Registros encontrado");
         return response()->json(OrdenEncabezado::all(),200);
     }
 
@@ -21,9 +23,10 @@ class OrdenEncabezadoController extends Controller
         $ordenEncabezado = OrdenEncabezado::findByCliente($clienteId);
 
         if(empty($ordenEncabezado)){
+            Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
 
@@ -32,9 +35,10 @@ class OrdenEncabezadoController extends Controller
         $ordenEncabezado = OrdenEncabezado::findByEmpleadoMesero($empleadoId);
 
         if(empty($ordenEncabezado)){
+            Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
 
@@ -43,9 +47,10 @@ class OrdenEncabezadoController extends Controller
         $ordenEncabezado = OrdenEncabezado::findByEmpleadoCocina($empleadoId);
 
         if(empty($ordenEncabezado)){
+            Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
 
@@ -54,9 +59,10 @@ class OrdenEncabezadoController extends Controller
         $ordenEncabezado = OrdenEncabezado::findByTipoEntrega($tipoEntregaId);
 
         if(empty($ordenEncabezado)){
+            Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
    
@@ -68,6 +74,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("ordenencabezado")->error("El cliente no puede estar vacío");
             return response()->json(['Error'=>'El cliente no puede estar vacío.'], 203);
         }
 
@@ -76,6 +83,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("ordenencabezado")->error("El mesero no puede estar vacío");
             return response()->json(['Error'=>'El mesero no puede estar vacío.'], 203);
         }
 
@@ -84,6 +92,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator2->fails()){
+            Log::channel("ordenencabezado")->error("El cocinero no puede estar vacío");
             return response()->json(['Error'=>'El cocinero no puede estar vacío.'], 203);
         }
 
@@ -92,6 +101,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator3->fails()){
+            Log::channel("ordenencabezado")->error("El tipo de entrega no puede estar vacío");
             return response()->json(['Error'=>'El tipo de entrega no puede estar vacío.'], 203);
         }
 
@@ -100,19 +110,22 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator4->fails()){
+            Log::channel("ordenencabezado")->error("La fecha y hora de la orden no puede estar vacía");
             return response()->json(['Error'=>'La fecha y hora de la orden no puede estar vacía.'], 203);
         }
 
         if ($request->empleadoMeseroId == $request->empleadoCocinaId) {
+            Log::channel("ordenencabezado")->error("El mesero y el cocinero no pueden ser el mismo");
             return response()->json(['Error'=>'El mesero y el cocinero no pueden ser el mismo.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("ordenencabezado")->error("l estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $ordenEncabezado = OrdenEncabezado::create($request->all());
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
     
@@ -121,13 +134,15 @@ class OrdenEncabezadoController extends Controller
         $ordenEncabezado = OrdenEncabezado::find($id);
 
         if  ($id < 1){
+            Log::channel("ordenencabezado")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($ordenEncabezado)){
+            Log::channel("ordenencabezado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response($ordenEncabezado, 200);
     }
 
@@ -140,6 +155,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("ordenencabezado")->error("El cliente no puede estar vacío");
             return response()->json(['Error'=>'El cliente no puede estar vacío.'], 203);
         }
 
@@ -148,6 +164,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("ordenencabezado")->error("El mesero no puede estar vacío");
             return response()->json(['Error'=>'El mesero no puede estar vacío.'], 203);
         }
 
@@ -156,6 +173,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator2->fails()){
+            Log::channel("ordenencabezado")->error("El cocinero no puede estar vacío");
             return response()->json(['Error'=>'El cocinero no puede estar vacío.'], 203);
         }
 
@@ -164,6 +182,7 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator3->fails()){
+            Log::channel("ordenencabezado")->error("El tipo de entrega no puede estar vacío");
             return response()->json(['Error'=>'El tipo de entrega no puede estar vacío.'], 203);
         }
 
@@ -172,19 +191,22 @@ class OrdenEncabezadoController extends Controller
         ]);
 
         if($validator4->fails()){
+            Log::channel("ordenencabezado")->error("La fecha y hora de la orden no puede estar vacía");
             return response()->json(['Error'=>'La fecha y hora de la orden no puede estar vacía.'], 203);
         }
 
         if ($request->empleadoMeseroId == $request->empleadoCocinaId) {
+            Log::channel("ordenencabezado")->error("El mesero y el cocinero no pueden ser el mismo");
             return response()->json(['Error'=>'El mesero y el cocinero no pueden ser el mismo.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("ordenencabezado")->error("l estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $ordenEncabezado->update($request->all());
-
+        Log::channel("ordenencabezado")->info($ordenEncabezado);
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
     }
 

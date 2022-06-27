@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TipoEntrega;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class TipoEntregaController
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class TipoEntregaController extends Controller
 {
     public function getTipoEntrega(){
+        Log::channel("tipoentrega")->info("Registros encontrado");
         return response()->json(TipoEntrega::all(),200);
     }
 
@@ -24,6 +26,7 @@ class TipoEntregaController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("tipoentrega")->error("El nombre del tipo de entrega no puede estar vacío y debe tener entre 4 a 40 caracteres");
             return response()->json(['Error'=>'El nombre del tipo de entrega no puede estar vacío y debe tener entre 4 a 40 caracteres.'], 203);
         }
 
@@ -32,15 +35,17 @@ class TipoEntregaController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("tipoentrega")->error("El nombre del tipo de entrega debe ser único");
             return response()->json(['Error'=>'El nombre del tipo de entrega debe ser único'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("tipoentrega")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $tipoEntrega = TipoEntrega::create($request->all());
-
+        Log::channel("tipoentrega")->info($tipoEntrega);
         return response($tipoEntrega, 200);
     }
 
@@ -49,13 +54,15 @@ class TipoEntregaController extends Controller
         $tipoEntrega = TipoEntrega::find($id);
 
         if  ($id < 1){
+            Log::channel("tipoentrega")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($tipoEntrega)){
+            Log::channel("tipoentrega")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-
+        Log::channel("tipoentrega")->info($tipoEntrega);
         return response($tipoEntrega, 200); 
     }
 
@@ -65,10 +72,12 @@ class TipoEntregaController extends Controller
         $tipoEntrega = TipoEntrega::find($id);
 
         if  ($id < 1){
+            Log::channel("tipoentrega")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($tipoEntrega)){
+            Log::channel("tipoentrega")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -77,22 +86,25 @@ class TipoEntregaController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("tipoentrega")->error("El nombre del tipo de entrega no puede estar vacío y debe tener entre 4 a 40 caracteres");
             return response()->json(['Error'=>'El nombre del tipo de entrega no puede estar vacío y debe tener entre 4 a 40 caracteres.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("tipoentrega")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         try {
 
             $tipoEntrega->update($request->all());
-
+            Log::channel("tipoentrega")->info($tipoEntrega);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
+                Log::channel("tipoentrega")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Tipo de Entrega.'], 203);
             }
         }

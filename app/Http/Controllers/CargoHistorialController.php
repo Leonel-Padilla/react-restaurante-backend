@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CargoHistorial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CargoHistorialController
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 class CargoHistorialController extends Controller
 {
     public function getCargoHistorial(){
+        Log::channel("cargohistorial")->info("Registros encontrado");
         return response()->json(CargoHistorial::all(),200);
     }
 
@@ -22,9 +24,10 @@ class CargoHistorialController extends Controller
         $cargoHistorial = CargoHistorial::findByEmpleadoId($empleadoId);
 
         if(empty($cargoHistorial)){
+            Log::channel("cargohistorial")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("cargohistorial")->info($cargoHistorial);
         return response($cargoHistorial, 200);
     }
 
@@ -36,6 +39,7 @@ class CargoHistorialController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("cargohistorial")->error("El Id del empleado no puede estar vacía");
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
 
@@ -44,15 +48,18 @@ class CargoHistorialController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("cargohistorial")->error("El Id del cargo no puede estar vacía");
             return response()->json(['Error'=>'El Id del cargo no puede estar vacía.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("cargohistorial")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $cargoHistorial = CargoHistorial::create($request->all());
 
+        Log::channel("cargohistorial")->info($cargoHistorial);
         return response($cargoHistorial, 200);
     }
 
@@ -61,10 +68,12 @@ class CargoHistorialController extends Controller
         $cargoHistorial = CargoHistorial::find($id);
 
         if  ($id < 1){
+            Log::channel("cargohistorial")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($cargoHistorial)){
+            Log::channel("cargohistorial")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -76,10 +85,12 @@ class CargoHistorialController extends Controller
         $cargoHistorial = CargoHistorial::find($id);
 
         if  ($id < 1){
+            Log::channel("cargohistorial")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($cargoHistorial)){
+            Log::channel("cargohistorial")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -88,6 +99,7 @@ class CargoHistorialController extends Controller
         ]);
 
         if($validator0->fails()){
+            Log::channel("cargohistorial")->error("El Id del empleado no puede estar vacía");
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
 
@@ -96,15 +108,17 @@ class CargoHistorialController extends Controller
         ]);
 
         if($validator1->fails()){
+            Log::channel("cargohistorial")->error("El Id del empleado no puede estar vacía");
             return response()->json(['Error'=>'El Id del empleado no puede estar vacía.'], 203);
         }
 
         if ($request->estado > 1|| $request->estado < 0){
+            Log::channel("cargohistorial")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
         $cargoHistorial->update($request->all());
-
+        Log::channel("cargohistorial")->info($cargoHistorial);
         return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
 
     }

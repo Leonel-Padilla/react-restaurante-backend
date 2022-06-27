@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class EmpleadoController
@@ -15,6 +16,7 @@ class EmpleadoController extends Controller
 
     //
     public function getEmpleado(){
+        Log::channel("empleado")->info("Registros encontrado");
         return response()->json(Empleado::all(),200);
     }
 
@@ -24,9 +26,10 @@ class EmpleadoController extends Controller
         $empleado = Empleado::findByEmpleadoUsuario($empleadoUsuario);
 
         if(empty($empleado)){
+            Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("empleado")->info($empleado);
         return response($empleado, 200);
     }
 
@@ -36,9 +39,10 @@ class EmpleadoController extends Controller
         $empleado = Empleado::findByEmpleadoNombre($nombreEmpleado);
 
         if(empty($empleado)){
+            Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("empleado")->info($empleado);
         return response($empleado, 200);
     }
 
@@ -47,9 +51,10 @@ class EmpleadoController extends Controller
         $empleado = Empleado::findByNumeroDocumento($numeroDocumento);
 
         if(empty($empleado)){
+            Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("empleado")->info($empleado);
         return response($empleado, 200);
     }
 
@@ -58,9 +63,10 @@ class EmpleadoController extends Controller
         $empleado = Empleado::findByNumeroEmpleado($empleadoNumero);
 
         if(empty($empleado)){
+            Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("empleado")->info($empleado);
         return response($empleado, 200);
     }
 
@@ -69,9 +75,10 @@ class EmpleadoController extends Controller
         $empleado = Empleado::findByCorreoEmpleado($empleadoCorreo);
 
         if(empty($empleado)){
+            Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-
+        Log::channel("empleado")->info($empleado);
         return response($empleado, 200);
     }
 
@@ -84,6 +91,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator0->fails()){
+            Log::channel("empleado")->error("El número de documento de empleado debe ser único");
             return response()->json(['Error'=>'El número de documento de empleado debe ser único.'], 203);
         }
         //
@@ -92,6 +100,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("empleado")->error("El número de documento no puede estar vacío");
             return response()->json(['Error'=>'El número de documento no puede estar vacío.'], 203);
         }
         //
@@ -100,6 +109,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("empleado")->error("El nombre del empleado no puede estar vacío");
             return response()->json(['Error'=>'El nombre del empleado no puede estar vacío.'], 203);
         }
         //
@@ -108,6 +118,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator3->fails()){
+            Log::channel("empleado")->error("El número del empleado debe ser único");
             return response()->json(['Error'=>'El número del empleado debe ser único.'], 203);
         }
         //
@@ -116,6 +127,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator4->fails()){
+            Log::channel("empleado")->error("El numero del empleado debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9");
             return response()->json(['Error'=>'El numero del empleado debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
         }
         //
@@ -124,6 +136,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator5->fails()){
+            Log::channel("empleado")->error("El correo del empleado debe ser único");
             return response()->json(['Error'=>'El correo del empleado debe ser único.'], 203);
         }
         //
@@ -132,10 +145,12 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator6->fails()){
+            Log::channel("empleado")->error("El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com");
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         if (!str_contains($request->empleadoCorreo, "@") || !str_contains($request->empleadoCorreo, ".")){
+            Log::channel("empleado")->error("El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com");
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
@@ -144,6 +159,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator7->fails()){
+            Log::channel("empleado")->error("El usuario del empleado debe ser único");
             return response()->json(['Error'=>'El usuario del empleado debe ser único.'], 203);
         }
         //
@@ -152,6 +168,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator8->fails()){
+            Log::channel("empleado")->error("El usuario del empleado debe tener de 4 a 20 caractes");
             return response()->json(['Error'=>'El usuario del empleado debe tener de 4 a 20 caractes'], 203);
         }
         //
@@ -160,6 +177,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator9->fails()){
+            Log::channel("empleado")->error("El contraseña del empleado debe tener de 5 a 16 caracteres");
             return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 16 caracteres.'], 203);
         }
         //
@@ -168,6 +186,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator10->fails()){
+            Log::channel("empleado")->error("La dirección del empleado debe tener de 10 a 50 caracteres");
             return response()->json(['Error'=>'La dirección del empleado debe tener de 10 a 50 caracteres.'], 203);
         }
         //
@@ -176,6 +195,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator11->fails()){
+            Log::channel("empleado")->error("El sueldo no puede estar vacío y debe tener de 4 a 6 dígitos");
             return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 dígitos.'], 203);
         }
         //
@@ -184,6 +204,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator12->fails()){
+            Log::channel("empleado")->error("Debe ingresar una fecha de contratación");
             return response()->json(['Error'=>'Debe ingresar una fecha de contratación.'], 203);
         }
         //
@@ -192,6 +213,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator13->fails()){
+            Log::channel("empleado")->error("Debe ingresar una fecha de de nacimiento");
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
         //
@@ -200,16 +222,18 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator14->fails()){
+            Log::channel("empleado")->error("La sucursal no puede estar vacío");
             return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
         //
         if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
+            Log::channel("empleado")->error("El sueldo debe tener un minímo de L.5000 y un máximo de L.100,000");
             return response()->json(['Error'=>'El sueldo debe tener un minímo de L.5000 y un máximo de L.100,000'], 203);
         }
 
 
         $empleado = Empleado::create($request->all());
-
+        Log::channel("empleado")->info($empleado);
         return response($empleado, 200);
     }
 
@@ -219,10 +243,12 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find($id);
 
         if  ($id < 1){
+            Log::channel("empleado")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($empleado)){
+            Log::channel("empleado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -235,10 +261,12 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
+            Log::channel("empleado")->error("El Id no puede ser menor o igual a cero");
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
         if  (is_null($empleado)){
+            Log::channel("empleado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
@@ -249,6 +277,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator1->fails()){
+            Log::channel("empleado")->error("El número de documento no puede estar vacío");
             return response()->json(['Error'=>'El número de documento no puede estar vacío.'], 203);
         }
         //
@@ -257,6 +286,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator2->fails()){
+            Log::channel("empleado")->error("El nombre del empleado no puede estar vacío");
             return response()->json(['Error'=>'El nombre del empleado no puede estar vacío.'], 203);
         }
         //
@@ -265,6 +295,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator4->fails()){
+            Log::channel("empleado")->error("El número del empleado debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9");
             return response()->json(['Error'=>'El número del empleado debe tener 8 dígitos y debe comenzar con 2, 3, 7, 8 o un 9.'], 203);
         }
         //
@@ -273,10 +304,12 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator6->fails()){
+            Log::channel("empleado")->error("El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com");
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
         if (!str_contains($request->empleadoCorreo, "@") || !str_contains($request->empleadoCorreo, ".")){
+            Log::channel("empleado")->error("El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com");
             return response()->json(['Error'=>'El correo debe tener de 10 a 50 caracteres y un formato válido ejemplo@gmail.com'], 203);
         }
         //
@@ -285,6 +318,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator8->fails()){
+            Log::channel("empleado")->error("El usuario del empleado debe tener de 4 a 20 caracteres");
             return response()->json(['Error'=>'El usuario del empleado debe tener de 4 a 20 caracteres'], 203);
         }
         //
@@ -293,6 +327,7 @@ class EmpleadoController extends Controller
         ]);
  
         if($validator9->fails()){
+            Log::channel("empleado")->error("El contraseña del empleado debe tener de 5 a 16 caracteres");
             return response()->json(['Error'=>'El contraseña del empleado debe tener de 5 a 16 caracteres.'], 203);
         }
         //
@@ -301,6 +336,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator10->fails()){
+            Log::channel("empleado")->error("La dirección del empleado debe tener de 10 a 50 caracteres");
             return response()->json(['Error'=>'La dirección del empleado debe tener de 10 a 50 caracteres.'], 203);
         }
         //
@@ -309,6 +345,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator11->fails()){
+            Log::channel("empleado")->error("El sueldo no puede estar vacío y debe tener de 4 a 6 dígitos");
             return response()->json(['Error'=>'El sueldo no puede estar vacío y debe tener de 4 a 6 dígitos.'], 203);
         }
         //
@@ -317,6 +354,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator12->fails()){
+            Log::channel("empleado")->error("Debe ingresar una fecha de contratación");
             return response()->json(['Error'=>'Debe ingresar una fecha de contratación.'], 203);
         }
         //
@@ -325,6 +363,7 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator13->fails()){
+            Log::channel("empleado")->error("Debe ingresar una fecha de nacimiento");
             return response()->json(['Error'=>'Debe ingresar una fecha de de nacimiento.'], 203);
         }
         //
@@ -333,22 +372,25 @@ class EmpleadoController extends Controller
         ]);
 
         if($validator14->fails()){
+            Log::channel("empleado")->error("La sucursal no puede estar vacío");
             return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
         //
         if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
+            Log::channel("empleado")->error("El sueldo debe tener un minímo de 5000 y un máximo de 100,000");
             return response()->json(['Error'=>'El sueldo debe tener un minímo de 5000 y un máximo de 100,000'], 203);
         }
 
         try {
 
             $empleado->update($request->all());
-
+            Log::channel("empleado")->info($empleado);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
+                Log::channel("empleado")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número Documento, Número Empleado,
                 Correo Empleado y el Usuario del Empleado.'], 203);
             }
