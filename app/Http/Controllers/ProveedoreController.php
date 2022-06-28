@@ -11,12 +11,18 @@ use Illuminate\Support\Facades\Log;
 class ProveedoreController extends Controller
 {
     public function getProveedor(){
-        Log::channel("proveedor")->info("Registros encontrado");
-        return response()->json(Proveedore::all(),200);
+        try{
+            return response()->json(Proveedore::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("proveedor")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByProveedorNombre($nombreProveedor){
+        try{
 
         $proveedor = Proveedore::findByProveedorNombre($nombreProveedor);
 
@@ -24,13 +30,20 @@ class ProveedoreController extends Controller
             Log::channel("proveedor")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("proveedor")->info($proveedor);
-        return response($proveedor, 200);
+            Log::channel("proveedor")->info($proveedor);
+            return response($proveedor, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("proveedor")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
     
     public function store(Request $request)
     {
-        
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'proveedorNombre' => 'required|min:3|max:50',
         ]);
@@ -127,15 +140,22 @@ class ProveedoreController extends Controller
             return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
         }
 
+            $proveedore = Proveedore::create($request->all());
+            Log::channel("proveedor")->info($proveedore);
+            return response($proveedore, 200); 
 
-        $proveedore = Proveedore::create($request->all());
-        Log::channel("proveedor")->info($proveedore);
-        return response($proveedore, 200); 
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("proveedor")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     
     public function show($id)
     {
+        try{
+
         $proveedore = Proveedore::find($id);
 
         if  ($id < 1){
@@ -147,12 +167,20 @@ class ProveedoreController extends Controller
             Log::channel("proveedor")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("proveedor")->info($proveedore);
-        return response($proveedore, 200); 
+            Log::channel("proveedor")->info($proveedore);
+            return response($proveedore, 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("proveedor")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request,$id)
     {
+        try{
+
         $proveedore = Proveedore::find($id);
 
         if  ($id < 1){
@@ -221,8 +249,6 @@ class ProveedoreController extends Controller
             return response()->json(['Error'=>'El RTN debe empezar con 0 o 1.'], 203);
         }
 
-        try {
-
             $proveedore->update($request->all());
             Log::channel("proveedor")->info($proveedore);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -232,6 +258,10 @@ class ProveedoreController extends Controller
             if($errorCode == '1062'){
                 Log::channel("proveedor")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre, Número, Correo y RTN.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("proveedor")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

@@ -15,37 +15,55 @@ class CompraEncabezadoController extends Controller
 {
 
     public function getCompraEncabezado(){
-        Log::channel("compraencabezado")->info("Registros encontrado");
-        return response()->json(CompraEncabezado::all(),200);
+        try{
+            return response()->json(CompraEncabezado::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compraencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByProveedor($proveedorId){
-
+        try{
         $compraEncabezado = CompraEncabezado::findByProveedor($proveedorId);
 
         if(empty($compraEncabezado)){
             Log::channel("compraencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("compraencabezado")->info($compraEncabezado);
-        return response($compraEncabezado, 200);
+            Log::channel("compraencabezado")->info($compraEncabezado);
+            return response($compraEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compraencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByEstadoCompra($estadoCompra){
-
+        try{
         $compraEncabezado = CompraEncabezado::findByEstadoCompra($estadoCompra);
 
         if(empty($compraEncabezado)){
             Log::channel("compraencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("compraencabezado")->info($compraEncabezado);
-        return response($compraEncabezado, 200);
+            Log::channel("compraencabezado")->info($compraEncabezado);
+            return response($compraEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compraencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function store(Request $request)
     {
+        try{
         $validator0 = Validator::make($request->all(), [ 
             'proveedorId' => 'required',
         ]);
@@ -149,14 +167,21 @@ class CompraEncabezadoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $compraEncabezado = CompraEncabezado::create($request->all());
+            $compraEncabezado = CompraEncabezado::create($request->all());
 
-        Log::channel("compraencabezado")->info($compraEncabezado);
-        return response($compraEncabezado, 200);
+            Log::channel("compraencabezado")->info($compraEncabezado);
+            return response($compraEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compraencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
         $compraEncabezado = CompraEncabezado::find($id);
 
         if  ($id < 1){
@@ -169,11 +194,17 @@ class CompraEncabezadoController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
-        return response($compraEncabezado, 200);
+            return response($compraEncabezado, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compraencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
         $compraEncabezado = CompraEncabezado::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
@@ -282,16 +313,18 @@ class CompraEncabezadoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $compraEncabezado->update($request->all());
             Log::channel("compraencabezado")->info($compraEncabezado);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
-        } catch(\Illuminate\Database\QueryException $e){
+        }catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Combinación de Número de factura y CAI.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("compraencabezado")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

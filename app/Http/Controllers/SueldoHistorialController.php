@@ -14,13 +14,20 @@ use Illuminate\Support\Facades\Log;
 class SueldoHistorialController extends Controller
 {
     public function getSueldoHistorial(){
-        Log::channel("sueldo")->info("Registros encontrado");
-        return response()->json(SueldoHistorial::all(),200);
+        try{
+            return response()->json(SueldoHistorial::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sueldo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     //
     public function getByEmpleadoId($empleadoId){
+
+        try{
 
         $sueldoHistorial = SueldoHistorial::findByEmpleadoId($empleadoId);
 
@@ -28,12 +35,20 @@ class SueldoHistorialController extends Controller
             Log::channel("sueldo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("sueldo")->info($sueldoHistorial);
-        return response($sueldoHistorial, 200);
+            Log::channel("sueldo")->info($sueldoHistorial);
+            return response($sueldoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sueldo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [
             'empleadoId' => 'required'
         ]);
@@ -73,13 +88,21 @@ class SueldoHistorialController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $sueldoHistorial = SueldoHistorial::create($request->all());
-        Log::channel("sueldo")->info($sueldoHistorial);
-        return response($sueldoHistorial, 200);
+            $sueldoHistorial = SueldoHistorial::create($request->all());
+            Log::channel("sueldo")->info($sueldoHistorial);
+            return response($sueldoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sueldo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $sueldoHistorial = SueldoHistorial::find($id);
 
         if  ($id < 1){
@@ -91,12 +114,20 @@ class SueldoHistorialController extends Controller
             Log::channel("sueldo")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("sueldo")->info($sueldoHistorial);
-        return response($sueldoHistorial, 200); 
+            Log::channel("sueldo")->info($sueldoHistorial);
+            return response($sueldoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sueldo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $sueldoHistorial = SueldoHistorial::find($id);
 
         $validator0 = Validator::make($request->all(), [
@@ -138,9 +169,15 @@ class SueldoHistorialController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
         //
-        $sueldoHistorial->update($request->all());
-        Log::channel("sueldo")->info($sueldoHistorial);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $sueldoHistorial->update($request->all());
+            Log::channel("sueldo")->info($sueldoHistorial);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sueldo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

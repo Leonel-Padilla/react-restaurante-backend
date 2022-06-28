@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\Log;
 class OrdenDetalleController extends Controller
 {
     public function getOrdenDetalle(){
-        Log::channel("ordendetalle")->info("Registros encontrado");
-        return response()->json(OrdenDetalle::all(),200);
+        try{
+            return response()->json(OrdenDetalle::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordendetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByOrdenEncabezadoId($ordenEncabezado){
+        try{
 
         $ordenEncabezado = OrdenDetalle::findByOrdenEncabezadoId($ordenEncabezado);
 
@@ -26,12 +32,20 @@ class OrdenDetalleController extends Controller
             Log::channel("ordendetalle")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("ordendetalle")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            Log::channel("ordendetalle")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordendetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'ordenEncabezadoId' => 'required',
         ]);
@@ -111,13 +125,21 @@ class OrdenDetalleController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $ordenDetalle = OrdenDetalle::create($request->all());
-        Log::channel("ordendetalle")->info($ordenDetalle);
-        return response($ordenDetalle, 200);
+            $ordenDetalle = OrdenDetalle::create($request->all());
+            Log::channel("ordendetalle")->info($ordenDetalle);
+            return response($ordenDetalle, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordendetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $ordenDetalle = OrdenDetalle::find($id);
 
         if  ($id < 1){
@@ -129,12 +151,20 @@ class OrdenDetalleController extends Controller
             Log::channel("ordendetalle")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("ordendetalle")->info($ordenDetalle);
-        return response($ordenDetalle, 200);
+            Log::channel("ordendetalle")->info($ordenDetalle);
+            return response($ordenDetalle, 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordendetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $ordenDetalle = OrdenDetalle::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
@@ -226,9 +256,15 @@ class OrdenDetalleController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $ordenDetalle->update($request->all());
-        Log::channel("ordendetalle")->info($ordenDetalle);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $ordenDetalle->update($request->all());
+            Log::channel("ordendetalle")->info($ordenDetalle);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordendetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

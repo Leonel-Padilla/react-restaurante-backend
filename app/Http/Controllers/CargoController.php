@@ -16,27 +16,38 @@ class CargoController extends Controller
 
 
     public function getCargo(){
-        Log::channel("cargo")->info("Registros encontrado");
-        return response()->json(Cargo::all(),200);
+        try{
+            return response()->json(Cargo::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cargo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByCargoNombre($nombreCargo){
+        try{
+            $Cargo = Cargo::findByCargoNombre($nombreCargo);
+            if(empty($Cargo)){
+                Log::channel("cargo")->error("Registro no encontrado");
+                return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+            }
+            Log::channel("cargo")->info($Cargo);
+            return response($Cargo, 200);
 
-        $Cargo = Cargo::findByCargoNombre($nombreCargo);
-
-        if(empty($Cargo)){
-            Log::channel("cargo")->error("Registro no encontrado");
-            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cargo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
         }
-        Log::channel("cargo")->info($Cargo);
-        return response($Cargo, 200);
     }
-    
 
 
     public function store(Request $request)
     {
+        try {
+
         $validator1 = Validator::make($request->all(), [ 
             'cargoNombre' => 'unique:cargos',
         ]);
@@ -85,22 +96,28 @@ class CargoController extends Controller
             return response()->json(['Error'=>'La descripción del cargo no puede ser menor de 20 caracteres'], 203);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         
         if ($request->estado > 1|| $request->estado < 0){
             Log::channel("cargo")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
+
         }
-
-        $cargo = Cargo::create($request->all());
-
-        Log::channel("cargo")->info($cargo);
-        return response($cargo, 200);
+            $cargo = Cargo::create($request->all());
+            Log::channel("cargo")->info($cargo);
+            return response($cargo, 200);
+        
+        }catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->getMessage();
+            Log::channel("cargo")->error($errorCode);
+            return response()->json(['Error'=>$errorCode], 203);
+        }
+    
     }
 
    
     public function show($id)
     {
+        try{
         $cargo = Cargo::find($id);
 
          //Validaciones Busqueda
@@ -115,12 +132,19 @@ class CargoController extends Controller
         }
 
         Log::channel("cargo")->info($cargo);
-        return response($cargo, 200);
+        return response($cargo, 200);     
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->getMessage();
+            Log::channel("cargo")->error($errorCode);
+            return response()->json(['Error'=>$errorCode], 203);
+        }
     }
 
     
     public function update(Request $request, $id)
     {
+        try{
         $cargo = Cargo::find($id);
 
          //Validaciones Busqueda
@@ -172,17 +196,19 @@ class CargoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $cargo->update($request->all());
             Log::channel("cargo")->info($cargo);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
-        } catch(\Illuminate\Database\QueryException $e){
+        }catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
                 Log::channel("cargo")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del cargo.'], 203);
+            }else{
+                $errorCode = $e->getMessage();
+                Log::channel("cargo")->error($errorCode);
+                return response()->json(['Error'=>$errorCode], 203);
             }
         }
 

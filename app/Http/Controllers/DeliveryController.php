@@ -15,26 +15,38 @@ class DeliveryController extends Controller
 {
 
     public function getDelivery(){
-        Log::channel("delivery")->info("Registros encontrado");
-        return response()->json(Delivery::all(),200);
+        try{
+            return response()->json(Delivery::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("delivery")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByCliente($clienteId){
+        try{
 
-        $delivery = Delivery::findByCliente($clienteId);
+            $delivery = Delivery::findByCliente($clienteId);
     
         if(empty($delivery)){
             Log::channel("delivery")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("delivery")->info($delivery);
-        return response($delivery, 200);
+            Log::channel("delivery")->info($delivery);
+            return response($delivery, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("delivery")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
-
+        try{
         $validator0 = Validator::make($request->all(), [ 
             'clienteId' => 'required',
         ]);
@@ -111,13 +123,20 @@ class DeliveryController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $delivery = Delivery::create($request->all());
-        Log::channel("delivery")->info($delivery);
-        return response($delivery, 200);
+            $delivery = Delivery::create($request->all());
+            Log::channel("delivery")->info($delivery);
+            return response($delivery, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("delivery")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
         $delivery = Delivery::find($id);
 
         if  ($id < 1){
@@ -130,13 +149,20 @@ class DeliveryController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
-        Log::channel("delivery")->info($delivery);
-        return response($delivery, 200);
+            Log::channel("delivery")->info($delivery);
+            return response($delivery, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("delivery")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function update(Request $request,$id)
     {
+        try{
 
         $delivery = Delivery::find($id);
 
@@ -226,17 +252,19 @@ class DeliveryController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $delivery->update($request->all());
             Log::channel("delivery")->info($delivery);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
-        } catch(\Illuminate\Database\QueryException $e){
+        }catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
                 Log::channel("delivery")->error("Datos repetidos");
                 return response()->json(['Error'=>'Esta orden ya esta registrada en un delivery'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("delivery")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

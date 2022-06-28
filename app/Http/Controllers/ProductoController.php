@@ -15,12 +15,17 @@ class ProductoController extends Controller
 {
 
     public function getProducto(){
-        Log::channel("producto")->info("Registros encontrado");
-        return response()->json(Producto::all(),200);
+        try{
+            return response()->json(Producto::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("producto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByProductoNombre($productoNombre){
-
+        try{
 
         $Producto = Producto::findByProductoNombre($productoNombre);
 
@@ -28,12 +33,20 @@ class ProductoController extends Controller
             Log::channel("producto")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("producto")->info($Producto);
-        return response($Producto, 200);
+            Log::channel("producto")->info($Producto);
+            return response($Producto, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("producto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
     
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'impuestoId' => 'required',
         ]);
@@ -99,13 +112,21 @@ class ProductoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $producto = Producto::create($request->all());
-        Log::channel("producto")->info($Producto);
-        return response($producto, 200);
+            $producto = Producto::create($request->all());
+            Log::channel("producto")->info($Producto);
+            return response($producto, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("producto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $producto = Producto::find($id);
         
         if  ($id < 1){
@@ -117,12 +138,20 @@ class ProductoController extends Controller
             Log::channel("producto")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro.'], 203);
         }
-        Log::channel("producto")->info($Producto);
-        return response($producto, 200); 
+            Log::channel("producto")->info($Producto);
+            return response($producto, 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("producto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $producto = Producto::find($id);
         
         if  ($id < 1){
@@ -190,8 +219,6 @@ class ProductoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $producto->update($request->all());
             Log::channel("producto")->info($Producto);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -201,6 +228,10 @@ class ProductoController extends Controller
             if($errorCode == '1062'){
                 Log::channel("producto")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del Producto.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("producto")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

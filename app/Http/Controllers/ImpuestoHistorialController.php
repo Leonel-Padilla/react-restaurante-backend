@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\Log;
 class ImpuestoHistorialController extends Controller
 {
     public function getImpuestoHistorial(){
-        Log::channel("impuestohistorial")->info("Registros encontrado");
-        return response()->json(ImpuestoHistorial::all(),200);
+        try{
+            return response()->json(ImpuestoHistorial::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuestohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByImpuestoId($impuestoId){
+        try{
 
         $impuestoHistorial = ImpuestoHistorial::findByImpuestoId($impuestoId);
 
@@ -26,12 +32,19 @@ class ImpuestoHistorialController extends Controller
             Log::channel("impuestohistorial")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("impuestohistorial")->info($impuestoHistorial);
-        return response($impuestoHistorial, 200);
+            Log::channel("impuestohistorial")->info($impuestoHistorial);
+            return response($impuestoHistorial, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuestohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [
             'impuestoId' => 'required'
         ]);
@@ -55,14 +68,22 @@ class ImpuestoHistorialController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $impuestoHistorial = ImpuestoHistorial::create($request->all());
+            $impuestoHistorial = ImpuestoHistorial::create($request->all());
 
-        Log::channel("impuestohistorial")->info($impuestoHistorial);
-        return response($impuestoHistorial, 200);
+            Log::channel("impuestohistorial")->info($impuestoHistorial);
+            return response($impuestoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuestohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $impuestoHistorial = ImpuestoHistorial::find($id);
 
         if  ($id < 1){
@@ -75,12 +96,20 @@ class ImpuestoHistorialController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
-        Log::channel("impuestohistorial")->info($impuestoHistorial);
-        return response($impuestoHistorial, 200); 
+            Log::channel("impuestohistorial")->info($impuestoHistorial);
+            return response($impuestoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuestohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request,  $id)
     {
+        try{
+
         $impuestoHistorial = ImpuestoHistorial::find($id);
 
         if  ($id < 1){
@@ -118,8 +147,13 @@ class ImpuestoHistorialController extends Controller
 
         $impuestoHistorial->update($request->all());
 
-        Log::channel("impuestohistorial")->info($impuestoHistorial);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            Log::channel("impuestohistorial")->info($impuestoHistorial);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuestohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\Log;
 class FormaPagoController extends Controller
 {
     public function getFormaPago(){
-        Log::channel("formapago")->info("Registros encontrado");
-        return response()->json(FormaPago::all(),200);
+        try{
+            return response()->json(FormaPago::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("formapago")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function store(Request $request)
     {
+        try{
         $validator0 = Validator::make($request->all(), [
             'nombreFormaPago' => 'required|min:4|max:40',
         ]);
@@ -44,13 +50,20 @@ class FormaPagoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $formaPago = FormaPago::create($request->all());
-        Log::channel("formapago")->error($formaPago);
-        return response($formaPago, 200);
+            $formaPago = FormaPago::create($request->all());
+            Log::channel("formapago")->error($formaPago);
+            return response($formaPago, 200);
+        
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("formapago")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
         $formaPago = FormaPago::find($id);
 
         if  ($id < 1){
@@ -62,12 +75,19 @@ class FormaPagoController extends Controller
             Log::channel("formapago")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("formapago")->error($formaPago);
-        return response($formaPago, 200); 
+            Log::channel("formapago")->error($formaPago);
+            return response($formaPago, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("formapago")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request,$id)
-    {
+    {   
+        try{
 
         $formaPago = FormaPago::find($id);
 
@@ -95,9 +115,6 @@ class FormaPagoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        
-        try {
-
             $formaPago->update($request->all());
             Log::channel("formapago")->info($formaPago);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -107,6 +124,10 @@ class FormaPagoController extends Controller
             if($errorCode == '1062'){
                 Log::channel("formapago")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre de Forma de Pago.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("formapago")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
     }

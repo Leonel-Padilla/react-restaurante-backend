@@ -15,27 +15,38 @@ class InsumoController extends Controller
 {
 
     public function getInsumo(){
-        Log::channel("insumo")->info("Registros encontrado");
-        return response()->json(Insumo::all(),200);
+        try{
+            return response()->json(Insumo::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("insumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByInsumoNombre($nombreInsumo){
 
-
+        try{
         $Insumo = Insumo::findByInsumoNombre($nombreInsumo);
 
         if(empty($Insumo)){
             Log::channel("insumo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("insumo")->info($Insumo);
-        return response($Insumo, 200);
+            Log::channel("insumo")->info($Insumo);
+            return response($Insumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("insumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function getByProveedorId($proveedorId){
-
+        try{
 
         $Insumo = Insumo::findByProveedorId($proveedorId);
     
@@ -43,12 +54,19 @@ class InsumoController extends Controller
             Log::channel("insumo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("insumo")->info($Insumo);
-        return response($Insumo, 200);
+            Log::channel("insumo")->info($Insumo);
+            return response($Insumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("insumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
    
     public function store(Request $request)
     {
+        try{
 
         $validator0 = Validator::make($request->all(), [ 
             'insumoNombre' => 'unique:insumos',
@@ -153,14 +171,22 @@ class InsumoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $insumo = Insumo::create($request->all());
-        Log::channel("insumo")->info($insumo);
-        return response($insumo, 200);
+            $insumo = Insumo::create($request->all());
+            Log::channel("insumo")->info($insumo);
+            return response($insumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("insumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function show($id)
     {
+        try{
+
         $insumo = Insumo::find($id);
 
         if  ($id < 1){
@@ -172,13 +198,21 @@ class InsumoController extends Controller
             Log::channel("insumo")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("insumo")->info($insumo);
-        return response($insumo, 200); 
+            Log::channel("insumo")->info($insumo);
+            return response($insumo, 200); 
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("insumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function update(Request $request, $id)
     { 
+        try{
+
         $insumo = Insumo::find($id);
         
         if  ($id < 1){
@@ -285,8 +319,6 @@ class InsumoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $insumo->update($request->all());
             Log::channel("insumo")->info($insumo);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -296,6 +328,10 @@ class InsumoController extends Controller
             if($errorCode == '1062'){
                 Log::channel("insumo")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del Insumo.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("insumo")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

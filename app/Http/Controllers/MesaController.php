@@ -15,11 +15,17 @@ class MesaController extends Controller
 {
 
     public function getMesa(){
-        Log::channel("mesa")->info("Registros encontrado");
-        return response()->json(Mesa::all(),200);
+        try{        
+            return response()->json(Mesa::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("mesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getBySucursalId($sucursalId){
+        try{
 
         $mesa = Mesa::findBySucursalId($sucursalId);
 
@@ -27,12 +33,20 @@ class MesaController extends Controller
             Log::channel("mesa")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("mesa")->info("Registros encontrado");
-        return response($mesa, 200);
+            Log::channel("mesa")->info("Registros encontrado");
+            return response($mesa, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("mesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+
+        try{
 
         $validator0 = Validator::make($request->all(), [
             'sucursalId' => 'required'
@@ -94,14 +108,22 @@ class MesaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $mesa = Mesa::create($request->all());
-        Log::channel("mesa")->info($mesa);
-        return response($mesa, 200);
+            $mesa = Mesa::create($request->all());
+            Log::channel("mesa")->info($mesa);
+            return response($mesa, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("mesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function show($id)
     {
+        try{
+
         $mesa = Mesa::find($id);
 
         if  ($id < 1){
@@ -113,13 +135,20 @@ class MesaController extends Controller
             Log::channel("mesa")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("mesa")->info($mesa);
-        return response($mesa, 200); 
+            Log::channel("mesa")->info($mesa);
+            return response($mesa, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("mesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function update(Request $request,$id)
     {
+        try{
 
         $mesa = Mesa::find($id);
 
@@ -183,8 +212,6 @@ class MesaController extends Controller
             Log::channel("mesa")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
-        try {
-
             $mesa->update($request->all());
             Log::channel("mesa")->info($mesa);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -194,6 +221,10 @@ class MesaController extends Controller
             if($errorCode == '1062'){
                 Log::channel("mesa")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número de Mesa.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("mesa")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

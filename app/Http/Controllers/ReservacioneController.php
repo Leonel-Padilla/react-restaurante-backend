@@ -14,12 +14,18 @@ use Illuminate\Support\Facades\Log;
 class ReservacioneController extends Controller
 {
     public function getReservacion(){
-        Log::channel("reservacion")->info("Registros encontrado");
-        return response()->json(Reservacione::all(),200);
+        try{
+            return response()->json(Reservacione::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacion")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByCliente($clienteId){
+        try{
 
         $reservacione = Reservacione::findByCliente($clienteId);
         
@@ -27,12 +33,20 @@ class ReservacioneController extends Controller
             Log::channel("reservacion")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("reservacion")->info($reservacione);
-        return response($reservacione, 200);
+            Log::channel("reservacion")->info($reservacione);
+            return response($reservacione, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacion")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
     
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'clienteId' => 'required',
         ]);
@@ -56,13 +70,21 @@ class ReservacioneController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $reservacione = Reservacione::create($request->all());
-        Log::channel("reservacion")->info($reservacione);
-        return response($reservacione, 200);
+            $reservacione = Reservacione::create($request->all());
+            Log::channel("reservacion")->info($reservacione);
+            return response($reservacione, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacion")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $reservacione = Reservacione::find($id);
 
         if  ($id < 1){
@@ -74,12 +96,20 @@ class ReservacioneController extends Controller
             Log::channel("reservacion")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("reservacion")->info($reservacione);
-        return response($reservacione, 200);
+            Log::channel("reservacion")->info($reservacione);
+            return response($reservacione, 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacion")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $reservacione = Reservacione::find($id);
 
         if  ($id < 1){
@@ -115,9 +145,15 @@ class ReservacioneController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $reservacione->update($request->all());
-        Log::channel("reservacion")->info($reservacione);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $reservacione->update($request->all());
+            Log::channel("reservacion")->info($reservacione);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacion")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

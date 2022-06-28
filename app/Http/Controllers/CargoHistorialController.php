@@ -14,25 +14,37 @@ use Illuminate\Support\Facades\Log;
 class CargoHistorialController extends Controller
 {
     public function getCargoHistorial(){
-        Log::channel("cargohistorial")->info("Registros encontrado");
-        return response()->json(CargoHistorial::all(),200);
+        try{
+            return response()->json(CargoHistorial::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cargohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByEmpleadoId($empleadoId){
+        try{
+            $cargoHistorial = CargoHistorial::findByEmpleadoId($empleadoId);
 
-        $cargoHistorial = CargoHistorial::findByEmpleadoId($empleadoId);
+            if(empty($cargoHistorial)){
+                Log::channel("cargohistorial")->error("Registro no encontrado");
+                return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+            }
+            Log::channel("cargohistorial")->info($cargoHistorial);
+            return response($cargoHistorial, 200);
 
-        if(empty($cargoHistorial)){
-            Log::channel("cargohistorial")->error("Registro no encontrado");
-            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cargohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
         }
-        Log::channel("cargohistorial")->info($cargoHistorial);
-        return response($cargoHistorial, 200);
     }
 
     public function store(Request $request)
     {
+        try{
 
         $validator0 = Validator::make($request->all(), [
             'empleadoId' => 'required'
@@ -55,16 +67,23 @@ class CargoHistorialController extends Controller
         if ($request->estado > 1|| $request->estado < 0){
             Log::channel("cargohistorial")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
+
+        }
+            $cargoHistorial = CargoHistorial::create($request->all());
+            Log::channel("cargohistorial")->info($cargoHistorial);
+            return response($cargoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->getMessage();
+            Log::channel("cargohistorial")->error($errorCode);
+            return response()->json(['Error'=>$errorCode], 203);
         }
 
-        $cargoHistorial = CargoHistorial::create($request->all());
-
-        Log::channel("cargohistorial")->info($cargoHistorial);
-        return response($cargoHistorial, 200);
     }
 
     public function show($id)
     {
+        try{
         $cargoHistorial = CargoHistorial::find($id);
 
         if  ($id < 1){
@@ -77,11 +96,19 @@ class CargoHistorialController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
+        Log::channel("cargohistorial")->info($cargoHistorial);
         return response($cargoHistorial, 200); 
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->getMessage();
+            Log::channel("cargohistorial")->error($errorCode);
+            return response()->json(['Error'=>$errorCode], 203);
+        }
     }
 
     public function update(Request $request,  $id)
     {
+        try{
         $cargoHistorial = CargoHistorial::find($id);
 
         if  ($id < 1){
@@ -117,9 +144,15 @@ class CargoHistorialController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $cargoHistorial->update($request->all());
-        Log::channel("cargohistorial")->info($cargoHistorial);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $cargoHistorial->update($request->all());
+            Log::channel("cargohistorial")->info($cargoHistorial);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->getMessage();
+            Log::channel("cargohistorial")->error($errorCode);
+            return response()->json(['Error'=>$errorCode], 203);
+        }
 
     }
 

@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\Log;
 class ComentarioController extends Controller{
 
     public function getComentario(){
-        Log::channel("comentario")->info("Registros encontrado");
-        return response()->json(Comentario::all(),200);
+        try{
+            return response()->json(Comentario::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("comentario")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getBySucursalId($sucursalId){
-
+        try{
 
         $Comentario = Comentario::findBySucursalId($sucursalId);
 
@@ -27,13 +32,19 @@ class ComentarioController extends Controller{
             Log::channel("comentario")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("comentario")->info($Comentario);
-        return response($Comentario, 200);
+            Log::channel("comentario")->info($Comentario);
+            return response($Comentario, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("comentario")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
-        
+        try{
         $validator0 = Validator::make($request->all(), [ 
             'sucursalId' => 'required',
         ]);
@@ -80,14 +91,21 @@ class ComentarioController extends Controller{
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $comentario = Comentario::create($request->all());
+            $comentario = Comentario::create($request->all());
 
-        Log::channel("comentario")->info($comentario);
-        return response($comentario, 200);
+            Log::channel("comentario")->info($comentario);
+            return response($comentario, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("comentario")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
         $comentario = Comentario::find($id);
         
         if  ($id < 1){
@@ -100,11 +118,19 @@ class ComentarioController extends Controller{
             return response()->json(['Error'=>'No existe este registro.'], 203);
         }
 
-        Log::channel("comentario")->info($comentario);
-        return response($comentario, 200); 
+            Log::channel("comentario")->info($comentario);
+            return response($comentario, 200); 
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("comentario")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id){
+
+        try{
 
         $comentario = Comentario::find($id);
         
@@ -159,9 +185,15 @@ class ComentarioController extends Controller{
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $comentario->update($request->all());
-        Log::channel("comentario")->info($comentario);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $comentario->update($request->all());
+            Log::channel("comentario")->info($comentario);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("comentario")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
 
     }
 

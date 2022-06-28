@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\Log;
 class ProductoInsumoController extends Controller{
 
     public function getProductoInsumo(){
-        Log::channel("productoinsumo")->info("Registros encontrado");
-        return response()->json(ProductoInsumo::all(),200);
+        try{
+            return response()->json(ProductoInsumo::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productoinsumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByInsumoId($insumoId){
-
+        try{
 
         $ProductoInsumo = ProductoInsumo::findByInsumoId($insumoId);
 
@@ -27,12 +32,18 @@ class ProductoInsumoController extends Controller{
             Log::channel("productoinsumo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("productoinsumo")->info($ProductoInsumo);
-        return response($ProductoInsumo, 200);
+            Log::channel("productoinsumo")->info($ProductoInsumo);
+            return response($ProductoInsumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productoinsumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByProductoId($productoId){
-
+        try{
 
         $ProductoInsumo = ProductoInsumo::findByProductoId($productoId);
 
@@ -40,12 +51,20 @@ class ProductoInsumoController extends Controller{
             Log::channel("productoinsumo")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("productoinsumo")->info($ProductoInsumo);
-        return response($ProductoInsumo, 200);
+            Log::channel("productoinsumo")->info($ProductoInsumo);
+            return response($ProductoInsumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productoinsumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'insumoId' => 'required',
         ]);
@@ -82,16 +101,23 @@ class ProductoInsumoController extends Controller{
             Log::channel("productoinsumo")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
-
         
-        $productoInsumo = ProductoInsumo::create($request->all());
-        Log::channel("productoinsumo")->info($ProductoInsumo);
-        return response($productoInsumo, 200);
+            $productoInsumo = ProductoInsumo::create($request->all());
+            Log::channel("productoinsumo")->info($ProductoInsumo);
+            return response($productoInsumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productoinsumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
 
     }
 
     public function show($id)
     {
+        try{
+
         $productoInsumo = ProductoInsumo::find($id);
         
         if  ($id < 1){
@@ -103,12 +129,19 @@ class ProductoInsumoController extends Controller{
             Log::channel("productoinsumo")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro.'], 203);
         }
-        Log::channel("productoinsumo")->info($ProductoInsumo);
-        return response($productoInsumo, 200); 
+            Log::channel("productoinsumo")->info($ProductoInsumo);
+            return response($productoInsumo, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productoinsumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function update(Request $request, $id){
+        try{
 
         $productoInsumo = ProductoInsumo::find($id);
         
@@ -159,9 +192,15 @@ class ProductoInsumoController extends Controller{
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $productoInsumo->update($request->all());
-        Log::channel("productoinsumo")->info($ProductoInsumo);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $productoInsumo->update($request->all());
+            Log::channel("productoinsumo")->info($ProductoInsumo);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productoinsumo")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
 
     }
 

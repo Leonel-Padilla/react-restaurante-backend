@@ -116,8 +116,8 @@ return [
 
         'cargo' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log1 = 'logs/Cargo/Cargos '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log1 = 'logs/Cargo/Cargo-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log1),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -126,8 +126,8 @@ return [
 
         'cargohistorial' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log2 = 'logs/CargoHistorial/CargoHistorial '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log2 = 'logs/CargoHistorial/CargoHistorial-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log2),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -136,8 +136,8 @@ return [
 
         'cliente' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log3 = 'logs/Cliente/Cliente '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log3 = 'logs/Cliente/Cliente-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log3),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -146,8 +146,8 @@ return [
 
         'comentario' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log4 = 'logs/Comentario/Comentario '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log4 = 'logs/Comentario/Comentario-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log4),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -156,8 +156,8 @@ return [
 
         'compradetalle' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log5 = 'logs/CompraDetalle/CompraDetalle '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log5 = 'logs/CompraDetalle/CompraDetalle-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log5),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -166,8 +166,8 @@ return [
 
         'compraencabezado' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log6 = 'logs/CompraEncabezado/CompraEncabezado '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log6 = 'logs/CompraEncabezado/CompraEncabezado-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log6),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -176,8 +176,8 @@ return [
 
         'delivery' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log7 = 'logs/Delivery/Delivery '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log7 = 'logs/Delivery/Delivery-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log7),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -186,8 +186,8 @@ return [
 
         'empleado' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log8 = 'logs/Empleado/Empleado '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log8 = 'logs/Empleado/Empleado-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log8),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -196,8 +196,8 @@ return [
 
         'factura' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log9 = 'logs/Factura/Factura '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log9 = 'logs/Factura/Factura-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log9),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -206,8 +206,8 @@ return [
 
         'formapago' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log10 = 'logs/FormaPago/FormaPago '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log10 = 'logs/FormaPago/FormaPago-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log10),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -216,8 +216,8 @@ return [
 
         'impuesto' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log11 = 'logs/Impuesto/Impuesto '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log11 = 'logs/Impuesto/Impuesto-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log11),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -226,8 +226,8 @@ return [
 
         'impuestohistorial' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log13 = 'logs/ImpuestoHistorial/ImpuestoHistorial '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log13 = 'logs/ImpuestoHistorial/ImpuestoHistorial-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log13),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -236,8 +236,8 @@ return [
 
         'insumo' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log14 = 'logs/Insumo/Insumo '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log14 = 'logs/Insumo/Insumo-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log14),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -246,8 +246,8 @@ return [
 
         'mesa' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log15 = 'logs/Mesa/Mesa '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log15 = 'logs/Mesa/Mesa-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log15),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -256,8 +256,8 @@ return [
 
         'ordendetalle' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log16 = 'logs/OrdenDetalle/OrdenDetalle '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log16 = 'logs/OrdenDetalle/OrdenDetalle-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log16),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -266,8 +266,8 @@ return [
 
         'ordenencabezado' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log17 = 'logs/OrdenEncabezado/OrdenEncabezado '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log17 = 'logs/OrdenEncabezado/OrdenEncabezado-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log17),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -276,8 +276,8 @@ return [
 
         'parametrosfactura' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log18 = 'logs/ParametrosFactura/ParametrosFactura '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log18 = 'logs/ParametrosFactura/ParametrosFactura-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log18),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -286,8 +286,8 @@ return [
 
         'producto' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log19 = 'logs/Producto/Producto '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log19 = 'logs/Producto/Producto-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log19),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -296,8 +296,8 @@ return [
 
         'productohistorial' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log20 = 'logs/ProductoHistorial/ProductoHistorial '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log20 = 'logs/ProductoHistorial/ProductoHistorial-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log20),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -306,8 +306,8 @@ return [
 
         'productoinsumo' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log21 = 'logs/ProductoInsumo/ProductoInsumo '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log21 = 'logs/ProductoInsumo/ProductoInsumo-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log21),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -316,8 +316,8 @@ return [
 
         'proveedor' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log22 = 'logs/Proveedor/Proveedor '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log22 = 'logs/Proveedor/Proveedor-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log22),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -326,8 +326,8 @@ return [
 
         'reservacion' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log23 = 'logs/Reservacion/Reservacion '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log23 = 'logs/Reservacion/Reservacion-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log23),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -336,8 +336,8 @@ return [
 
         'reservacionmesa' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log24 = 'logs/ReservacionMesa/ReservacionMesa '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log24 = 'logs/ReservacionMesa/ReservacionMesa-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log24),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -346,8 +346,8 @@ return [
 
         'sucursal' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log25 = 'logs/Sucursal/Sucursal '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log25 = 'logs/Sucursal/Sucursal-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log25),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -356,8 +356,8 @@ return [
 
         'sueldo' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log26 = 'logs/Sueldo/Sueldo '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log26 = 'logs/Sueldo/Sueldo-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log26),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -366,8 +366,8 @@ return [
 
         'tipodocumento' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log27 = 'logs/TipoDocumento/TipoDocumento '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log27 = 'logs/TipoDocumento/TipoDocumento-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log27),
             'level' => env('LOG_LEVEL', 'debug'),
@@ -376,8 +376,8 @@ return [
         
         'tipoentrega' => [
             date_default_timezone_set("America/Tegucigalpa"),
-            $tiempo = date('y-m-d h-i-s'),
-            $log28 = 'logs/TipoEntrega/TipoEntrega '.$tiempo.'.log', 
+            $tiempo = date('Ymd-his'),
+            $log28 = 'logs/TipoEntrega/TipoEntrega-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log28),
             'level' => env('LOG_LEVEL', 'debug'),

@@ -14,13 +14,20 @@ use Illuminate\Support\Facades\Log;
 class TipoEntregaController extends Controller
 {
     public function getTipoEntrega(){
-        Log::channel("tipoentrega")->info("Registros encontrado");
-        return response()->json(TipoEntrega::all(),200);
+        try{
+            return response()->json(TipoEntrega::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("tipoentrega")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [
             'nombreTipoEntrega' => 'required|min:4|max:40',
         ]);
@@ -44,13 +51,21 @@ class TipoEntregaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $tipoEntrega = TipoEntrega::create($request->all());
-        Log::channel("tipoentrega")->info($tipoEntrega);
-        return response($tipoEntrega, 200);
+            $tipoEntrega = TipoEntrega::create($request->all());
+            Log::channel("tipoentrega")->info($tipoEntrega);
+            return response($tipoEntrega, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("tipoentrega")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $tipoEntrega = TipoEntrega::find($id);
 
         if  ($id < 1){
@@ -62,13 +77,19 @@ class TipoEntregaController extends Controller
             Log::channel("tipoentrega")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("tipoentrega")->info($tipoEntrega);
-        return response($tipoEntrega, 200); 
+            Log::channel("tipoentrega")->info($tipoEntrega);
+            return response($tipoEntrega, 200); 
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("tipoentrega")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request,$id)
     {
-
+        try{
         $tipoEntrega = TipoEntrega::find($id);
 
         if  ($id < 1){
@@ -95,8 +116,6 @@ class TipoEntregaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $tipoEntrega->update($request->all());
             Log::channel("tipoentrega")->info($tipoEntrega);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -106,6 +125,10 @@ class TipoEntregaController extends Controller
             if($errorCode == '1062'){
                 Log::channel("tipoentrega")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Tipo de Entrega.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("tipoentrega")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

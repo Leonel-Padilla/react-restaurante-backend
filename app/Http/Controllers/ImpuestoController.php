@@ -15,13 +15,20 @@ class ImpuestoController extends Controller
 {
 
     public function getImpuesto(){
-        Log::channel("impuesto")->info("Registros encontrado");
-        return response()->json(Impuesto::all(),200);
+        try{        
+            return response()->json(Impuesto::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuesto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [
             'valorImpuesto' => 'required|min:1|max:3',
         ]);
@@ -54,13 +61,21 @@ class ImpuestoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $impuesto = Impuesto::create($request->all());
-        Log::channel("impuesto")->info($impuesto);
-        return response($impuesto, 200);
+            $impuesto = Impuesto::create($request->all());
+            Log::channel("impuesto")->info($impuesto);
+            return response($impuesto, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuesto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
+
         $impuesto = Impuesto::find($id);
 
         if  ($id < 1){
@@ -72,12 +87,20 @@ class ImpuestoController extends Controller
             Log::channel("impuesto")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("impuesto")->info($impuesto);
-        return response($impuesto, 200); 
+            Log::channel("impuesto")->info($impuesto);
+            return response($impuesto, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("impuesto")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request,$id)
     {
+        try{
+
         $impuesto = Impuesto::find($id);
 
         if  ($id < 1){
@@ -113,8 +136,6 @@ class ImpuestoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
-
             $impuesto->update($request->all());
             Log::channel("impuesto")->info($impuesto);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -124,6 +145,10 @@ class ImpuestoController extends Controller
             if($errorCode == '1062'){
                 Log::channel("impuesto")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre del Impuesto.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("impuesto")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
     }

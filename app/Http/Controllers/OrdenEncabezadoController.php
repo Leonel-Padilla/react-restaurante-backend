@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\Log;
 class OrdenEncabezadoController extends Controller
 {
     public function getOrdenEncabezado(){
-        Log::channel("ordenencabezado")->info("Registros encontrado");
-        return response()->json(OrdenEncabezado::all(),200);
+        try{
+            return response()->json(OrdenEncabezado::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByClienteId($clienteId){
+        try{
 
         $ordenEncabezado = OrdenEncabezado::findByCliente($clienteId);
 
@@ -26,11 +32,18 @@ class OrdenEncabezadoController extends Controller
             Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByEmpleadoMeseroId($empleadoId){
+        try{
 
         $ordenEncabezado = OrdenEncabezado::findByEmpleadoMesero($empleadoId);
 
@@ -38,11 +51,18 @@ class OrdenEncabezadoController extends Controller
             Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByEmpleadoCocinaId($empleadoId){
+        try{
 
         $ordenEncabezado = OrdenEncabezado::findByEmpleadoCocina($empleadoId);
 
@@ -50,11 +70,18 @@ class OrdenEncabezadoController extends Controller
             Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByTipoEntregaId($tipoEntregaId){
+        try{
 
         $ordenEncabezado = OrdenEncabezado::findByTipoEntrega($tipoEntregaId);
 
@@ -62,12 +89,19 @@ class OrdenEncabezadoController extends Controller
             Log::channel("ordenencabezado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
    
     public function store(Request $request)
     {
+        try{
 
         $validator0 = Validator::make($request->all(), [ 
             'clienteId' => 'required',
@@ -124,13 +158,21 @@ class OrdenEncabezadoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $ordenEncabezado = OrdenEncabezado::create($request->all());
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            $ordenEncabezado = OrdenEncabezado::create($request->all());
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
     
     public function show($id)
     {
+        try{
+
         $ordenEncabezado = OrdenEncabezado::find($id);
 
         if  ($id < 1){
@@ -142,12 +184,20 @@ class OrdenEncabezadoController extends Controller
             Log::channel("ordenencabezado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response($ordenEncabezado, 200);
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response($ordenEncabezado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $ordenEncabezado = OrdenEncabezado::find($id);
 
         $validator0 = Validator::make($request->all(), [ 
@@ -205,9 +255,15 @@ class OrdenEncabezadoController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $ordenEncabezado->update($request->all());
-        Log::channel("ordenencabezado")->info($ordenEncabezado);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $ordenEncabezado->update($request->all());
+            Log::channel("ordenencabezado")->info($ordenEncabezado);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("ordenencabezado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

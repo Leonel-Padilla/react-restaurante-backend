@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\Log;
 class FacturaController extends Controller
 {
     public function getFactura(){
-        Log::channel("factura")->info("Registros encontrado");
-        return response()->json(Factura::all(),200);
+        try{
+            return response()->json(Factura::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("factura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByEmpleadoCajeroId($empleadoCajeroId){
+        try{
 
         $empleadoCajeroId = Factura::findByEmpleadoCajeroId($empleadoCajeroId);
 
@@ -26,12 +32,20 @@ class FacturaController extends Controller
             Log::channel("factura")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("factura")->info($empleadoCajeroId);
-        return response($empleadoCajeroId, 200);
+            Log::channel("factura")->info($empleadoCajeroId);
+            return response($empleadoCajeroId, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("factura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
+
     }
     
     public function store(Request $request)
     {
+        try{
         $validator0 = Validator::make($request->all(), [
             'ordenEncabezadoId' => 'required',
         ]);
@@ -167,13 +181,20 @@ class FacturaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $factura = Factura::create($request->all());
-        Log::channel("factura")->info($factura);
-        return response($factura, 200);
+            $factura = Factura::create($request->all());
+            Log::channel("factura")->info($factura);
+            return response($factura, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("factura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
         $factura = Factura::find($id);
 
         if  ($id < 1){
@@ -185,12 +206,19 @@ class FacturaController extends Controller
             Log::channel("factura")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("factura")->info($factura);
-        return response($factura, 200);
+            Log::channel("factura")->info($factura);
+            return response($factura, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("factura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
         $factura = Factura::find($id);
 
         if  ($id < 1){
@@ -338,9 +366,16 @@ class FacturaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $factura->update($request->all());
-        Log::channel("factura")->info($factura);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $factura->update($request->all());
+            Log::channel("factura")->info($factura);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+        
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("factura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
+
     }
 
     public function destroy($id)

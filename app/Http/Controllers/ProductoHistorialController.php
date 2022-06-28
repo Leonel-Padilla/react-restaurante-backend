@@ -15,13 +15,19 @@ use Illuminate\Support\Facades\Log;
 class ProductoHistorialController extends Controller
 {
     public function getProductoHistorial(){
-        Log::channel("productohistorial")->info("Registros encontrado");
-        return response()->json(ProductoHistorial::all(),200);
+        try{
+            return response()->json(ProductoHistorial::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
 
     public function getByProductoId($productoId){
+        try{
 
         $productoHistorial = ProductoHistorial::findByProductoId($productoId);
 
@@ -29,12 +35,20 @@ class ProductoHistorialController extends Controller
             Log::channel("productohistorial")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("productohistorial")->info($productoHistorial);
-        return response($productoHistorial, 200);
+            Log::channel("productohistorial")->info($productoHistorial);
+            return response($productoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [
             'productoId' => 'required'
         ]);
@@ -58,14 +72,22 @@ class ProductoHistorialController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $productoHistorial = ProductoHistorial::create($request->all());
-        Log::channel("productohistorial")->info($productoHistorial);
-        return response($productoHistorial, 200);
+            $productoHistorial = ProductoHistorial::create($request->all());
+            Log::channel("productohistorial")->info($productoHistorial);
+            return response($productoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function show($id)
     {
+        try{
+
         $productoHistorial = ProductoHistorial::find($id);
 
         if  ($id < 1){
@@ -77,12 +99,20 @@ class ProductoHistorialController extends Controller
             Log::channel("productohistorial")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("productohistorial")->info($productoHistorial);
-        return response($productoHistorial, 200); 
+            Log::channel("productohistorial")->info($productoHistorial);
+            return response($productoHistorial, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $productoHistorial = ProductoHistorial::find($id);
 
         if  ($id < 1){
@@ -118,9 +148,15 @@ class ProductoHistorialController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $productoHistorial->update($request->all());
-        Log::channel("productohistorial")->info($productoHistorial);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $productoHistorial->update($request->all());
+            Log::channel("productohistorial")->info($productoHistorial);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("productohistorial")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

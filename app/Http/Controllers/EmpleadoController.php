@@ -16,37 +16,55 @@ class EmpleadoController extends Controller
 
     //
     public function getEmpleado(){
-        Log::channel("empleado")->info("Registros encontrado");
-        return response()->json(Empleado::all(),200);
+        try{
+            return response()->json(Empleado::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByEmpleadoUsuario($empleadoUsuario){
-
+        try{
         $empleado = Empleado::findByEmpleadoUsuario($empleadoUsuario);
 
         if(empty($empleado)){
             Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("empleado")->info($empleado);
-        return response($empleado, 200);
+            Log::channel("empleado")->info($empleado);
+            return response($empleado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getByEmpleadoNombre($nombreEmpleado){
-
+        try{
         $empleado = Empleado::findByEmpleadoNombre($nombreEmpleado);
 
         if(empty($empleado)){
             Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("empleado")->info($empleado);
-        return response($empleado, 200);
+            Log::channel("empleado")->info($empleado);
+            return response($empleado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByNumeroDocumento($numeroDocumento){
+        try{
 
         $empleado = Empleado::findByNumeroDocumento($numeroDocumento);
 
@@ -54,11 +72,17 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("empleado")->info($empleado);
-        return response($empleado, 200);
+            Log::channel("empleado")->info($empleado);
+            return response($empleado, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByNumeroEmpleado($empleadoNumero){
+        try{
 
         $empleado = Empleado::findByNumeroEmpleado($empleadoNumero);
 
@@ -66,11 +90,18 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("empleado")->info($empleado);
-        return response($empleado, 200);
+            Log::channel("empleado")->info($empleado);
+            return response($empleado, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByCorreoEmpleado($empleadoCorreo){
+        try{
 
         $empleado = Empleado::findByCorreoEmpleado($empleadoCorreo);
 
@@ -78,13 +109,19 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("empleado")->info($empleado);
-        return response($empleado, 200);
+            Log::channel("empleado")->info($empleado);
+            return response($empleado, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function store(Request $request)
     {   
+        try{
         //
         $validator0 = Validator::make($request->all(), [ 
             'numeroDocumento' => 'unique:empleados',
@@ -231,15 +268,21 @@ class EmpleadoController extends Controller
             return response()->json(['Error'=>'El sueldo debe tener un minímo de L.5000 y un máximo de L.100,000'], 203);
         }
 
+            $empleado = Empleado::create($request->all());
+            Log::channel("empleado")->info($empleado);
+            return response($empleado, 200);
 
-        $empleado = Empleado::create($request->all());
-        Log::channel("empleado")->info($empleado);
-        return response($empleado, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function show($id)
     {
+        try{
         $empleado = Empleado::find($id);
 
         if  ($id < 1){
@@ -251,13 +294,19 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
+            return response($empleado, 200);
 
-        return response($empleado, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("empleado")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function update(Request $request, $id)
     {
+        try{
         $empleado = Empleado::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
@@ -381,7 +430,6 @@ class EmpleadoController extends Controller
             return response()->json(['Error'=>'El sueldo debe tener un minímo de 5000 y un máximo de 100,000'], 203);
         }
 
-        try {
 
             $empleado->update($request->all());
             Log::channel("empleado")->info($empleado);
@@ -393,6 +441,10 @@ class EmpleadoController extends Controller
                 Log::channel("empleado")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número Documento, Número Empleado,
                 Correo Empleado y el Usuario del Empleado.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("empleado")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

@@ -15,12 +15,18 @@ class ParametrosFacturaController extends Controller
 {
 
     public function getParametrosFactura(){
-        Log::channel("parametrosfactura")->info("Registros encontrado");
-        return response()->json(ParametrosFactura::all(),200);
+        try{
+            return response()->json(ParametrosFactura::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("parametrosfactura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     //
     public function getBySucursal($sucursalId){
+        try{
 
         $parametrosFactura = ParametrosFactura::findBySucursal($sucursalId);
         
@@ -28,12 +34,20 @@ class ParametrosFacturaController extends Controller
             Log::channel("parametrosfactura")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("parametrosfactura")->info($parametrosFactura);
-        return response($parametrosFactura, 200);
+            Log::channel("parametrosfactura")->info($parametrosFactura);
+            return response($parametrosFactura, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("parametrosfactura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
   
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [
             'sucursalId' => 'required',
         ]);
@@ -156,13 +170,20 @@ class ParametrosFacturaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $parametrosFactura = ParametrosFactura::create($request->all());
-        Log::channel("parametrosfactura")->info($parametrosFactura);
-        return response($parametrosFactura, 200);
+            $parametrosFactura = ParametrosFactura::create($request->all());
+            Log::channel("parametrosfactura")->info($parametrosFactura);
+            return response($parametrosFactura, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("parametrosfactura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function show($id)
     {
+        try{
         $parametrosFactura = ParametrosFactura::find($id);
 
         if  ($id < 1){
@@ -174,12 +195,20 @@ class ParametrosFacturaController extends Controller
             Log::channel("parametrosfactura")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("parametrosfactura")->info($parametrosFactura);
-        return response($parametrosFactura, 200); 
+            Log::channel("parametrosfactura")->info($parametrosFactura);
+            return response($parametrosFactura, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("parametrosfactura")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request,$id)
     {
+        try{
+
         $parametrosFactura = ParametrosFactura::find($id);
 
         if  ($id < 1){
@@ -304,9 +333,6 @@ class ParametrosFacturaController extends Controller
             Log::channel("parametrosfactura")->error("El estado solo puede ser 1 o 0");
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
-
-        try {
-
             $parametrosFactura->update($request->all());
             Log::channel("parametrosfactura")->info($parametrosFactura);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -316,6 +342,10 @@ class ParametrosFacturaController extends Controller
             if($errorCode == '1062'){
                 Log::channel("parametrosfactura")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número CAI.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("parametrosfactura")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

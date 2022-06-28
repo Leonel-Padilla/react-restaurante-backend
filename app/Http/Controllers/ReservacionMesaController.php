@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\Log;
 class ReservacionMesaController extends Controller
 {
     public function getReservacionMesa(){
-        Log::channel("reservacionmesa")->info("Registros encontrado");
-        return response()->json(ReservacionMesa::all(),200);
+        try{
+            return response()->json(ReservacionMesa::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacionmesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByReservacionId($reservacionId){
-
+        try{
 
         $ReservacionMesa = ReservacionMesa::findByReservacionId($reservacionId);
 
@@ -27,12 +32,18 @@ class ReservacionMesaController extends Controller
             Log::channel("reservacionmesa")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("reservacionmesa")->info($ReservacionMesa);
-        return response($ReservacionMesa, 200);
+            Log::channel("reservacionmesa")->info($ReservacionMesa);
+            return response($ReservacionMesa, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacionmesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByMesaId($mesaId){
-
+        try{
 
         $ReservacionMesa = ReservacionMesa::findByMesaId($mesaId);
 
@@ -40,12 +51,20 @@ class ReservacionMesaController extends Controller
             Log::channel("reservacionmesa")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("reservacionmesa")->info($ReservacionMesa);
-        return response($ReservacionMesa, 200);
+            Log::channel("reservacionmesa")->info($ReservacionMesa);
+            return response($ReservacionMesa, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacionmesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'reservacionId' => 'required',
         ]);
@@ -105,15 +124,22 @@ class ReservacionMesaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
+            $reservacionMesa = ReservacionMesa::create($request->all());
+            Log::channel("reservacionmesa")->info($ReservacionMesa);
+            return response($reservacionMesa, 200);
 
-        $reservacionMesa = ReservacionMesa::create($request->all());
-        Log::channel("reservacionmesa")->info($ReservacionMesa);
-        return response($reservacionMesa, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacionmesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
    
     public function show($id)
     {
+        try{
+
         $reservacionMesa = ReservacionMesa::find($id);
 
         if  ($id < 1){
@@ -125,12 +151,20 @@ class ReservacionMesaController extends Controller
             Log::channel("reservacionmesa")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("reservacionmesa")->info($ReservacionMesa);
-        return response($reservacionMesa, 200);
+            Log::channel("reservacionmesa")->info($ReservacionMesa);
+            return response($reservacionMesa, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacionmesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
+
         $reservacionMesa = ReservacionMesa::find($id);
 
         if  ($id < 1){
@@ -202,9 +236,15 @@ class ReservacionMesaController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $reservacionMesa->update($request->all());
-        Log::channel("reservacionmesa")->info($ReservacionMesa);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $reservacionMesa->update($request->all());
+            Log::channel("reservacionmesa")->info($ReservacionMesa);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("reservacionmesa")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)

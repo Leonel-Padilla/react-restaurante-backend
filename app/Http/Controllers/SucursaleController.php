@@ -15,11 +15,17 @@ class SucursaleController extends Controller
 {
 
     public function getSucursal(){
-        Log::channel("sucursal")->info("Registros encontrado");
-        return response()->json(Sucursale::all(),200);
+        try{
+            return response()->json(Sucursale::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sucursal")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getBySucursalNombre($nombreSucursal){
+        try{
 
         $sucursal = Sucursale::findBySucursalNombre($nombreSucursal);
 
@@ -27,11 +33,18 @@ class SucursaleController extends Controller
             Log::channel("sucursal")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("sucursal")->info($sucursal);
-        return response($sucursal, 200);
+            Log::channel("sucursal")->info($sucursal);
+            return response($sucursal, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sucursal")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getBySucursalEncargado($empleadoId){
+        try{
 
         $sucursal = Sucursale::findBySucursalEncargado($empleadoId);
 
@@ -39,14 +52,22 @@ class SucursaleController extends Controller
             Log::channel("sucursal")->error("Registro no encontrado");
             return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
         }
-        Log::channel("sucursal")->info($sucursal);
-        return response($sucursal, 200);
+            Log::channel("sucursal")->info($sucursal);
+            return response($sucursal, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sucursal")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
 
     public function store(Request $request)
     {
+        try{
+
         $validator0 = Validator::make($request->all(), [ 
             'sucursalDireccion' => 'required|min:10|max:100',
         ]);
@@ -74,14 +95,22 @@ class SucursaleController extends Controller
             return response()->json(['Error'=>'El nombre del sucursal debe ser único.'], 203);
         }
 
-        $sucursal = Sucursale::create($request->all());
-        Log::channel("sucursal")->info($sucursal);
-        return response($sucursal, 200);
+            $sucursal = Sucursale::create($request->all());
+            Log::channel("sucursal")->info($sucursal);
+            return response($sucursal, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sucursal")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function show($id)
     {
+        try{
+
         $sucursal = Sucursale::find($id);
 
         if  ($id < 1){
@@ -93,13 +122,21 @@ class SucursaleController extends Controller
             Log::channel("sucursal")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-        Log::channel("sucursal")->info($sucursal);
-        return response($sucursal, 200);
+            Log::channel("sucursal")->info($sucursal);
+            return response($sucursal, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("sucursal")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function update(Request $request, $id)
     {   
+        try{
+
         $sucursal = Sucursale::find($id);
 
         if  ($id < 1){
@@ -130,8 +167,6 @@ class SucursaleController extends Controller
             return response()->json(['Error'=>'No puede estar vacía el nombre del sucursal y debe tener entre 4 a 40 caracteres.'], 203);
         }
 
-        try {
-
             $sucursal->update($request->all());
             Log::channel("sucursal")->info($sucursal);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
@@ -141,6 +176,10 @@ class SucursaleController extends Controller
             if($errorCode == '1062'){
                 Log::channel("sucursal")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Nombre de la sucursal.'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("sucursal")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

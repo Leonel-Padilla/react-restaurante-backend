@@ -15,26 +15,37 @@ class ClienteController extends Controller
 {
 
     public function getCliente(){
-        Log::channel("cliente")->info("Registros encontrado");
-        return response()->json(Cliente::all(),200);
+        try{
+            return response()->json(Cliente::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cliente")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function getByClienteNombre($nombreCliente){
+        try{
+            $Cliente = Cliente::findByClienteNombre($nombreCliente);
 
+            if(empty($Cliente)){
+                Log::channel("cliente")->error("Registro no encontrado");
+                return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+            }
+            Log::channel("cliente")->info($Cliente);
+            return response($Cliente, 200);
 
-        $Cliente = Cliente::findByClienteNombre($nombreCliente);
-
-        if(empty($Cliente)){
-            Log::channel("cliente")->error("Registro no encontrado");
-            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cliente")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
         }
-        Log::channel("cliente")->info($Cliente);
-        return response($Cliente, 200);
     }
 
 
     public function store(Request $request){
+        try{
 
         $validator0 = Validator::make($request->all(), [ 
             'tipoDocumentoId' => 'required|min:1|max:1',
@@ -145,16 +156,23 @@ class ClienteController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
+            $cliente = Cliente::create($request->all());
+            Log::channel("cliente")->info($cliente);
+            return response($cliente, 200);
 
-        $cliente = Cliente::create($request->all());
-
-        return response($cliente, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cliente")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function show($id)
     {
-        $cliente = Cliente::find($id);
+        try{
+
+            $cliente = Cliente::find($id);
 
         if  ($id < 1){
             Log::channel("cliente")->error("El Id no puede ser menor o igual a cero");
@@ -165,13 +183,20 @@ class ClienteController extends Controller
             Log::channel("cliente")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
+            Log::channel("cargohistorial")->info($cargoHistorial);
+            return response($cliente, 200);
 
-        return response($cliente, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("cliente")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
 
     public function update(Request $request, $id)
     {
+        try{
         $cliente = Cliente::find($id);
 
         if  ($id < 1){
@@ -257,7 +282,6 @@ class ClienteController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        try {
 
             $cliente->update($request->all());
             Log::channel("cliente")->info($cliente);
@@ -268,6 +292,10 @@ class ClienteController extends Controller
             if($errorCode == '1062'){
                 Log::channel("cliente")->error("Datos repetidos");
                 return response()->json(['Error'=>'Los siguientes datos deben ser únicos: Número Documento, Número Cliente, Cliente Correo, RTN Cliente'], 203);
+            }else{
+                $errormessage = $e->getMessage();
+                Log::channel("cliente")->error($errormessage);
+                return response()->json(['Error'=>$errormessage], 203);
             }
         }
 

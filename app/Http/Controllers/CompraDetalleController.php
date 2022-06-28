@@ -15,24 +15,36 @@ class CompraDetalleController extends Controller
 {
 
     public function getCompraDetalle(){
-        Log::channel("compradetalle")->info("Registros encontrado");
-        return response()->json(CompraDetalle::all(),200);
+        try{
+            return response()->json(CompraDetalle::all(),200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compradetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function getByCompraEncabezadoId($compraEncabezado){
+        try{
+            $compraEncabezado = CompraDetalle::findByCompraEncabezadoId($compraEncabezado);
 
-        $compraEncabezado = CompraDetalle::findByCompraEncabezadoId($compraEncabezado);
+            if(empty($compraEncabezado)){
+                Log::channel("compradetalle")->error("Registro no encontrado");
+                return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+            }
+            Log::channel("compradetalle")->info($compraEncabezado);
+            return response($compraEncabezado, 200);
 
-        if(empty($compraEncabezado)){
-            Log::channel("compradetalle")->error("Registro no encontrado");
-            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compradetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
         }
-        Log::channel("compradetalle")->info($compraEncabezado);
-        return response($compraEncabezado, 200);
     }
    
     public function store(Request $request)
     {
+        try{
         $validator0 = Validator::make($request->all(), [ 
             'insumoId' => 'required',
         ]);
@@ -84,14 +96,22 @@ class CompraDetalleController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
 
-        $compraDetalle = CompraDetalle::create($request->all());
-        Log::channel("compradetalle")->info($compraDetalle);
-        return response($compraDetalle, 200);
+            $compraDetalle = CompraDetalle::create($request->all());
+            Log::channel("compradetalle")->info($compraDetalle);
+            return response($compraDetalle, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compradetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
    
     public function show($id)
     {
+        try{
+
         $compraDetalle = CompraDetalle::find($id);
 
         if  ($id < 1){
@@ -104,12 +124,18 @@ class CompraDetalleController extends Controller
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
 
-        return response($compraDetalle, 200);
+            return response($compraDetalle, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compradetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function update(Request $request, $id)
     {
-
+        try{
         $compraDetalle = CompraDetalle::find($id);
         //Validaciones Busqueda
         if  ($id < 1){
@@ -173,9 +199,15 @@ class CompraDetalleController extends Controller
             return response()->json(['Error'=>'El estado solo puede ser 1 o 0'], 203);
         }
     
-        $compraDetalle->update($request->all());
-        Log::channel("compradetalle")->info($compraDetalle);
-        return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+            $compraDetalle->update($request->all());
+            Log::channel("compradetalle")->info($compraDetalle);
+            return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("compradetalle")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
     }
 
     public function destroy($id)
