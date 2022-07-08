@@ -19,6 +19,7 @@ use ESolution\DBEncryption\Traits\EncryptedAttribute;
  * @property $empleadoDireccion
  * @property $empleadoSueldo
  * @property $cargoActualId
+ * @property $rolId
  * @property $fechaContratacion
  * @property $fechaNacimiento
  * @property $sucursalId
@@ -51,6 +52,7 @@ class Empleado extends Model
 		'empleadoDireccion' => 'required',
     'empleadoSueldo' => 'required',
     'cargoActualId' => 'required',
+    'rolId' =>  'required',
     'fechaContratacion' => 'required',
     'fechaNacimiento' => 'required',
     'fechaBloqueo' => 'nullable',
@@ -66,7 +68,7 @@ class Empleado extends Model
      * @var array
      */
     protected $fillable = ['tipoDocumentoId','numeroDocumento','empleadoNombre','empleadoNumero', 'empleadoCorreo',
-    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','empleadoSueldo','cargoActualId','fechaContratacion','fechaNacimiento',
+    'empleadoUsuario','empleadoContrasenia','empleadoDireccion','empleadoSueldo','cargoActualId','rolId','fechaContratacion','fechaNacimiento',
     'fechaBloqueo','sucursalId','estado'];
 
 
@@ -82,6 +84,12 @@ class Empleado extends Model
     {
         return $this->hasOne('App\Models\Sucursal', 'id', 'sucursalId');
     }
+
+    public function rol()
+    {
+        return $this->hasOne('App\Models\Role', 'id', 'rolId');
+    }
+    
     
 
     //New Collections

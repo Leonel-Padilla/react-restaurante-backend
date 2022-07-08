@@ -384,6 +384,36 @@ return [
             'days' => 2,
         ],
 
+        'rol' => [
+            date_default_timezone_set("America/Tegucigalpa"),
+            $tiempo = date('Ymd-his'),
+            $log29 = 'logs/Rol/Rol-'.$tiempo.'.log', 
+            'driver' => 'single',
+            'path' => storage_path($log29),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 2,
+        ],
+
+        'pantalla' => [
+            date_default_timezone_set("America/Tegucigalpa"),
+            $tiempo = date('Ymd-his'),
+            $log30 = 'logs/Pantalla/Pantalla-'.$tiempo.'.log', 
+            'driver' => 'single',
+            'path' => storage_path($log30),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 2,
+        ],
+
+        'rolPantalla' => [
+            date_default_timezone_set("America/Tegucigalpa"),
+            $tiempo = date('Ymd-his'),
+            $log31 = 'logs/RolesPantalla/RolesPantalla-'.$tiempo.'.log', 
+            'driver' => 'single',
+            'path' => storage_path($log31),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 2,
+        ],
+
     ],
 
 ];

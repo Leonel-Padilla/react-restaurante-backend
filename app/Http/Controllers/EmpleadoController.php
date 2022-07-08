@@ -262,6 +262,15 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->error("La sucursal no puede estar vacío");
             return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
+
+        $validator15 = Validator::make($request->all(), [ 
+            'rolId' => 'required',
+        ]);
+
+        if($validator15->fails()){
+            Log::channel("empleado")->error("El rol no puede estar vacío");
+            return response()->json(['Error'=>'El rol no puede estar vacío.'], 203);
+        }
         //
         if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
             Log::channel("empleado")->error("El sueldo debe tener un minímo de L.5000 y un máximo de L.100,000");
@@ -424,6 +433,15 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->error("La sucursal no puede estar vacío");
             return response()->json(['Error'=>'La sucursal no puede estar vacío.'], 203);
         }
+
+        $validator15 = Validator::make($request->all(), [ 
+            'rolId' => 'required',
+        ]);
+
+        if($validator15->fails()){
+            Log::channel("empleado")->error("El rol no puede estar vacío");
+            return response()->json(['Error'=>'El rol no puede estar vacío.'], 203);
+        }
         //
         if ($request->empleadoSueldo > 100000|| $request->empleadoSueldo < 5000 ){
             Log::channel("empleado")->error("El sueldo debe tener un minímo de 5000 y un máximo de 100,000");
@@ -435,7 +453,7 @@ class EmpleadoController extends Controller
             Log::channel("empleado")->info($empleado);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
-        } catch(\Illuminate\Database\QueryException $e){
+        }catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
                 Log::channel("empleado")->error("Datos repetidos");

@@ -27,6 +27,7 @@ class Empleados extends Migration
             $table->string('empleadoDireccion', 100);
             $table->string('empleadoSueldo', 6);
             $table->bigInteger('cargoActualId')->unsigned();
+            $table->bigInteger('rolId')->unsigned();
             $table->date('fechaContratacion');
             $table->date('fechaNacimiento');
             $table->dateTime('fechaBloqueo')->nullable();
@@ -37,6 +38,7 @@ class Empleados extends Migration
             $table->foreign('tipoDocumentoId')->references('id')->on('tipo_documentos');
             $table->foreign('cargoActualId')->references('id')->on('cargos');
             $table->foreign('sucursalId')->references('id')->on('sucursales');
+            $table->foreign('rolId')->references('id')->on('roles');
         });
     }
 

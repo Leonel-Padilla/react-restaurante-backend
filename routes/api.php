@@ -153,6 +153,14 @@ Route::post('addOrdenDetalle', 'App\Http\Controllers\OrdenDetalleController@stor
 Route::put('updateOrdenDetalle/{id}', 'App\Http\Controllers\OrdenDetalleController@update');
 Route::delete('deleteOrdenDetalle/{id}', 'App\Http\Controllers\OrdenDetalleController@destroy');
 
+//Pantalla
+Route::get('Pantalla', 'App\Http\Controllers\PantallaController@getPantalla');
+Route::get('Pantalla/{id}', 'App\Http\Controllers\PantallaController@show');
+Route::get('PantallaN/{nombre}', 'App\Http\Controllers\PantallaController@getByPantallaNombre');
+Route::post('addPantalla', 'App\Http\Controllers\PantallaController@store');
+Route::put('updatePantalla/{id}', 'App\Http\Controllers\PantallaController@update');
+Route::delete('deletePantalla/{id}', 'App\Http\Controllers\PantallaController@destroy');
+
 //Parametros Factura
 Route::get('ParametrosFactura', 'App\Http\Controllers\ParametrosFacturaController@getParametrosFactura');
 Route::get('ParametrosFactura/{id}', 'App\Http\Controllers\ParametrosFacturaController@show');
@@ -210,6 +218,21 @@ Route::get('ReservacionMesaM/{mesaId}', 'App\Http\Controllers\ReservacionMesaCon
 Route::post('addReservacionMesa', 'App\Http\Controllers\ReservacionMesaController@store');
 Route::put('updateReservacionMesa/{id}', 'App\Http\Controllers\ReservacionMesaController@update');
 Route::delete('deleteReservacionMesa/{id}', 'App\Http\Controllers\ReservacionMesaController@destroy');
+
+//Rol
+Route::get('Rol', 'App\Http\Controllers\RoleController@getRol');
+Route::get('Rol/{id}', 'App\Http\Controllers\RoleController@show');
+Route::get('RolN/{nombre}', 'App\Http\Controllers\RoleController@getByRolNombre');
+Route::post('addRol', 'App\Http\Controllers\RoleController@store');
+Route::put('updateRol/{id}', 'App\Http\Controllers\RoleController@update');
+Route::delete('deleteRol/{id}', 'App\Http\Controllers\RoleController@destroy');
+
+//RolPantalla
+Route::get('RolPantalla', 'App\Http\Controllers\RolesPantallaController@getRolPantalla');
+Route::get('RolPantalla/{id}', 'App\Http\Controllers\RolesPantallaController@show');
+Route::post('addRolPantalla', 'App\Http\Controllers\RolesPantallaController@store');
+Route::put('updateRolPantalla/{id}', 'App\Http\Controllers\RolesPantallaController@update');
+Route::delete('deleteRolPantalla/{id}', 'App\Http\Controllers\RolesPantallaController@destroy');
 
 //Sucursal
 Route::get('Sucursal', 'App\Http\Controllers\SucursaleController@getSucursal');
