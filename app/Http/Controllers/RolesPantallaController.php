@@ -23,6 +23,43 @@ class RolesPantallaController extends Controller
         }
     }
 
+    public function getByPantallaId($pantallaId){
+        try{
+
+        $rolesPantalla = RolesPantalla::findByPantallaId($pantallaId);
+
+        if(empty($rolesPantalla)){
+            Log::channel("rolPantalla")->error("Registro no encontrado");
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+            Log::channel("rolPantalla")->info($rolesPantalla);
+            return response($rolesPantalla, 200);
+
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("rolPantalla")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
+    }
+
+    public function getByRolesId($rolesId){
+        try{
+
+        $rolesPantalla = RolesPantalla::findByRolesId($rolesId);
+
+        if(empty($rolesPantalla)){
+            Log::channel("rolPantalla")->error("Registro no encontrado");
+            return response()->json(['Mensaje' => 'Registro no encontrado'], 203);
+        }
+            Log::channel("rolPantalla")->info($rolesPantalla);
+            return response($rolesPantalla, 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            $errormessage = $e->getMessage();
+            Log::channel("rolPantalla")->error($errormessage);
+            return response()->json(['Error'=>$errormessage], 203);
+        }
+    }
+
     public function store(Request $request)
     {
         try{
@@ -81,23 +118,23 @@ class RolesPantallaController extends Controller
                 return response()->json(['Error'=>'La validación de imprimir reportes no puede estar vacio'], 203);
             }
 
-            $validator7 = Validator::make($request->all(), [ 
-                'reimprimir' => 'required',
-            ]);
+            // $validator7 = Validator::make($request->all(), [ 
+            //     'reimprimir' => 'required',
+            // ]);
      
-            if($validator7->fails()){
-                Log::channel("rolPantalla")->error("La validación de reimprimir no puede estar vacio");
-                return response()->json(['Error'=>'La validación de reimprimir no puede estar vacio'], 203);
-            }
+            // if($validator7->fails()){
+            //     Log::channel("rolPantalla")->error("La validación de reimprimir no puede estar vacio");
+            //     return response()->json(['Error'=>'La validación de reimprimir no puede estar vacio'], 203);
+            // }
 
-            $validator8 = Validator::make($request->all(), [ 
-                'detalles' => 'required',
-            ]);
+            // $validator8 = Validator::make($request->all(), [ 
+            //     'detalles' => 'required',
+            // ]);
      
-            if($validator8->fails()){
-                Log::channel("rolPantalla")->error("La validación de detalles no puede estar vacio");
-                return response()->json(['Error'=>'La validación de detalles no puede estar vacio'], 203);
-            }
+            // if($validator8->fails()){
+            //     Log::channel("rolPantalla")->error("La validación de detalles no puede estar vacio");
+            //     return response()->json(['Error'=>'La validación de detalles no puede estar vacio'], 203);
+            // }
 
             if ($request->estado > 1|| $request->estado < 0){
                 Log::channel("rolPantalla")->error("El estado solo puede ser 1 o 0");
@@ -200,23 +237,23 @@ class RolesPantallaController extends Controller
                 return response()->json(['Error'=>'La validación de imprimir reportes no puede estar vacio'], 203);
             }
 
-            $validator7 = Validator::make($request->all(), [ 
-                'reimprimir' => 'required',
-            ]);
+            // $validator7 = Validator::make($request->all(), [ 
+            //     'reimprimir' => 'required',
+            // ]);
      
-            if($validator7->fails()){
-                Log::channel("rolPantalla")->error("La validación de reimprimir no puede estar vacio");
-                return response()->json(['Error'=>'La validación de reimprimir no puede estar vacio'], 203);
-            }
+            // if($validator7->fails()){
+            //     Log::channel("rolPantalla")->error("La validación de reimprimir no puede estar vacio");
+            //     return response()->json(['Error'=>'La validación de reimprimir no puede estar vacio'], 203);
+            // }
 
-            $validator8 = Validator::make($request->all(), [ 
-                'detalles' => 'required',
-            ]);
+            // $validator8 = Validator::make($request->all(), [ 
+            //     'detalles' => 'required',
+            // ]);
      
-            if($validator8->fails()){
-                Log::channel("rolPantalla")->error("La validación de detalles no puede estar vacio");
-                return response()->json(['Error'=>'La validación de detalles no puede estar vacio'], 203);
-            }
+            // if($validator8->fails()){
+            //     Log::channel("rolPantalla")->error("La validación de detalles no puede estar vacio");
+            //     return response()->json(['Error'=>'La validación de detalles no puede estar vacio'], 203);
+            // }
 
             if ($request->estado > 1|| $request->estado < 0){
                 Log::channel("rolPantalla")->error("El estado solo puede ser 1 o 0");

@@ -230,6 +230,8 @@ Route::delete('deleteRol/{id}', 'App\Http\Controllers\RoleController@destroy');
 //RolPantalla
 Route::get('RolPantalla', 'App\Http\Controllers\RolesPantallaController@getRolPantalla');
 Route::get('RolPantalla/{id}', 'App\Http\Controllers\RolesPantallaController@show');
+Route::get('RolPantallaP/{pantallaId}', 'App\Http\Controllers\RolesPantallaController@getByPantallaId');
+Route::get('RolPantallaR/{rolesId}', 'App\Http\Controllers\RolesPantallaController@getByRolesId');
 Route::post('addRolPantalla', 'App\Http\Controllers\RolesPantallaController@store');
 Route::put('updateRolPantalla/{id}', 'App\Http\Controllers\RolesPantallaController@update');
 Route::delete('deleteRolPantalla/{id}', 'App\Http\Controllers\RolesPantallaController@destroy');

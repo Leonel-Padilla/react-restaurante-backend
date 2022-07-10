@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class RolesPantalla
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $id
  * @property $rolesId
  * @property $pantallaId
+ * @property $rolPantalla
  * @property $buscar
  * @property $actualizar
  * @property $registrar
@@ -31,12 +33,11 @@ class RolesPantalla extends Model
     static $rules = [
 		'rolesId' => 'required',
 		'pantallaId' => 'required',
+        'rolPantalla' => 'required',
 		'buscar' => 'required',
 		'actualizar' => 'required',
 		'registrar' => 'required',
-		'imprimirReportes' => 'required',
-		'reimprimir' => 'required',
-		'detalles' => 'required',
+		'imprimirReportes' => 'required',   
 		'estado' => 'required',
     ];
 
@@ -47,7 +48,7 @@ class RolesPantalla extends Model
      *
      * @var array
      */
-    protected $fillable = ['rolesId','pantallaId','buscar','actualizar','registrar','imprimirReportes','reimprimir','detalles','estado'];
+    protected $fillable = ['rolesId','pantallaId','rolPantalla','buscar','actualizar','registrar','imprimirReportes','reimprimir','detalles','estado'];
 
 
     /**
@@ -65,6 +66,20 @@ class RolesPantalla extends Model
     {
         return $this->hasOne('App\Models\Role', 'id', 'rolesId');
     }
+
+    //New Collections
+
+    public static function findByPantallaId($pantallaId){
+
+        return $Empleado = DB::table('roles_pantallas')->where('pantallaId', $pantallaId)->get();
+  
+      }
+  
+      public static function findByRolesId($rolesId){
+  
+        return $Empleado = DB::table('roles_pantallas')->where('rolesId', $rolesId)->get();
+  
+      }
     
 
 }

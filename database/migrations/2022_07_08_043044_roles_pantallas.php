@@ -18,12 +18,13 @@ class RolesPantallas extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('rolesId')->unsigned();
             $table->bigInteger('pantallaId')->unsigned();
+            $table->string('rolPantalla', 10)->unique();
             $table->string('buscar', 1);
             $table->string('actualizar', 1);
             $table->string('registrar', 1);
             $table->string('imprimirReportes', 1);
-            $table->string('reimprimir', 1);
-            $table->string('detalles', 1);
+            $table->string('reimprimir', 1)->nullable();
+            $table->string('detalles', 1)->nullable();
             $table->tinyInteger('estado');
             $table->timestamps();
 
