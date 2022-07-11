@@ -125,7 +125,7 @@ class ReservacionMesaController extends Controller
         }
 
             $reservacionMesa = ReservacionMesa::create($request->all());
-            Log::channel("reservacionmesa")->info($ReservacionMesa);
+            Log::channel("reservacionmesa")->info($reservacionMesa);
             return response($reservacionMesa, 200);
 
         }catch(\Illuminate\Database\QueryException $e){
