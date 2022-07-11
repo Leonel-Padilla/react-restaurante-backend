@@ -118,6 +118,15 @@ class RolesPantallaController extends Controller
                 return response()->json(['Error'=>'La validación de imprimir reportes no puede estar vacio'], 203);
             }
 
+            $validator7 = Validator::make($request->all(), [ 
+                'rolPantalla' => 'unique:roles_pantallas',
+            ]);
+     
+            if($validator7->fails()){
+                Log::channel("rolPantalla")->error("Este rol ya tiene permisos en esta pantalla, actualice los permisos.");
+                return response()->json(['Error'=>'Este rol ya tiene permisos en esta pantalla, actualice los permisos.'], 203);
+            }
+
             // $validator7 = Validator::make($request->all(), [ 
             //     'reimprimir' => 'required',
             // ]);
@@ -178,7 +187,7 @@ class RolesPantallaController extends Controller
                 return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
             }
     
-            if  (is_null($role)){
+            if  (is_null($rolesPantalla)){
                 Log::channel("rolPantalla")->error("No existe este registro");
                 return response()->json(['Error'=>'No existe este registro'], 203);
             }
