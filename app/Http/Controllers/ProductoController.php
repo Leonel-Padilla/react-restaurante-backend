@@ -138,7 +138,7 @@ class ProductoController extends Controller
             Log::channel("producto")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro.'], 203);
         }
-            Log::channel("producto")->info($Producto);
+            Log::channel("producto")->info($producto);
             return response($producto, 200);
             
         }catch(\Illuminate\Database\QueryException $e){
@@ -220,7 +220,7 @@ class ProductoController extends Controller
         }
 
             $producto->update($request->all());
-            Log::channel("producto")->info($Producto);
+            Log::channel("producto")->info($producto);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
         
         } catch(\Illuminate\Database\QueryException $e){

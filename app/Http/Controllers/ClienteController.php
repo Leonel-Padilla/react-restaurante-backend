@@ -183,7 +183,7 @@ class ClienteController extends Controller
             Log::channel("cliente")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }
-            Log::channel("cargohistorial")->info($cargoHistorial);
+            Log::channel("cargohistorial")->info($cliente);
             return response($cliente, 200);
 
         }catch(\Illuminate\Database\QueryException $e){
