@@ -15,7 +15,7 @@ class LoggerController extends Controller
 
     public function postLog(Request $request)
     {
-        Log::channel('logger')->info($request);
+        Log::channel('logger')->info("El usuario $request->usuario intento acceder a la pantalla $request->pantalla");
     }
 
 }

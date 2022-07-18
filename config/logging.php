@@ -247,7 +247,7 @@ return [
         'logger' => [
             date_default_timezone_set("America/Tegucigalpa"),
             $tiempo = date('Ymd-his'),
-            $log32 = 'logs/Logs/Logs-'.$tiempo.'.log', 
+            $log32 = 'logs/Permisos/Permisos-'.$tiempo.'.log', 
             'driver' => 'single',
             'path' => storage_path($log32),
             'level' => env('LOG_LEVEL', 'debug'),
