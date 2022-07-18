@@ -170,7 +170,7 @@ class RolesPantallaController extends Controller
             return response()->json(['Error'=>'El Id no puede ser menor o igual a cero'], 203);
         }
 
-        if  (is_null($role)){
+        if  (is_null($rolesPantalla)){
             Log::channel("rolPantalla")->error("No existe este registro");
             return response()->json(['Error'=>'No existe este registro'], 203);
         }

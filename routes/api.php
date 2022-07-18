@@ -126,6 +126,9 @@ Route::post('addInsumo', 'App\Http\Controllers\InsumoController@store');
 Route::put('updateInsumo/{id}', 'App\Http\Controllers\InsumoController@update');
 Route::delete('deleteInsumo/{id}', 'App\Http\Controllers\InsumoController@destroy');
 
+//Logger
+Route::post('Log', 'App\Http\Controllers\LoggerController@postLog');
+
 //Mesa
 Route::get('Mesa', 'App\Http\Controllers\MesaController@getMesa');
 Route::get('Mesa/{id}', 'App\Http\Controllers\MesaController@show');
