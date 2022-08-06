@@ -103,7 +103,7 @@ class ProductoInsumoController extends Controller{
         }
         
             $productoInsumo = ProductoInsumo::create($request->all());
-            Log::channel("productoinsumo")->info($ProductoInsumo);
+            Log::channel("productoinsumo")->info($productoInsumo);
             return response($productoInsumo, 200);
 
         }catch(\Illuminate\Database\QueryException $e){
@@ -193,7 +193,7 @@ class ProductoInsumoController extends Controller{
         }
 
             $productoInsumo->update($request->all());
-            Log::channel("productoinsumo")->info($ProductoInsumo);
+            Log::channel("productoinsumo")->info($productoInsumo);
             return response()->json(['Mensaje'=>'Registro Actualizado con exito'], 200);
             
         }catch(\Illuminate\Database\QueryException $e){

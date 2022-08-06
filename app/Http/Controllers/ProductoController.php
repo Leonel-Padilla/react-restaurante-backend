@@ -113,7 +113,7 @@ class ProductoController extends Controller
         }
 
             $producto = Producto::create($request->all());
-            Log::channel("producto")->info($Producto);
+            Log::channel("producto")->info($producto);
             return response($producto, 200);
 
         }catch(\Illuminate\Database\QueryException $e){
